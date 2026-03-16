@@ -1,4 +1,4 @@
-/* SIMPACT B2B — AUTH.JS v2.1 */
+/* SIMPACT B2B — AUTH.JS v2.2 */
 /* Authentification, sessions, rôles, guards */
 
 const Auth = {
