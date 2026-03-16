@@ -83,11 +83,11 @@ const App = {
   // ── Modals ──
   openModal(id) {
     const el = document.getElementById(id);
-    if (el) { el.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    if (el) { el.classList.add('active'); }
   },
   closeModal(id) {
     const el = document.getElementById(id);
-    if (el) { el.classList.remove('active'); document.body.style.overflow = ''; }
+    if (el) { el.classList.remove('active'); }
   },
 
   // ── Slide panels ──
