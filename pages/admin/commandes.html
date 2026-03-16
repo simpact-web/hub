@@ -105,6 +105,7 @@
 </div>
 </div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/pricing.js"></script>
@@ -120,8 +121,10 @@ const STATUS_LABELS = {'waiting_file':'Att. fichier','file_received':'Fichier re
 const STATUS_COLORS = {'waiting_file':'#FF9800','file_received':'#2196F3','production':'#9C27B0','finishing':'#FF5722','ready':'#4CAF50','delivered':'#00BCD4','cancelled':'#F44336'};
 
 document.addEventListener('DOMContentLoaded', async () => {
-  if (!Auth.guard('ADMIN')) return;
   await Storage.init();
+  Auth.init();
+  if (!Auth.guard('ADMIN')) return;
+  App.setupUI();
   // Peupler filtre clients
   const sel = document.getElementById('filter-client');
   Storage.getClients().forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.nom; sel.appendChild(o); });

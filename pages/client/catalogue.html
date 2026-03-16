@@ -115,6 +115,7 @@
   </div>
 </main></div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/auth.js"></script>
@@ -133,7 +134,10 @@ const PRODUCTS_CATALOG = [
 ];
 
 document.addEventListener('DOMContentLoaded', async () => {
+  await Storage.init();
+  Auth.init();
   if (!Auth.guard('CLIENT')) return;
+  App.setupUI();
   document.getElementById('catalogue-grid').innerHTML = PRODUCTS_CATALOG.map(p=>`
     <div class="card card-hover" style="cursor:default;">
       <div class="card-body" style="text-align:center;padding:24px;">

@@ -92,6 +92,7 @@
   <div id="devis-list"></div>
 </main></div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/pricing.js"></script>
@@ -102,8 +103,10 @@
 <script src="../../assets/js/app.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  if (!Auth.guard('CLIENT')) return;
   await Storage.init();
+  Auth.init();
+  if (!Auth.guard('CLIENT')) return;
+  App.setupUI();
   const user = Auth.current;
   const devis = Storage.getDevis(user.id);
   const wrap = document.getElementById('devis-list');

@@ -138,6 +138,7 @@
 </main>
 </div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/pricing.js"></script>
@@ -149,8 +150,10 @@
 <script src="../../assets/js/app.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  if (!Auth.guard('ADMIN')) return;
   await Storage.init();
+  Auth.init();
+  if (!Auth.guard('ADMIN')) return;
+  App.setupUI();
   document.getElementById('admin-date').textContent = new Date().toLocaleDateString('fr-TN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const kpis = Storage.getKPIs();
   const commandes = Storage.getCommandes();

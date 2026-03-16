@@ -100,6 +100,7 @@
   <div id="files-list"></div>
 </main></div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/pricing.js"></script>
@@ -110,8 +111,10 @@
 <script src="../../assets/js/app.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  if (!Auth.guard('CLIENT')) return;
   await Storage.init();
+  Auth.init();
+  if (!Auth.guard('CLIENT')) return;
+  App.setupUI();
   renderFiles();
   document.getElementById('f-input').addEventListener('change', (e) => {
     const file = e.target.files[0];

@@ -108,6 +108,7 @@
 </main>
 </div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/auth.js"></script>
@@ -130,7 +131,10 @@ const TARIFS_ADMIN = {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
+  await Storage.init();
+  Auth.init();
   if (!Auth.guard('ADMIN')) return;
+  App.setupUI();
   showTarifAdmin('recto', document.querySelector('.tab'));
 });
 

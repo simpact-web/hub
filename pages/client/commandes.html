@@ -121,6 +121,7 @@
 </div>
 </div>
 <div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/pricing.js"></script>
@@ -133,8 +134,10 @@
 <script>
 let allOrders = [], currentTab = 'all', filterSt = '';
 document.addEventListener('DOMContentLoaded', async () => {
-  if (!Auth.guard('CLIENT')) return;
   await Storage.init();
+  Auth.init();
+  if (!Auth.guard('CLIENT')) return;
+  App.setupUI();
   loadOrders();
 });
 

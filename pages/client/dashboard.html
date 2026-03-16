@@ -156,6 +156,7 @@
 </main>
 </div>
 
+<script>window.SIMPACT_ROOT='../../';</script>
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/pricing.js"></script>
@@ -167,7 +168,10 @@
 <script src="../../assets/js/app.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
+  await Storage.init();
+  Auth.init();
   if (!Auth.guard('CLIENT')) return;
+  App.setupUI();
   const user = Auth.current;
   document.getElementById('dash-date').textContent = new Date().toLocaleDateString('fr-TN', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
