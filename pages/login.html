@@ -5,240 +5,459 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion — Simpact B2B</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/main.css">
-<link rel="stylesheet" href="../assets/css/components.css">
-<link rel="stylesheet" href="../assets/css/layout.css">
 <style>
-.login-page{min-height:100vh;display:flex;background:var(--primary-900);}
-.login-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;position:relative;overflow:hidden;}
-.login-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%, rgba(0,184,212,.15) 0%, transparent 60%),radial-gradient(ellipse at 80% 50%, rgba(233,30,99,.1) 0%, transparent 60%);}
-.login-right{width:480px;background:white;display:flex;flex-direction:column;justify-content:center;padding:60px 56px;}
-.login-brand{text-align:center;margin-bottom:40px;position:relative;z-index:1;}
-.login-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#00B8D4,#E91E63);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:2rem;color:white;margin:0 auto 20px;box-shadow:0 8px 32px rgba(0,184,212,.4);}
-.login-brand-name{font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:white;letter-spacing:.02em;}
-.login-brand-tag{color:rgba(255,255,255,.4);font-size:.875rem;margin-top:6px;}
-.feature-list{margin-top:48px;position:relative;z-index:1;}
-.feature-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px;}
-.feature-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,184,212,.15);border:1px solid rgba(0,184,212,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
-.feature-text .title{font-family:'Outfit',sans-serif;font-weight:600;color:white;font-size:.9375rem;}
-.feature-text .desc{color:rgba(255,255,255,.4);font-size:.8125rem;margin-top:2px;}
-.login-title{font-family:'Outfit',sans-serif;font-size:1.875rem;font-weight:800;color:var(--gray-900);margin-bottom:6px;}
-.login-subtitle{color:var(--gray-500);font-size:.9375rem;margin-bottom:36px;}
-.demo-accounts{background:var(--gray-50);border-radius:12px;padding:16px;margin-bottom:28px;border:1px solid var(--gray-200);}
-.demo-title{font-size:.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);margin-bottom:10px;}
-.demo-account{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;cursor:pointer;transition:var(--transition-fast);border:1px solid transparent;}
-.demo-account:hover{background:var(--cyan-50);border-color:var(--cyan-200);}
-.demo-account .name{font-weight:600;font-size:.8125rem;color:var(--gray-800);}
-.demo-account .creds{font-family:'Space Mono',monospace;font-size:.6875rem;color:var(--gray-500);}
-.demo-account .role-pill{font-size:.625rem;font-weight:700;padding:2px 8px;border-radius:6px;}
-.role-client{background:var(--cyan-100);color:var(--cyan-700,#0097A7);}
-.role-agence{background:var(--info-bg);color:var(--info-dark);}
-.role-admin{background:var(--magenta-100);color:var(--magenta-600);}
-@media(max-width:900px){.login-left{display:none;}.login-right{width:100%;max-width:480px;margin:0 auto;box-shadow:none;}}
+/* ── Reset total ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Inter', sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+/* ── Page layout ── */
+.page { min-height: 100vh; display: flex; background: #0a0a0a; }
+
+/* ── Colonne gauche ── */
+.left {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 48px; position: relative; overflow: hidden;
+}
+.left::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(0,184,212,.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(233,30,99,.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.brand { text-align: center; position: relative; z-index: 1; }
+.logo-box {
+  width: 80px; height: 80px; border-radius: 22px;
+  background: linear-gradient(135deg, #00B8D4, #E91E63);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2.2rem; color: white;
+  margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(0,184,212,.4);
+}
+.brand-name {
+  font-family: 'Outfit', sans-serif; font-size: 2.5rem;
+  font-weight: 800; color: white; letter-spacing: .02em;
+}
+.brand-tag { color: rgba(255,255,255,.4); font-size: .875rem; margin-top: 6px; }
+.features { margin-top: 48px; max-width: 380px; width: 100%; position: relative; z-index: 1; }
+.feat { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 24px; }
+.feat-icon {
+  width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px;
+  background: rgba(0,184,212,.15); border: 1px solid rgba(0,184,212,.2);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.feat-title { font-family: 'Outfit', sans-serif; font-weight: 600; color: white; font-size: .9375rem; }
+.feat-desc  { color: rgba(255,255,255,.4); font-size: .8125rem; margin-top: 2px; }
+
+/* ── Colonne droite — Formulaire ── */
+.right {
+  width: 480px; background: white;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 60px 56px; overflow-y: auto;
+}
+.login-title { font-family: 'Outfit', sans-serif; font-size: 1.875rem; font-weight: 800; color: #212121; margin-bottom: 6px; }
+.login-sub   { color: #9E9E9E; font-size: .9375rem; margin-bottom: 36px; }
+
+/* ── Comptes démo ── */
+.demo-box {
+  background: #FAFAFA; border-radius: 12px; padding: 14px;
+  margin-bottom: 28px; border: 1px solid #EEEEEE;
+}
+.demo-label {
+  font-size: .6875rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: #BDBDBD; margin-bottom: 10px;
+}
+.demo-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  border: 1.5px solid transparent; transition: all .15s ease;
+  user-select: none;
+}
+.demo-row:hover { background: #E0F7FA; border-color: #80DEEA; }
+.demo-row:active { background: #B2EBF2; }
+.demo-name { font-weight: 600; font-size: .8125rem; color: #212121; }
+.demo-creds { font-family: 'Space Mono', monospace; font-size: .6875rem; color: #9E9E9E; }
+.pill {
+  font-size: .625rem; font-weight: 700; padding: 3px 9px;
+  border-radius: 8px; white-space: nowrap;
+}
+.pill-client  { background: #E0F7FA; color: #0097A7; }
+.pill-agence  { background: #E3F2FD; color: #1976D2; }
+.pill-admin   { background: #FCE4EC; color: #C2185B; }
+
+/* ── Divider ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  font-size: .6875rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: #BDBDBD; margin-bottom: 24px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: #EEEEEE;
+}
+
+/* ── Alerte erreur ── */
+.error-box {
+  display: none; align-items: center; gap: 10px;
+  padding: 12px 16px; border-radius: 8px; margin-bottom: 20px;
+  background: #FFEBEE; border: 1px solid rgba(244,67,54,.2); color: #C62828;
+  font-size: .875rem;
+}
+.error-box.visible { display: flex; }
+
+/* ── Labels & Inputs ── */
+.form-grp { margin-bottom: 18px; }
+label {
+  display: block; font-weight: 600; font-size: .8125rem;
+  color: #616161; margin-bottom: 6px; font-family: 'Outfit', sans-serif;
+}
+label .req { color: #E91E63; margin-left: 2px; }
+.inp-wrap { position: relative; }
+.inp-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  font-size: .875rem; pointer-events: none; color: #9E9E9E;
+}
+input[type="email"], input[type="password"], input[type="text"] {
+  width: 100%; padding: 11px 14px 11px 40px;
+  border: 1.5px solid #E0E0E0; border-radius: 8px;
+  font-size: .9375rem; font-family: 'Inter', sans-serif;
+  color: #212121; background: white;
+  transition: border-color .15s ease, box-shadow .15s ease;
+  -webkit-appearance: none; outline: none;
+}
+input[type="email"]:focus, input[type="password"]:focus {
+  border-color: #00B8D4; box-shadow: 0 0 0 3px rgba(0,184,212,.15);
+}
+input::placeholder { color: #BDBDBD; }
+
+/* ── Row remember / forgot ── */
+.row-check {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 8px;
+}
+.check-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.check-wrap input { width: 16px; height: 16px; accent-color: #00B8D4; cursor: pointer; }
+.check-wrap span { font-size: .875rem; color: #616161; }
+.link-btn {
+  background: none; border: none; cursor: pointer;
+  color: #00B8D4; font-size: .8125rem; font-weight: 600;
+  font-family: 'Inter', sans-serif; padding: 0;
+  text-decoration: none; transition: color .15s;
+}
+.link-btn:hover { color: #0097A7; }
+
+/* ── Bouton principal ── */
+.btn-login {
+  width: 100%; padding: 14px; border: none; border-radius: 10px; cursor: pointer;
+  font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+  color: white; background: linear-gradient(135deg, #00B8D4, #E91E63);
+  box-shadow: 0 4px 20px rgba(0,184,212,.3);
+  transition: all .2s ease; position: relative; overflow: hidden;
+  -webkit-appearance: none; outline: none; min-height: 50px;
+}
+.btn-login:hover { transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,184,212,.4); }
+.btn-login:active { transform: translateY(0); }
+.btn-login:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+.btn-login .spinner {
+  display: none; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,.4);
+  border-top-color: white; border-radius: 50%;
+  animation: spin .7s linear infinite; margin: 0 auto;
+}
+.btn-login.loading .btn-text { display: none; }
+.btn-login.loading .spinner  { display: block; }
+
+/* ── Pied ── */
+.footer-txt { text-align: center; margin-top: 20px; font-size: .8125rem; color: #9E9E9E; }
+
+/* ── Panneaux flottants (SANS modal-overlay qui bloque) ── */
+.panel-bg {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.5); z-index: 1000;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+/* Utiliser flex au lieu de display:block pour éviter le problème de visibilité */
+.panel-bg.show { display: flex; }
+.panel {
+  background: white; border-radius: 16px; padding: 28px;
+  width: 100%; max-width: 440px; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+.panel h3 { font-family: 'Outfit', sans-serif; font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; }
+.panel .inp-wrap-simple { margin-bottom: 16px; }
+.panel .inp-wrap-simple input {
+  width: 100%; padding: 10px 14px; border: 1.5px solid #E0E0E0;
+  border-radius: 8px; font-size: .875rem; outline: none;
+}
+.panel .inp-wrap-simple input:focus { border-color: #00B8D4; }
+.panel .inp-wrap-simple label {
+  display: block; font-weight: 600; font-size: .8125rem;
+  color: #616161; margin-bottom: 5px;
+}
+.panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.panel-foot { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.btn-sec {
+  padding: 9px 18px; border: 1.5px solid #E0E0E0; border-radius: 8px;
+  background: white; cursor: pointer; font-size: .8125rem; font-weight: 600;
+  font-family: 'Outfit', sans-serif; color: #616161; outline: none;
+}
+.btn-sec:hover { border-color: #BDBDBD; }
+.btn-pri {
+  padding: 9px 18px; border: none; border-radius: 8px;
+  background: linear-gradient(135deg, #00B8D4, #E91E63);
+  color: white; cursor: pointer; font-size: .8125rem; font-weight: 700;
+  font-family: 'Outfit', sans-serif; outline: none;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 860px) {
+  .left { display: none; }
+  .right { width: 100%; max-width: 480px; margin: 0 auto; padding: 40px 28px; }
+  .page { background: white; }
+}
 </style>
 </head>
 <body>
-<div class="login-page">
-  <!-- GAUCHE — Présentation -->
-  <div class="login-left">
-    <div class="login-brand">
-      <div class="login-logo">S</div>
-      <div class="login-brand-name">SIMPACT</div>
-      <div class="login-brand-tag">Portail B2B · Impression numérique</div>
+
+<div class="page">
+  <!-- ── GAUCHE ── -->
+  <div class="left">
+    <div class="brand">
+      <div class="logo-box">S</div>
+      <div class="brand-name">SIMPACT</div>
+      <div class="brand-tag">Portail B2B · Impression numérique</div>
     </div>
-    <div class="feature-list" style="max-width:380px;width:100%;">
-      <div class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-text">
-          <div class="title">Devis instantané</div>
-          <div class="desc">Calculez vos prix en temps réel avec notre moteur UA4</div>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📦</div>
-        <div class="feature-text">
-          <div class="title">Suivi de production</div>
-          <div class="desc">Suivez vos commandes étape par étape sur Canon V1000</div>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📄</div>
-        <div class="feature-text">
-          <div class="title">Bons de commande PDF</div>
-          <div class="desc">Générez et téléchargez vos documents commerciaux</div>
-        </div>
-      </div>
-      <div class="feature-item">
-        <div class="feature-icon">📊</div>
-        <div class="feature-text">
-          <div class="title">Historique & Analytics</div>
-          <div class="desc">Tableau de bord complet de vos volumes et dépenses</div>
-        </div>
-      </div>
+    <div class="features">
+      <div class="feat"><div class="feat-icon">⚡</div><div><div class="feat-title">Devis instantané</div><div class="feat-desc">Moteur UA4 — prix en temps réel</div></div></div>
+      <div class="feat"><div class="feat-icon">📦</div><div><div class="feat-title">Suivi de production</div><div class="feat-desc">Canon V1000 — étape par étape</div></div></div>
+      <div class="feat"><div class="feat-icon">📄</div><div><div class="feat-title">Bons de commande PDF</div><div class="feat-desc">Documents commerciaux instantanés</div></div></div>
+      <div class="feat"><div class="feat-icon">📊</div><div><div class="feat-title">Analytics & Reporting</div><div class="feat-desc">CA, volumes, segmentation clients</div></div></div>
     </div>
   </div>
 
-  <!-- DROITE — Formulaire -->
-  <div class="login-right">
-    <div>
-      <h1 class="login-title">Bon retour 👋</h1>
-      <p class="login-subtitle">Connectez-vous à votre espace client Simpact</p>
+  <!-- ── DROITE ── -->
+  <div class="right">
+    <h1 class="login-title">Bon retour 👋</h1>
+    <p class="login-sub">Connectez-vous à votre espace Simpact</p>
 
-      <!-- Comptes de démo -->
-      <div class="demo-accounts">
-        <div class="demo-title">🎭 Comptes de démonstration — cliquez pour remplir</div>
-        <div class="demo-account" onclick="fillLogin('client@demo.tn','demo123')">
-          <div><div class="name">Clinique Hannibal</div><div class="creds">client@demo.tn / demo123</div></div>
-          <span class="role-pill role-client">Client</span>
-        </div>
-        <div class="demo-account" onclick="fillLogin('agence@demo.tn','demo123')">
-          <div><div class="name">Memac Ogilvy</div><div class="creds">agence@demo.tn / demo123</div></div>
-          <span class="role-pill role-agence">Agence</span>
-        </div>
-        <div class="demo-account" onclick="fillLogin('admin@simpact.tn','admin')">
-          <div><div class="name">Simpact Admin</div><div class="creds">admin@simpact.tn / admin</div></div>
-          <span class="role-pill role-admin">Admin</span>
-        </div>
+    <!-- Comptes démo -->
+    <div class="demo-box">
+      <div class="demo-label">🎭 Comptes de démonstration — cliquez pour remplir</div>
+      <div class="demo-row" id="d1">
+        <div><div class="demo-name">Clinique Hannibal</div><div class="demo-creds">client@demo.tn / demo123</div></div>
+        <span class="pill pill-client">Client</span>
       </div>
+      <div class="demo-row" id="d2">
+        <div><div class="demo-name">Memac Ogilvy</div><div class="demo-creds">agence@demo.tn / demo123</div></div>
+        <span class="pill pill-agence">Agence</span>
+      </div>
+      <div class="demo-row" id="d3">
+        <div><div class="demo-name">Simpact Admin</div><div class="demo-creds">admin@simpact.tn / admin</div></div>
+        <span class="pill pill-admin">Admin</span>
+      </div>
+    </div>
 
-      <div class="divider-text" style="margin-bottom:24px;">OU CONNECTEZ-VOUS</div>
+    <div class="divider">ou connectez-vous manuellement</div>
 
-      <!-- Formulaire -->
-      <div id="login-error" class="alert alert-danger mb-4 hidden">
-        <span class="alert-icon">⚠</span>
-        <div><div class="alert-title">Erreur de connexion</div><div id="error-msg"></div></div>
+    <!-- Erreur -->
+    <div class="error-box" id="err-box">
+      <span>⚠️</span>
+      <span id="err-msg">Email ou mot de passe incorrect</span>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="form-grp">
+      <label for="email">Adresse email <span class="req">*</span></label>
+      <div class="inp-wrap">
+        <span class="inp-icon">✉</span>
+        <input type="email" id="email" placeholder="votre@email.com" autocomplete="email">
       </div>
-      <div class="form-group">
-        <label class="form-label">Adresse email <span class="required">*</span></label>
-        <div class="input-group">
-          <span class="input-icon">✉</span>
-          <input type="email" id="login-email" class="form-control" placeholder="votre@email.com" autocomplete="email">
-        </div>
+    </div>
+
+    <div class="form-grp">
+      <label for="pwd">Mot de passe <span class="req">*</span></label>
+      <div class="inp-wrap">
+        <span class="inp-icon">🔒</span>
+        <input type="password" id="pwd" placeholder="••••••••" autocomplete="current-password">
       </div>
-      <div class="form-group">
-        <label class="form-label">Mot de passe <span class="required">*</span></label>
-        <div class="input-group">
-          <span class="input-icon">🔒</span>
-          <input type="password" id="login-password" class="form-control" placeholder="••••••••" autocomplete="current-password">
-        </div>
-      </div>
-      <div class="flex justify-between items-center mb-6">
-        <label class="form-check">
-          <input type="checkbox" id="remember-me">
-          <span class="form-check-label">Se souvenir de moi</span>
-        </label>
-        <a href="#" onclick="showForgotModal()" style="font-size:.8125rem;">Mot de passe oublié ?</a>
-      </div>
-      <button class="btn btn-gradient w-full btn-lg" id="btn-login" onclick="doLogin()">
-        <span class="btn-text">Se connecter</span>
-      </button>
-      <div style="text-align:center;margin-top:20px;">
-        <span style="font-size:.8125rem;color:var(--gray-500);">Pas encore de compte ?</span>
-        <a href="#" onclick="showAccessModal()" style="font-size:.8125rem;font-weight:600;margin-left:6px;">Demander un accès</a>
-      </div>
+    </div>
+
+    <div class="row-check">
+      <label class="check-wrap">
+        <input type="checkbox" id="remember">
+        <span>Se souvenir de moi</span>
+      </label>
+      <button class="link-btn" id="btn-forgot">Mot de passe oublié ?</button>
+    </div>
+
+    <button class="btn-login" id="btn-login">
+      <span class="btn-text">Se connecter</span>
+      <div class="spinner"></div>
+    </button>
+
+    <div class="footer-txt">
+      Pas encore de compte ?
+      <button class="link-btn" id="btn-access" style="margin-left:4px;">Demander un accès</button>
     </div>
   </div>
 </div>
 
-<!-- Modal mot de passe oublié -->
-<div class="modal-overlay" id="modal-forgot" onclick="if(event.target===this)this.classList.remove('active')">
-  <div class="modal modal-sm">
-    <div class="modal-header">
-      <span class="modal-title">Mot de passe oublié</span>
-      <button class="modal-close" onclick="document.getElementById('modal-forgot').classList.remove('active')">✕</button>
+<!-- ── PANNEAU MOT DE PASSE OUBLIÉ (pas de modal-overlay) ── -->
+<div class="panel-bg" id="panel-forgot">
+  <div class="panel">
+    <h3>Mot de passe oublié</h3>
+    <p style="color:#9E9E9E;font-size:.875rem;margin-bottom:16px;">Envoyez votre email pour recevoir un lien.</p>
+    <div class="inp-wrap-simple">
+      <label>Email</label>
+      <input type="email" placeholder="votre@email.com">
     </div>
-    <div class="modal-body">
-      <p class="mb-4">Entrez votre email pour recevoir un lien de réinitialisation.</p>
-      <div class="form-group"><input type="email" class="form-control" placeholder="votre@email.com"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('modal-forgot').classList.remove('active')">Annuler</button>
-      <button class="btn btn-primary btn-sm" onclick="alert('Fonctionnalité simulée — contacter Simpact directement.');document.getElementById('modal-forgot').classList.remove('active')">Envoyer</button>
+    <div class="panel-foot">
+      <button class="btn-sec" id="close-forgot">Annuler</button>
+      <button class="btn-pri" id="send-forgot">Envoyer</button>
     </div>
   </div>
 </div>
 
-<!-- Modal demande d'accès -->
-<div class="modal-overlay" id="modal-access" onclick="if(event.target===this)this.classList.remove('active')">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">Demander un accès</span>
-      <button class="modal-close" onclick="document.getElementById('modal-access').classList.remove('active')">✕</button>
+<!-- ── PANNEAU DEMANDE D'ACCÈS ── -->
+<div class="panel-bg" id="panel-access">
+  <div class="panel">
+    <h3>Demander un accès</h3>
+    <p style="color:#9E9E9E;font-size:.875rem;margin-bottom:16px;">L'équipe Simpact vous contacte sous 24h.</p>
+    <div class="panel-grid">
+      <div class="inp-wrap-simple"><label>Raison sociale</label><input type="text" placeholder="Votre entreprise"></div>
+      <div class="inp-wrap-simple"><label>Nom & Prénom</label><input type="text" placeholder="Votre nom"></div>
+      <div class="inp-wrap-simple"><label>Email</label><input type="email" placeholder="contact@cie.tn"></div>
+      <div class="inp-wrap-simple"><label>Téléphone</label><input type="text" placeholder="+216 XX XXX XXX"></div>
     </div>
-    <div class="modal-body">
-      <p class="mb-4">Remplissez ce formulaire et l'équipe Simpact vous contactera sous 24h.</p>
-      <div class="grid-2 gap-4">
-        <div class="form-group"><label class="form-label">Raison sociale</label><input type="text" class="form-control" placeholder="Votre entreprise"></div>
-        <div class="form-group"><label class="form-label">Secteur</label><select class="form-control"><option>Santé</option><option>Hôtellerie</option><option>Agence</option><option>Industrie</option><option>Éducation</option><option>Autre</option></select></div>
-        <div class="form-group"><label class="form-label">Nom & Prénom</label><input type="text" class="form-control" placeholder="Votre nom"></div>
-        <div class="form-group"><label class="form-label">Téléphone</label><input type="text" class="form-control" placeholder="+216 XX XXX XXX"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="contact@entreprise.tn"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('modal-access').classList.remove('active')">Annuler</button>
-      <button class="btn btn-gradient btn-sm" onclick="alert('Demande envoyée ! Simpact vous contactera sous 24h.');document.getElementById('modal-access').classList.remove('active')">Envoyer la demande</button>
+    <div class="panel-foot">
+      <button class="btn-sec" id="close-access">Annuler</button>
+      <button class="btn-pri" id="send-access">Envoyer la demande</button>
     </div>
   </div>
 </div>
 
-<script>window.SIMPACT_ROOT='../';</script>
-<script src="../assets/js/utils.js"></script>
-<script src="../assets/js/storage.js"></script>
-<script src="../assets/js/auth.js"></script>
-<script src="../assets/js/notifications.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-  await Storage.init();
-  Auth.init();
-  Notify.init();
-  // Si déjà connecté, rediriger
-  if (Auth.isLoggedIn()) { Auth.redirectAfterLogin(); return; }
+// ── Données de démo embarquées ──
+const DEMO_DATA_INLINE = {"clients": [{"id": "CLI001", "nom": "Clinique Hannibal", "contact": "Dr. Rami Gharbi", "email": "client@demo.tn", "tel": "+216 71 895 000", "adresse": "Rue du Lac Léman, Les Berges du Lac, Tunis", "secteur": "Santé", "segment": "gold", "ca_mensuel": 2800, "nb_commandes_mois": 12, "derniere_commande": "2026-03-14", "password": "demo123", "role": "CLIENT", "avatar": "CH", "actif": true}, {"id": "CLI002", "nom": "Memac Ogilvy Tunisie", "contact": "Mehdi Ben Salah", "email": "agence@demo.tn", "tel": "+216 71 965 000", "adresse": "Rue du Lac Windermere, Les Berges du Lac 2, Tunis", "secteur": "Agences", "segment": "platinum", "ca_mensuel": 6200, "nb_commandes_mois": 28, "derniere_commande": "2026-03-15", "password": "demo123", "role": "AGENCE", "avatar": "MO", "actif": true}, {"id": "CLI003", "nom": "The Residence Tunis", "contact": "Sofien Mzoughi", "email": "residence@demo.tn", "tel": "+216 71 910 101", "adresse": "Les Côtes de Carthage, Tunis", "secteur": "Hôtellerie", "segment": "silver", "ca_mensuel": 900, "nb_commandes_mois": 5, "derniere_commande": "2026-03-10", "password": "demo123", "role": "CLIENT", "avatar": "RT", "actif": true}, {"id": "CLI004", "nom": "ESPRIT School", "contact": "Sonia Belhadj", "email": "esprit@demo.tn", "tel": "+216 71 862 600", "adresse": "2 Rue Abou Rayhane Albirouni, Ariana", "secteur": "Éducation", "segment": "silver", "ca_mensuel": 780, "nb_commandes_mois": 6, "derniere_commande": "2026-03-08", "password": "demo123", "role": "CLIENT", "avatar": "ES", "actif": true}, {"id": "CLI005", "nom": "Délice Holding", "contact": "Karim Ghariani", "email": "delice@demo.tn", "tel": "+216 71 788 000", "adresse": "Boulevard du 7 Novembre, Tunis", "secteur": "Industrie", "segment": "gold", "ca_mensuel": 3100, "nb_commandes_mois": 15, "derniere_commande": "2026-03-15", "password": "demo123", "role": "CLIENT", "avatar": "DH", "actif": true}, {"id": "CLI006", "nom": "Studio Artline", "contact": "Yassine Cherif", "email": "artline@demo.tn", "tel": "+216 28 456 789", "adresse": "Rue Ibn Khaldoun, Tunis Médina", "secteur": "Indépendant", "segment": "bronze", "ca_mensuel": 280, "nb_commandes_mois": 4, "derniere_commande": "2026-03-12", "password": "demo123", "role": "CLIENT", "avatar": "SA", "actif": true}], "admins": [{"id": "ADM001", "nom": "Simpact Admin", "email": "admin@simpact.tn", "password": "admin", "role": "ADMIN", "avatar": "SA"}], "commandes": [{"id": "SC-2026-0047", "client_id": "CLI001", "produit": "Flyer A5 R/V", "config": {"format": "A5", "faces": "R/V", "papier": "Couché 135g", "quantite": 1000, "urgence": "standard"}, "montant_ht": 298.5, "tva": 56.7, "montant_ttc": 355.2, "statut": "production", "date": "2026-03-14", "delai": "2026-03-16", "fichier": "flyer_clinique_v2.pdf", "fichier_statut": "valide", "note": "Fond perdu 3mm inclus"}, {"id": "SC-2026-0046", "client_id": "CLI002", "produit": "Brochure A4 28p", "config": {"format": "A4", "pages": 28, "papier_int": "Couché 115g", "papier_couv": "Couché 350g", "quantite": 500, "urgence": "urgent_24h", "pelliculage": true}, "montant_ht": 1456.0, "tva": 276.6, "montant_ttc": 1732.6, "statut": "finishing", "date": "2026-03-15", "delai": "2026-03-16", "fichier": "brochure_ogilvy_2026.pdf", "fichier_statut": "valide", "note": "URGENT — Client prioritaire Platinum"}, {"id": "SC-2026-0045", "client_id": "CLI005", "produit": "Carte de visite", "config": {"format": "Carte", "faces": "R/V", "papier": "Couché 350g", "quantite": 500, "pelliculage": true}, "montant_ht": 59.0, "tva": 11.2, "montant_ttc": 70.2, "statut": "ready", "date": "2026-03-13", "delai": "2026-03-15", "fichier": "cv_delice_2026.pdf", "fichier_statut": "valide", "note": ""}, {"id": "SC-2026-0044", "client_id": "CLI003", "produit": "En-tête A4 Recto", "config": {"format": "A4", "faces": "Recto", "papier": "Offset 80g", "quantite": 2000, "urgence": "standard"}, "montant_ht": 156.0, "tva": 29.6, "montant_ttc": 185.6, "statut": "delivered", "date": "2026-03-10", "delai": "2026-03-12", "fichier": "entete_residence.pdf", "fichier_statut": "valide", "note": ""}, {"id": "SC-2026-0043", "client_id": "CLI004", "produit": "Dépliant A4 R/V", "config": {"format": "A4", "faces": "R/V", "papier": "Couché 170g", "quantite": 1000, "urgence": "standard", "pliage": "2 plis"}, "montant_ht": 410.0, "tva": 77.9, "montant_ttc": 487.9, "statut": "delivered", "date": "2026-03-08", "delai": "2026-03-10", "fichier": "depliant_esprit_rentree.pdf", "fichier_statut": "valide", "note": ""}, {"id": "SC-2026-0042", "client_id": "CLI001", "produit": "Affiche A3+ Recto", "config": {"format": "A3+", "faces": "Recto", "papier": "Couché 200g", "quantite": 50, "urgence": "standard"}, "montant_ht": 287.0, "tva": 54.5, "montant_ttc": 341.5, "statut": "delivered", "date": "2026-03-05", "delai": "2026-03-07", "fichier": "affiche_clinique_mars.pdf", "fichier_statut": "valide", "note": ""}, {"id": "SC-2026-0041", "client_id": "CLI006", "produit": "Flyer A5 Recto", "config": {"format": "A5", "faces": "Recto", "papier": "Couché 115g", "quantite": 200, "urgence": "standard"}, "montant_ht": 45.0, "tva": 8.6, "montant_ttc": 53.6, "statut": "waiting_file", "date": "2026-03-15", "delai": "2026-03-17", "fichier": null, "fichier_statut": "manquant", "note": "Client a dit qu'il envoie demain"}, {"id": "SC-2026-0040", "client_id": "CLI002", "produit": "Livre N&B A5 100p", "config": {"format": "A5", "pages": 100, "papier_int": "Offset 80g", "papier_couv": "Couché 300g", "quantite": 100, "urgence": "standard", "reliure": "dos_carre_colle"}, "montant_ht": 856.0, "tva": 162.6, "montant_ttc": 1018.6, "statut": "delivered", "date": "2026-03-01", "delai": "2026-03-04", "fichier": "rapport_annuel_ogilvy.pdf", "fichier_statut": "valide", "note": ""}, {"id": "SC-2026-0039", "client_id": "CLI005", "produit": "Flyer A4 R/V", "config": {"format": "A4", "faces": "R/V", "papier": "Couché 135g", "quantite": 5000, "urgence": "standard"}, "montant_ht": 1540.0, "tva": 292.6, "montant_ttc": 1832.6, "statut": "file_received", "date": "2026-03-15", "delai": "2026-03-18", "fichier": "promo_ramadan_delice.pdf", "fichier_statut": "verification", "note": ""}, {"id": "SC-2026-0038", "client_id": "CLI003", "produit": "Carte de visite", "config": {"format": "Carte", "faces": "R/V", "papier": "Couché 400g", "quantite": 200, "pelliculage": false}, "montant_ht": 36.0, "tva": 6.8, "montant_ttc": 42.8, "statut": "delivered", "date": "2026-02-28", "delai": "2026-03-02", "fichier": "cv_residence.pdf", "fichier_statut": "valide", "note": ""}], "devis": [{"id": "DEV-2026-0012", "client_id": "CLI001", "produit": "Brochure A5 16p", "config": {"format": "A5", "pages": 16, "papier_int": "Couché 115g", "papier_couv": "Couché 300g", "quantite": 300, "pelliculage": true}, "montant_ht": 756.0, "tva": 143.6, "montant_ttc": 899.6, "statut": "pending", "date": "2026-03-14", "expiry": "2026-04-13", "note": "Devis pour journées portes ouvertes"}, {"id": "DEV-2026-0011", "client_id": "CLI002", "produit": "Affiche A3 Recto x100", "config": {"format": "A3", "faces": "Recto", "papier": "Couché 250g", "quantite": 100, "urgence": "standard"}, "montant_ht": 490.0, "tva": 93.1, "montant_ttc": 583.1, "statut": "accepted", "date": "2026-03-12", "expiry": "2026-04-11", "commande_id": "SC-2026-0046", "note": "Converti en commande"}, {"id": "DEV-2026-0009", "client_id": "CLI004", "produit": "Livre N&B A4 50p", "config": {"format": "A4", "pages": 50, "papier_int": "Offset 80g", "papier_couv": "Couché 350g", "quantite": 50, "reliure": "spirale_plastique"}, "montant_ht": 390.0, "tva": 74.1, "montant_ttc": 464.1, "statut": "expired", "date": "2026-02-10", "expiry": "2026-03-11", "note": "Expiration dépassée — à relancer"}, {"id": "DEV-2026-0013", "client_id": "CLI005", "produit": "Dépliant 16x23 R/V", "config": {"format": "16x23", "faces": "R/V", "papier": "Couché 200g", "quantite": 2000, "pliage": "1 pli"}, "montant_ht": 987.0, "tva": 187.5, "montant_ttc": 1174.5, "statut": "pending", "date": "2026-03-15", "expiry": "2026-04-14", "note": "Campagne Ramadan 2026"}], "kpis": {"ca_aujourd_hui": 12450, "ca_mois_courant": 45200, "ca_mois_precedent": 41850, "variation_ca_pct": 8.0, "commandes_aujourd_hui": 47, "commandes_mois": 312, "pages_ytd": 1847000, "pages_objectif": 2000000, "panier_moyen": 264, "panier_moyen_variation": 3.0, "top_clients": ["CLI002", "CLI005", "CLI001", "CLI003", "CLI004"], "ca_mensuel_12m": [28400, 31200, 29800, 33500, 35100, 38200, 36800, 39500, 42100, 40300, 41850, 45200], "mois_labels": ["Avr'25", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc", "Jan'26", "Fév", "Mar"], "mix_produits": {"Flyer": 35, "Brochure": 22, "Carte de visite": 18, "Dépliant": 12, "En-tête": 8, "Autres": 5}, "ca_segments": {"Platinum": 38, "Gold": 32, "Silver": 20, "Standard": 10}}, "stocks": [{"ref": "PAP-COU135-A3P", "nom": "Couché 135g A3+", "type": "papier", "grammage": 135, "format": "A3+", "qty": 4200, "seuil": 1000, "statut": "ok", "unite": "feuilles"}, {"ref": "PAP-COU350-A3P", "nom": "Couché 350g A3+", "type": "papier", "grammage": 350, "format": "A3+", "qty": 380, "seuil": 500, "statut": "low", "unite": "feuilles"}, {"ref": "PAP-OFF80-A3", "nom": "Offset 80g A3", "type": "papier", "grammage": 80, "format": "A3", "qty": 8500, "seuil": 2000, "statut": "ok", "unite": "feuilles"}, {"ref": "PAP-COU250-A3P", "nom": "Couché 250g A3+", "type": "papier", "grammage": 250, "format": "A3+", "qty": 1200, "seuil": 500, "statut": "ok", "unite": "feuilles"}, {"ref": "PAP-COU115-A3P", "nom": "Couché 115g A3+", "type": "papier", "grammage": 115, "format": "A3+", "qty": 3600, "seuil": 1000, "statut": "ok", "unite": "feuilles"}, {"ref": "PAP-OFF100-A3", "nom": "Offset 100g A3", "type": "papier", "grammage": 100, "format": "A3", "qty": 120, "seuil": 500, "statut": "rupture", "unite": "feuilles"}, {"ref": "TON-V1000-K", "nom": "Toner Noir V1000", "type": "consommable", "qty_pct": 72, "statut": "ok", "dernier_remplacement": "2026-02-15"}, {"ref": "TON-V1000-C", "nom": "Toner Cyan V1000", "type": "consommable", "qty_pct": 41, "statut": "low", "dernier_remplacement": "2026-02-15"}, {"ref": "TON-V1000-M", "nom": "Toner Magenta V1000", "type": "consommable", "qty_pct": 68, "statut": "ok", "dernier_remplacement": "2026-02-15"}, {"ref": "TON-V1000-Y", "nom": "Toner Yellow V1000", "type": "consommable", "qty_pct": 55, "statut": "ok", "dernier_remplacement": "2026-02-15"}], "fichiers": [{"id": "FIC001", "client_id": "CLI001", "nom": "flyer_clinique_v2.pdf", "produit": "Flyer A5", "date": "2026-03-14", "taille": "2.4 MB", "statut": "valide", "commande_id": "SC-2026-0047"}, {"id": "FIC002", "client_id": "CLI002", "nom": "brochure_ogilvy_2026.pdf", "produit": "Brochure A4 28p", "date": "2026-03-15", "taille": "18.7 MB", "statut": "valide", "commande_id": "SC-2026-0046"}, {"id": "FIC003", "client_id": "CLI001", "nom": "logo_clinique_RGB.png", "produit": null, "date": "2026-03-10", "taille": "450 KB", "statut": "warning", "note": "Fichier RGB détecté — conversion CMJN nécessaire", "commande_id": null}, {"id": "FIC004", "client_id": "CLI005", "nom": "cv_delice_2026.pdf", "produit": "Carte de visite", "date": "2026-03-13", "taille": "1.1 MB", "statut": "valide", "commande_id": "SC-2026-0045"}, {"id": "FIC005", "client_id": "CLI002", "nom": "rapport_annuel_ogilvy.pdf", "produit": "Livre N&B A5", "date": "2026-03-01", "taille": "45.2 MB", "statut": "valide", "commande_id": "SC-2026-0040"}]};
 
-  // Enter key
-  document.getElementById('login-password').addEventListener('keypress', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-  document.getElementById('login-email').addEventListener('keypress', e => {
-    if (e.key === 'Enter') document.getElementById('login-password').focus();
-  });
-});
+const SK = 'simpact_session';
+const TTL = 8 * 3600 * 1000;
 
-function fillLogin(email, pw) {
-  document.getElementById('login-email').value = email;
-  document.getElementById('login-password').value = pw;
-  document.getElementById('btn-login').focus();
+// Détection robuste — fonctionne pour tout nom de dossier et GitHub Pages
+function detectRoot() {
+  const p = window.location.pathname;
+  if (p.includes('/pages/')) return p.slice(0, p.indexOf('/pages/')) + '/';
+  return p.replace(/\/[^\/]*$/, '/') || '/';
+}
+
+function urlTo(rel) {
+  return detectRoot() + rel;
+}
+
+function getSession() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SK) || 'null');
+    if (!s || Date.now() > s.expiry) { localStorage.removeItem(SK); return null; }
+    return s;
+  } catch { return null; }
+}
+
+function setSession(user) {
+  const s = {
+    id: user.id, email: user.email, nom: user.nom,
+    contact: user.contact || user.nom, role: user.role,
+    segment: user.segment || null,
+    avatar: user.avatar || (user.nom||'?').slice(0,2).toUpperCase(),
+    loginAt: Date.now(), expiry: Date.now() + TTL
+  };
+  localStorage.setItem(SK, JSON.stringify(s));
+  return s;
+}
+
+function findUser(email, password) {
+  const all = [...(DEMO_DATA_INLINE.clients||[]), ...(DEMO_DATA_INLINE.admins||[])];
+  return all.find(u => u.email === email && u.password === password) || null;
+}
+
+function redirectAfterLogin(role) {
+  const dest = role === 'ADMIN'
+    ? urlTo('pages/admin/dashboard.html')
+    : urlTo('pages/client/dashboard.html');
+  window.location.replace(dest);
+}
+
+function showError(msg) {
+  const box = document.getElementById('err-box');
+  document.getElementById('err-msg').textContent = msg;
+  box.classList.add('visible');
+}
+
+function hideError() {
+  document.getElementById('err-box').classList.remove('visible');
 }
 
 async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pw = document.getElementById('login-password').value;
-  const btn = document.getElementById('btn-login');
-  const errBox = document.getElementById('login-error');
+  const email = document.getElementById('email').value.trim();
+  const pwd   = document.getElementById('pwd').value;
+  const btn   = document.getElementById('btn-login');
 
-  if (!email || !pw) {
-    errBox.classList.remove('hidden');
-    document.getElementById('error-msg').textContent = 'Veuillez remplir tous les champs.';
+  hideError();
+
+  if (!email) { showError('Veuillez saisir votre adresse email.'); document.getElementById('email').focus(); return; }
+  if (!pwd)   { showError('Veuillez saisir votre mot de passe.'); document.getElementById('pwd').focus(); return; }
+
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  await new Promise(r => setTimeout(r, 600));
+
+  const user = findUser(email, pwd);
+  if (!user) {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    showError('Email ou mot de passe incorrect. Utilisez un compte de démonstration ci-dessus.');
     return;
   }
-  btn.classList.add('btn-loading');
-  btn.disabled = true;
-  errBox.classList.add('hidden');
 
+  // Initialiser Storage avec les données inline si pas encore fait
   try {
-    await new Promise(r => setTimeout(r, 700)); // Simuler latence réseau
-    await Auth.login(email, pw);
-    Auth.redirectAfterLogin();
-  } catch(e) {
-    btn.classList.remove('btn-loading');
-    btn.disabled = false;
-    errBox.classList.remove('hidden');
-    document.getElementById('error-msg').textContent = e.message;
-  }
+    if (!localStorage.getItem('simpact_data')) {
+      localStorage.setItem('simpact_data', JSON.stringify(DEMO_DATA_INLINE));
+    }
+  } catch(e) {}
+
+  setSession(user);
+  redirectAfterLogin(user.role);
 }
 
-function showForgotModal() { document.getElementById('modal-forgot').classList.add('active'); }
-function showAccessModal()  { document.getElementById('modal-access').classList.add('active'); }
+// ── Événements ──
+document.addEventListener('DOMContentLoaded', () => {
+  // Déjà connecté ?
+  const sess = getSession();
+  if (sess) { redirectAfterLogin(sess.role); return; }
+
+  // Comptes démo
+  document.getElementById('d1').addEventListener('click', () => { document.getElementById('email').value='client@demo.tn';  document.getElementById('pwd').value='demo123'; hideError(); });
+  document.getElementById('d2').addEventListener('click', () => { document.getElementById('email').value='agence@demo.tn';  document.getElementById('pwd').value='demo123'; hideError(); });
+  document.getElementById('d3').addEventListener('click', () => { document.getElementById('email').value='admin@simpact.tn'; document.getElementById('pwd').value='admin';   hideError(); });
+
+  // Login
+  document.getElementById('btn-login').addEventListener('click', doLogin);
+  document.getElementById('pwd').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('email').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('pwd').focus(); });
+
+  // Panneaux flottants (display:flex/none — pas de modal-overlay qui bloque)
+  document.getElementById('btn-forgot').addEventListener('click', () => document.getElementById('panel-forgot').classList.add('show'));
+  document.getElementById('btn-access').addEventListener('click', () => document.getElementById('panel-access').classList.add('show'));
+  document.getElementById('close-forgot').addEventListener('click', () => document.getElementById('panel-forgot').classList.remove('show'));
+  document.getElementById('close-access').addEventListener('click', () => document.getElementById('panel-access').classList.remove('show'));
+  document.getElementById('send-forgot').addEventListener('click', () => { alert('Fonctionnalité simulée — contactez Simpact directement.'); document.getElementById('panel-forgot').classList.remove('show'); });
+  document.getElementById('send-access').addEventListener('click', () => { alert('Demande envoyée ! Simpact vous contactera sous 24h.'); document.getElementById('panel-access').classList.remove('show'); });
+
+  // Fermer panneau sur clic fond
+  ['panel-forgot','panel-access'].forEach(id => {
+    document.getElementById(id).addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('show');
+    });
+  });
+});
 </script>
 </body>
 </html>

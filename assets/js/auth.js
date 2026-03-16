@@ -81,16 +81,15 @@ const Auth = {
     return root + path;
   },
 
-  // Fallback auto-détection de la racine
+  // Détection robuste — fonctionne pour TOUT nom de dossier et GitHub Pages
   _detectRoot() {
-    const href = window.location.href;
-    // Chercher le pattern */simpact-b2b/ dans l'URL
-    const match = href.match(/^(.*\/simpact-b2b\/)/i);
-    if (match) return match[1];
-    // Compter les niveaux de profondeur à partir de pages/
-    const depth = (href.match(/\/pages\//) ? href.split('/pages/')[1] : '').split('/').length - 1;
-    const up = '../'.repeat(depth + (href.includes('/pages/') ? 1 : 0));
-    return up || './';
+    const p = window.location.pathname;
+    // Si l'URL contient /pages/, tout ce qui est avant est la racine
+    if (p.includes('/pages/')) {
+      return p.slice(0, p.indexOf('/pages/')) + '/';
+    }
+    // Sinon enlever le nom de fichier
+    return p.replace(/\/[^\/]*$/, '/') || '/';
   },
 
   refresh() {
