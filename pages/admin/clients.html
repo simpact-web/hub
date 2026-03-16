@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Clients — Admin — Admin Simpact</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+<link rel="stylesheet" href="../../assets/css/charts.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Administration</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>SA</div>
+      <div>
+        <div class="user-name" data-user-name>Admin</div>
+        <div class="user-role" style="color:rgba(233,30,99,.8);font-size:.625rem;font-weight:700;">ADMINISTRATEUR</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Vue d'ensemble</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="reporting.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        <span>Reporting</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Production</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Commandes</span>
+      </a>
+      <a href="clients.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clients</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Gestion</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="stock.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Stock</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Portail client</div>
+      <a href="../client/dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Vue client</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Gestion clients</div></div>
+  <div class="header-actions ml-auto gap-3">
+    <input type="text" class="form-control" id="search-client" style="height:38px;width:220px;" placeholder="🔍 Rechercher…" oninput="filterClients()">
+    <button class="btn btn-gradient btn-sm" onclick="App.openModal('modal-new-client')">+ Nouveau client</button>
+  </div>
+</header>
+<main class="main-content">
+  <div class="grid-4 gap-4 mb-6" id="client-kpis"></div>
+  <div class="table-wrap"><table class="table table-clickable"><thead>
+    <tr><th>Client</th><th>Secteur</th><th>Segment</th><th>CA mensuel</th><th>Nb commandes</th><th>Dernière cmd</th><th>Statut</th><th>Actions</th></tr>
+  </thead><tbody id="clients-body"></tbody></table></div>
+</main>
+<!-- Panel client -->
+<div class="slide-panel-overlay" id="panel-client-overlay" onclick="App.closePanel('panel-client')"></div>
+<div class="slide-panel" id="panel-client">
+  <div class="slide-panel-header"><span class="modal-title" id="panel-client-title">Fiche client</span>
+    <button class="modal-close" onclick="App.closePanel('panel-client')">✕</button></div>
+  <div class="slide-panel-body" id="panel-client-body"></div>
+</div>
+<!-- Modal nouveau client -->
+<div class="modal-overlay" id="modal-new-client" onclick="if(event.target===this)App.closeModal('modal-new-client')">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title">Nouveau client</span>
+      <button class="modal-close" onclick="App.closeModal('modal-new-client')">✕</button></div>
+    <div class="modal-body">
+      <div class="grid-2 gap-4">
+        <div class="form-group"><label class="form-label">Raison sociale <span class="required">*</span></label><input type="text" class="form-control" id="nc-nom"></div>
+        <div class="form-group"><label class="form-label">Email <span class="required">*</span></label><input type="email" class="form-control" id="nc-email"></div>
+        <div class="form-group"><label class="form-label">Contact</label><input type="text" class="form-control" id="nc-contact"></div>
+        <div class="form-group"><label class="form-label">Téléphone</label><input type="text" class="form-control" id="nc-tel"></div>
+        <div class="form-group"><label class="form-label">Secteur</label><select class="form-control" id="nc-secteur"><option>Santé</option><option>Hôtellerie</option><option>Agences</option><option>Industrie</option><option>Éducation</option><option>Indépendant</option></select></div>
+        <div class="form-group"><label class="form-label">Segment</label><select class="form-control" id="nc-segment"><option value="standard">Standard</option><option value="bronze">Bronze</option><option value="silver">Silver</option><option value="gold">Gold</option><option value="platinum">Platinum</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">Mot de passe initial</label><input type="text" class="form-control" id="nc-pwd" value="simpact2026"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="App.closeModal('modal-new-client')">Annuler</button>
+      <button class="btn btn-gradient btn-sm" onclick="createClient()">Créer le compte</button>
+    </div>
+  </div>
+</div>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/charts.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+let allClients = [];
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('ADMIN')) return;
+  await Storage.init();
+  allClients = Storage.getClients();
+  renderKPIs();
+  renderTable(allClients);
+});
+
+function renderKPIs() {
+  const total = allClients.length;
+  const actifs = allClients.filter(c=>c.actif!==false).length;
+  const caTotal = allClients.reduce((s,c)=>s+(c.ca_mensuel||0),0);
+  const segments = {platinum:0,gold:0,silver:0};
+  allClients.forEach(c=>{ if(segments[c.segment]!==undefined) segments[c.segment]++; });
+  document.getElementById('client-kpis').innerHTML = `
+    <div class="kpi-card cyan"><div class="kpi-label">Total clients</div><div class="kpi-value">${total}</div></div>
+    <div class="kpi-card success"><div class="kpi-label">Clients actifs</div><div class="kpi-value">${actifs}</div></div>
+    <div class="kpi-card magenta"><div class="kpi-label">CA mensuel total</div><div class="kpi-value tnd">${Utils.tndShort(caTotal)}</div></div>
+    <div class="kpi-card warning"><div class="kpi-label">Gold + Platinum</div><div class="kpi-value">${segments.gold+segments.platinum}</div></div>`;
+}
+
+function filterClients() {
+  const q = document.getElementById('search-client').value.toLowerCase();
+  renderTable(allClients.filter(c=>c.nom.toLowerCase().includes(q)||c.email.toLowerCase().includes(q)||(c.secteur||'').toLowerCase().includes(q)));
+}
+
+function renderTable(clients) {
+  document.getElementById('clients-body').innerHTML = clients.map(c=>`
+    <tr onclick="openClientPanel('${c.id}')">
+      <td><div class="flex items-center gap-3">
+        <div class="user-avatar" style="width:36px;height:36px;font-size:.875rem;background:linear-gradient(135deg,var(--cyan-500),var(--magenta-500));color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;">${c.avatar||'?'}</div>
+        <div><div class="font-semibold">${c.nom}</div><div class="text-xs text-muted">${c.email}</div></div>
+      </div></td>
+      <td>${c.secteur||'—'}</td>
+      <td><span class="badge ${Utils.segmentClass(c.segment)}">${Utils.segmentLabel(c.segment)}</span></td>
+      <td class="tnd font-bold">${Utils.tnd(c.ca_mensuel,0)}</td>
+      <td>${c.nb_commandes_mois||0}</td>
+      <td class="text-muted">${Utils.dateFormat(c.derniere_commande)}</td>
+      <td><span class="badge ${c.actif!==false?'badge-success':'badge-danger'}">${c.actif!==false?'Actif':'Inactif'}</span></td>
+      <td onclick="event.stopPropagation()">
+        <button class="btn btn-secondary btn-sm" onclick="openClientPanel('${c.id}')">Voir</button>
+      </td>
+    </tr>`).join('');
+}
+
+function openClientPanel(id) {
+  const c = Storage.getClient(id);
+  if (!c) return;
+  const cmds = Storage.getCommandes(id);
+  const caTotal = cmds.reduce((s,x)=>s+(x.montant_ttc||0),0);
+  document.getElementById('panel-client-title').textContent = c.nom;
+  document.getElementById('panel-client-body').innerHTML = `
+    <div class="flex items-center gap-4 mb-6">
+      <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--cyan-500),var(--magenta-500));color:white;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:800;">${c.avatar||'?'}</div>
+      <div class="flex-1">
+        <h3>${c.nom}</h3>
+        <div class="text-muted text-sm">${c.secteur||''}</div>
+        <span class="badge ${Utils.segmentClass(c.segment)} mt-1">${Utils.segmentLabel(c.segment)}</span>
+      </div>
+    </div>
+    <div class="grid-2 gap-4 mb-4">
+      <div class="kpi-card cyan p-3"><div class="kpi-label text-xs">CA total commandé</div><div class="kpi-value tnd" style="font-size:1.25rem;">${Utils.tnd(caTotal,0)}</div></div>
+      <div class="kpi-card success p-3"><div class="kpi-label text-xs">Nb commandes</div><div class="kpi-value" style="font-size:1.25rem;">${cmds.length}</div></div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h4>Coordonnées</h4></div>
+      <div class="card-body">
+        <div class="flex justify-between py-2 border-bottom"><span class="text-muted">Email</span><span>${c.email}</span></div>
+        <div class="flex justify-between py-2 border-bottom"><span class="text-muted">Tél</span><span>${c.tel||'—'}</span></div>
+        <div class="flex justify-between py-2 border-bottom"><span class="text-muted">Contact</span><span>${c.contact||'—'}</span></div>
+        <div class="flex justify-between py-2"><span class="text-muted">Adresse</span><span class="text-right" style="max-width:200px">${c.adresse||'—'}</span></div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h4>Dernières commandes</h4></div>
+      <div class="card-body p-0">
+        ${cmds.slice(0,5).map(cmd=>`<div class="flex justify-between items-center p-3 border-bottom">
+          <div><div class="font-mono text-xs font-semibold">${cmd.id}</div><div class="text-xs text-muted">${cmd.produit||'—'}</div></div>
+          <div class="text-right"><div class="tnd font-semibold">${Utils.tnd(cmd.montant_ttc,0)}</div>
+          <span class="status-badge ${Utils.statusClass(cmd.statut)} badge-sm">${Utils.statusLabel(cmd.statut)}</span></div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <button class="btn btn-gradient" onclick="Notify.success('Message envoyé','(Simulé)')">✉ Envoyer un message</button>
+      <button class="btn btn-secondary btn-sm" onclick="changeSegment('${c.id}')">Changer le segment</button>
+    </div>`;
+  App.openPanel('panel-client');
+}
+
+function changeSegment(id) {
+  const segs = ['standard','bronze','silver','gold','platinum'];
+  const current = Storage.getClient(id)?.segment || 'standard';
+  const next = segs[(segs.indexOf(current)+1)%segs.length];
+  Storage.updateClient(id, {segment:next});
+  Notify.success('Segment mis à jour', Utils.segmentLabel(next));
+  allClients = Storage.getClients();
+  renderTable(allClients);
+  openClientPanel(id);
+}
+
+function createClient() {
+  const nom = document.getElementById('nc-nom').value;
+  const email = document.getElementById('nc-email').value;
+  if (!nom || !email) { Notify.error('Erreur','Nom et email obligatoires'); return; }
+  const id = 'CLI' + Date.now();
+  Storage.addClient({
+    id, nom, email,
+    contact: document.getElementById('nc-contact').value,
+    tel: document.getElementById('nc-tel').value,
+    secteur: document.getElementById('nc-secteur').value,
+    segment: document.getElementById('nc-segment').value,
+    password: document.getElementById('nc-pwd').value || 'simpact2026',
+    role: 'CLIENT', actif: true, avatar: Utils.initials(nom),
+    ca_mensuel: 0, nb_commandes_mois: 0, derniere_commande: null
+  });
+  allClients = Storage.getClients();
+  renderTable(allClients);
+  App.closeModal('modal-new-client');
+  Notify.success('Client créé !', nom + ' — ' + email);
+}
+</script>
+</body></html>

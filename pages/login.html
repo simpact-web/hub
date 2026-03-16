@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/layout.css">
+<style>
+.login-page{min-height:100vh;display:flex;background:var(--primary-900);}
+.login-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;position:relative;overflow:hidden;}
+.login-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%, rgba(0,184,212,.15) 0%, transparent 60%),radial-gradient(ellipse at 80% 50%, rgba(233,30,99,.1) 0%, transparent 60%);}
+.login-right{width:480px;background:white;display:flex;flex-direction:column;justify-content:center;padding:60px 56px;}
+.login-brand{text-align:center;margin-bottom:40px;position:relative;z-index:1;}
+.login-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#00B8D4,#E91E63);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:2rem;color:white;margin:0 auto 20px;box-shadow:0 8px 32px rgba(0,184,212,.4);}
+.login-brand-name{font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:white;letter-spacing:.02em;}
+.login-brand-tag{color:rgba(255,255,255,.4);font-size:.875rem;margin-top:6px;}
+.feature-list{margin-top:48px;position:relative;z-index:1;}
+.feature-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px;}
+.feature-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,184,212,.15);border:1px solid rgba(0,184,212,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.feature-text .title{font-family:'Outfit',sans-serif;font-weight:600;color:white;font-size:.9375rem;}
+.feature-text .desc{color:rgba(255,255,255,.4);font-size:.8125rem;margin-top:2px;}
+.login-title{font-family:'Outfit',sans-serif;font-size:1.875rem;font-weight:800;color:var(--gray-900);margin-bottom:6px;}
+.login-subtitle{color:var(--gray-500);font-size:.9375rem;margin-bottom:36px;}
+.demo-accounts{background:var(--gray-50);border-radius:12px;padding:16px;margin-bottom:28px;border:1px solid var(--gray-200);}
+.demo-title{font-size:.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);margin-bottom:10px;}
+.demo-account{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;cursor:pointer;transition:var(--transition-fast);border:1px solid transparent;}
+.demo-account:hover{background:var(--cyan-50);border-color:var(--cyan-200);}
+.demo-account .name{font-weight:600;font-size:.8125rem;color:var(--gray-800);}
+.demo-account .creds{font-family:'Space Mono',monospace;font-size:.6875rem;color:var(--gray-500);}
+.demo-account .role-pill{font-size:.625rem;font-weight:700;padding:2px 8px;border-radius:6px;}
+.role-client{background:var(--cyan-100);color:var(--cyan-700,#0097A7);}
+.role-agence{background:var(--info-bg);color:var(--info-dark);}
+.role-admin{background:var(--magenta-100);color:var(--magenta-600);}
+@media(max-width:900px){.login-left{display:none;}.login-right{width:100%;max-width:480px;margin:0 auto;box-shadow:none;}}
+</style>
+</head>
+<body>
+<div class="login-page">
+  <!-- GAUCHE — Présentation -->
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="login-logo">S</div>
+      <div class="login-brand-name">SIMPACT</div>
+      <div class="login-brand-tag">Portail B2B · Impression numérique</div>
+    </div>
+    <div class="feature-list" style="max-width:380px;width:100%;">
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-text">
+          <div class="title">Devis instantané</div>
+          <div class="desc">Calculez vos prix en temps réel avec notre moteur UA4</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📦</div>
+        <div class="feature-text">
+          <div class="title">Suivi de production</div>
+          <div class="desc">Suivez vos commandes étape par étape sur Canon V1000</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📄</div>
+        <div class="feature-text">
+          <div class="title">Bons de commande PDF</div>
+          <div class="desc">Générez et téléchargez vos documents commerciaux</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-text">
+          <div class="title">Historique & Analytics</div>
+          <div class="desc">Tableau de bord complet de vos volumes et dépenses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DROITE — Formulaire -->
+  <div class="login-right">
+    <div>
+      <h1 class="login-title">Bon retour 👋</h1>
+      <p class="login-subtitle">Connectez-vous à votre espace client Simpact</p>
+
+      <!-- Comptes de démo -->
+      <div class="demo-accounts">
+        <div class="demo-title">🎭 Comptes de démonstration — cliquez pour remplir</div>
+        <div class="demo-account" onclick="fillLogin('client@demo.tn','demo123')">
+          <div><div class="name">Clinique Hannibal</div><div class="creds">client@demo.tn / demo123</div></div>
+          <span class="role-pill role-client">Client</span>
+        </div>
+        <div class="demo-account" onclick="fillLogin('agence@demo.tn','demo123')">
+          <div><div class="name">Memac Ogilvy</div><div class="creds">agence@demo.tn / demo123</div></div>
+          <span class="role-pill role-agence">Agence</span>
+        </div>
+        <div class="demo-account" onclick="fillLogin('admin@simpact.tn','admin')">
+          <div><div class="name">Simpact Admin</div><div class="creds">admin@simpact.tn / admin</div></div>
+          <span class="role-pill role-admin">Admin</span>
+        </div>
+      </div>
+
+      <div class="divider-text" style="margin-bottom:24px;">OU CONNECTEZ-VOUS</div>
+
+      <!-- Formulaire -->
+      <div id="login-error" class="alert alert-danger mb-4 hidden">
+        <span class="alert-icon">⚠</span>
+        <div><div class="alert-title">Erreur de connexion</div><div id="error-msg"></div></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Adresse email <span class="required">*</span></label>
+        <div class="input-group">
+          <span class="input-icon">✉</span>
+          <input type="email" id="login-email" class="form-control" placeholder="votre@email.com" autocomplete="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mot de passe <span class="required">*</span></label>
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" autocomplete="current-password">
+        </div>
+      </div>
+      <div class="flex justify-between items-center mb-6">
+        <label class="form-check">
+          <input type="checkbox" id="remember-me">
+          <span class="form-check-label">Se souvenir de moi</span>
+        </label>
+        <a href="#" onclick="showForgotModal()" style="font-size:.8125rem;">Mot de passe oublié ?</a>
+      </div>
+      <button class="btn btn-gradient w-full btn-lg" id="btn-login" onclick="doLogin()">
+        <span class="btn-text">Se connecter</span>
+      </button>
+      <div style="text-align:center;margin-top:20px;">
+        <span style="font-size:.8125rem;color:var(--gray-500);">Pas encore de compte ?</span>
+        <a href="#" onclick="showAccessModal()" style="font-size:.8125rem;font-weight:600;margin-left:6px;">Demander un accès</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal mot de passe oublié -->
+<div class="modal-overlay" id="modal-forgot" onclick="if(event.target===this)this.classList.remove('active')">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <span class="modal-title">Mot de passe oublié</span>
+      <button class="modal-close" onclick="document.getElementById('modal-forgot').classList.remove('active')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="mb-4">Entrez votre email pour recevoir un lien de réinitialisation.</p>
+      <div class="form-group"><input type="email" class="form-control" placeholder="votre@email.com"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('modal-forgot').classList.remove('active')">Annuler</button>
+      <button class="btn btn-primary btn-sm" onclick="alert('Fonctionnalité simulée — contacter Simpact directement.');document.getElementById('modal-forgot').classList.remove('active')">Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal demande d'accès -->
+<div class="modal-overlay" id="modal-access" onclick="if(event.target===this)this.classList.remove('active')">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Demander un accès</span>
+      <button class="modal-close" onclick="document.getElementById('modal-access').classList.remove('active')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="mb-4">Remplissez ce formulaire et l'équipe Simpact vous contactera sous 24h.</p>
+      <div class="grid-2 gap-4">
+        <div class="form-group"><label class="form-label">Raison sociale</label><input type="text" class="form-control" placeholder="Votre entreprise"></div>
+        <div class="form-group"><label class="form-label">Secteur</label><select class="form-control"><option>Santé</option><option>Hôtellerie</option><option>Agence</option><option>Industrie</option><option>Éducation</option><option>Autre</option></select></div>
+        <div class="form-group"><label class="form-label">Nom & Prénom</label><input type="text" class="form-control" placeholder="Votre nom"></div>
+        <div class="form-group"><label class="form-label">Téléphone</label><input type="text" class="form-control" placeholder="+216 XX XXX XXX"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="contact@entreprise.tn"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('modal-access').classList.remove('active')">Annuler</button>
+      <button class="btn btn-gradient btn-sm" onclick="alert('Demande envoyée ! Simpact vous contactera sous 24h.');document.getElementById('modal-access').classList.remove('active')">Envoyer la demande</button>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/storage.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/notifications.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  await Storage.init();
+  Auth.init();
+  // Si déjà connecté, rediriger
+  if (Auth.isLoggedIn()) Auth.redirectAfterLogin();
+
+  // Enter key
+  document.getElementById('login-password').addEventListener('keypress', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+  document.getElementById('login-email').addEventListener('keypress', e => {
+    if (e.key === 'Enter') document.getElementById('login-password').focus();
+  });
+});
+
+function fillLogin(email, pw) {
+  document.getElementById('login-email').value = email;
+  document.getElementById('login-password').value = pw;
+  document.getElementById('btn-login').focus();
+}
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pw = document.getElementById('login-password').value;
+  const btn = document.getElementById('btn-login');
+  const errBox = document.getElementById('login-error');
+
+  if (!email || !pw) {
+    errBox.classList.remove('hidden');
+    document.getElementById('error-msg').textContent = 'Veuillez remplir tous les champs.';
+    return;
+  }
+  btn.classList.add('btn-loading');
+  btn.disabled = true;
+  errBox.classList.add('hidden');
+
+  try {
+    await new Promise(r => setTimeout(r, 700)); // Simuler latence réseau
+    await Auth.login(email, pw);
+    Auth.redirectAfterLogin();
+  } catch(e) {
+    btn.classList.remove('btn-loading');
+    btn.disabled = false;
+    errBox.classList.remove('hidden');
+    document.getElementById('error-msg').textContent = e.message;
+  }
+}
+
+function showForgotModal() { document.getElementById('modal-forgot').classList.add('active'); }
+function showAccessModal()  { document.getElementById('modal-access').classList.add('active'); }
+</script>
+</body>
+</html>

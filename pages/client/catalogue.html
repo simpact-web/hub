@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Catalogue — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Vos projets, notre expertise</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>?</div>
+      <div>
+        <div class="user-name" data-user-name>Chargement…</div>
+        <div class="user-role" data-user-role></div>
+        <span class="user-segment" data-user-segment></span>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Menu principal</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a href="configurateur.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        <span>Nouveau devis</span>
+      </a>
+      <a href="panier.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Panier</span>
+        <span class="nav-badge hidden" data-cart-badge>0</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Suivi</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Mes commandes</span>
+      </a>
+      <a href="devis.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        <span>Mes devis</span>
+      </a>
+      <a href="fichiers.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Mes fichiers</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Ressources</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="profil.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mon profil</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Catalogue des produits</div></div>
+</header>
+<main class="main-content">
+  <div class="grid-3 gap-6 mb-8" id="catalogue-grid"></div>
+  <!-- Tarifs interactifs -->
+  <div class="card mb-6">
+    <div class="card-header">
+      <h4>📊 Grilles tarifaires</h4>
+      <select class="form-control" id="tarif-select" style="width:auto;height:36px;" onchange="showTarif(this.value)">
+        <option value="recto">Flyer Recto</option>
+        <option value="rv">Flyer R/V</option>
+        <option value="depliant">Dépliant</option>
+        <option value="entete">En-tête</option>
+        <option value="cv_sans">Carte de visite (sans pelliculage)</option>
+        <option value="cv_avec">Carte de visite (avec pelliculage)</option>
+      </select>
+    </div>
+    <div class="card-body" id="tarif-table"></div>
+  </div>
+  <!-- FAQ -->
+  <div class="card">
+    <div class="card-header"><h4>❓ Guides techniques</h4></div>
+    <div class="card-body p-0">
+      <div class="accordion" id="faq">
+        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📐 Spécifications fichiers <span class="accordion-chevron ml-auto">▾</span></div><div class="accordion-body"><div class="accordion-content"><ul style="padding-left:1.2rem;line-height:2"><li>Format PDF vectoriel (recommandé) ou TIFF haute résolution</li><li>Mode colorimétrique CMJN (pas RVB)</li><li>Résolution minimum 300 dpi</li><li>Fond perdu 3mm sur tous les bords</li><li>Textes convertis en tracés ou polices embarquées</li><li>Noirs profonds (texte) : K=100% uniquement</li></ul></div></div></div>
+        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">📏 Formats d'impression <span class="accordion-chevron ml-auto">▾</span></div><div class="accordion-body"><div class="accordion-content"><div class="table-wrap"><table class="table"><thead><tr><th>Format</th><th>Dimensions finies</th><th>Avec fond perdu</th><th>Ratio UA4</th></tr></thead><tbody><tr><td>Carte de visite</td><td>85 × 55 mm</td><td>91 × 61 mm</td><td>0.075</td></tr><tr><td>A5</td><td>148 × 210 mm</td><td>154 × 216 mm</td><td>0.498</td></tr><tr><td>16×23</td><td>160 × 230 mm</td><td>166 × 236 mm</td><td>0.590</td></tr><tr><td>A4</td><td>210 × 297 mm</td><td>216 × 303 mm</td><td>1.000</td></tr><tr><td>A3</td><td>297 × 420 mm</td><td>303 × 426 mm</td><td>2.000</td></tr><tr><td>A3+</td><td>330 × 480 mm</td><td>336 × 486 mm</td><td>2.540</td></tr></tbody></table></div></div></div></div>
+        <div class="accordion-item"><div class="accordion-header" onclick="toggleAccordion(this)">⏱ Délais de production <span class="accordion-chevron ml-auto">▾</span></div><div class="accordion-body"><div class="accordion-content"><ul style="padding-left:1.2rem;line-height:2"><li><strong>Standard 48h :</strong> Délai normal — sans surcharge</li><li><strong>Urgent 24h :</strong> Traitement prioritaire — +30% sur le total HT</li><li><strong>Express 4h :</strong> Production immédiate — +60% sur le total HT</li><li>Délais en jours ouvrables (lundi-vendredi)</li></ul></div></div></div>
+      </div>
+    </div>
+  </div>
+</main></div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+const PRODUCTS_CATALOG = [
+  {id:'flyer',icon:'📄',title:'Flyer',desc:'Recto ou Recto/Verso',formats:'A5 · 16×23 · A4',price_from:28,papiers:'Couché 115g à 200g',machine:'Canon V1000'},
+  {id:'carte_visite',icon:'💳',title:'Carte de visite',desc:'8,5×5,5 cm — 10 cartes/face A4',formats:'Standard',price_from:20,papiers:'Couché 250g à 400g',machine:'Canon V1000'},
+  {id:'depliant',icon:'📰',title:'Dépliant',desc:'R/V avec pliage',formats:'A4 · 16×23 · A3',price_from:29,papiers:'Couché 115g à 250g',machine:'Canon V1000'},
+  {id:'brochure',icon:'📖',title:'Brochure couleur',desc:'Intérieur + couverture',formats:'A4 · A5 · 16×23',price_from:50,papiers:'Couché 90g-350g',machine:'Canon V1000'},
+  {id:'livre_nb',icon:'📚',title:'Livre N&B',desc:'Intérieur N&B + couverture couleur',formats:'A4 · A5 · 16×23',price_from:30,papiers:'Offset 80g-100g',machine:'Konica Minolta'},
+  {id:'entete',icon:'📝',title:'En-tête',desc:'Papier à en-tête recto',formats:'A4 · 16×23',price_from:28,papiers:'Offset 80g à Couché 100g',machine:'Canon V1000'},
+  {id:'affiche',icon:'🖼',title:'Affiche',desc:'Grand format recto',formats:'A3 · A3+',price_from:36,papiers:'Couché 135g à 250g',machine:'Canon V1000'},
+];
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('CLIENT')) return;
+  document.getElementById('catalogue-grid').innerHTML = PRODUCTS_CATALOG.map(p=>`
+    <div class="card card-hover" style="cursor:default;">
+      <div class="card-body" style="text-align:center;padding:24px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">${p.icon}</div>
+        <h4 style="margin-bottom:6px;">${p.title}</h4>
+        <div class="text-sm text-muted mb-3">${p.desc}</div>
+        <div class="flex flex-wrap gap-1 justify-center mb-3">
+          ${p.formats.split(' · ').map(f=>`<span class="badge badge-cyan badge-sm">${f}</span>`).join('')}
+        </div>
+        <div class="text-xs text-muted mb-2">Papier : ${p.papiers}</div>
+        <div class="text-xs text-muted mb-4">Machine : ${p.machine}</div>
+        <div class="text-sm font-semibold mb-3" style="color:var(--gray-700);">À partir de <span class="tnd" style="font-size:1rem;color:var(--cyan-600);">${p.price_from} TND</span></div>
+        <button class="btn btn-gradient w-full btn-sm" onclick="window.location.href='configurateur.html?produit=${p.id}'">Configurer →</button>
+      </div>
+    </div>`).join('');
+  showTarif('recto');
+});
+
+function showTarif(key) {
+  const tables = {
+    recto:  {title:'Flyer Recto — Prix lot (TND)', data:[[24,36],[49,66],[99,100],[249,230],[498,350],[747,490],[996,610],[1494,890],[1992,1150],[2988,1700]]},
+    rv:     {title:'Flyer R/V — Prix lot (TND)',    data:[[24,40],[49,76],[99,125],[249,280],[498,450],[747,640],[996,840],[1494,1180],[1992,1540],[2988,2200]]},
+    depliant:{title:'Dépliant R/V — Prix lot (TND)',data:[[50,29],[100,47],[200,84],[400,175],[1000,410],[2000,760],[3000,1050],[4000,1350],[5000,1620],[10000,3050],[20000,5800]]},
+    entete: {title:'En-tête Recto — Prix lot (TND)',data:[[10,28.5],[25,36],[50,59],[100,90],[200,156],[500,340],[1000,519],[2000,999],[5000,2490],[10000,4990]]},
+    cv_sans:{title:'Carte de visite sans pelliculage (TND)', data:[[100,20],[200,36],[500,50],[1000,79],[1500,109],[2000,122],[2500,149],[5000,249],[10000,479]]},
+    cv_avec:{title:'Carte de visite avec pelliculage (TND)', data:[[100,28],[200,44],[500,59],[1000,89],[1500,119],[2000,136],[2500,171],[5000,299],[10000,560]]},
+  };
+  const t = tables[key];
+  document.getElementById('tarif-table').innerHTML = `
+    <div class="text-sm font-semibold text-muted mb-3">${t.title}</div>
+    <div class="table-wrap">
+    <table class="table"><thead><tr>
+      <th>${key.includes('cv')?'Quantité':'UA4 max'}</th>
+      <th>Prix TND HT (lot)</th>
+      <th>Prix TTC</th>
+      <th>Prix unitaire HT</th>
+    </tr></thead><tbody>
+    ${t.data.map(([q,p])=>`<tr>
+      <td class="font-mono font-semibold">${q}</td>
+      <td class="tnd font-bold">${Utils.tnd(p)}</td>
+      <td class="tnd text-muted">${Utils.tnd(p*1.19)}</td>
+      <td class="tnd text-muted">${Utils.tnd(p/q,4)}</td>
+    </tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.accordion-body.open').forEach(b=>{b.classList.remove('open');b.previousElementSibling.classList.remove('active');});
+  if (!isOpen) { body.classList.add('open'); header.classList.add('active'); }
+}
+</script>
+</body></html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Commandes — Admin — Admin Simpact</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+<link rel="stylesheet" href="../../assets/css/charts.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Administration</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>SA</div>
+      <div>
+        <div class="user-name" data-user-name>Admin</div>
+        <div class="user-role" style="color:rgba(233,30,99,.8);font-size:.625rem;font-weight:700;">ADMINISTRATEUR</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Vue d'ensemble</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="reporting.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        <span>Reporting</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Production</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Commandes</span>
+      </a>
+      <a href="clients.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clients</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Gestion</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="stock.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Stock</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Portail client</div>
+      <a href="../client/dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Vue client</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Gestion des commandes</div></div>
+  <div class="header-actions ml-auto gap-3">
+    <button class="btn btn-secondary btn-sm" id="btn-table" onclick="setView('table')">☰ Tableau</button>
+    <button class="btn btn-secondary btn-sm" id="btn-kanban" onclick="setView('kanban')">⊞ Kanban</button>
+    <select class="form-control" id="filter-client" style="width:auto;height:38px;" onchange="renderView()">
+      <option value="">Tous les clients</option>
+    </select>
+  </div>
+</header>
+<main class="main-content">
+  <div id="view-container"></div>
+</main>
+<!-- Panel détail commande admin -->
+<div class="slide-panel-overlay" id="panel-cmd-overlay" onclick="App.closePanel('panel-cmd')"></div>
+<div class="slide-panel" id="panel-cmd">
+  <div class="slide-panel-header">
+    <span class="modal-title" id="panel-cmd-title">Commande</span>
+    <button class="modal-close" onclick="App.closePanel('panel-cmd')">✕</button>
+  </div>
+  <div class="slide-panel-body" id="panel-cmd-body"></div>
+</div>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/charts.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+let currentView = 'table';
+const STATUTS = ['waiting_file','file_received','production','finishing','ready','delivered','cancelled'];
+const STATUS_LABELS = {'waiting_file':'Att. fichier','file_received':'Fichier reçu','production':'Production','finishing':'Finition','ready':'Prêt','delivered':'Livré','cancelled':'Annulé'};
+const STATUS_COLORS = {'waiting_file':'#FF9800','file_received':'#2196F3','production':'#9C27B0','finishing':'#FF5722','ready':'#4CAF50','delivered':'#00BCD4','cancelled':'#F44336'};
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('ADMIN')) return;
+  await Storage.init();
+  // Peupler filtre clients
+  const sel = document.getElementById('filter-client');
+  Storage.getClients().forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.nom; sel.appendChild(o); });
+  renderView();
+});
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('btn-table').className = v==='table'?'btn btn-primary btn-sm':'btn btn-secondary btn-sm';
+  document.getElementById('btn-kanban').className = v==='kanban'?'btn btn-primary btn-sm':'btn btn-secondary btn-sm';
+  renderView();
+}
+
+function renderView() {
+  let cmds = Storage.getCommandes();
+  const filterCli = document.getElementById('filter-client').value;
+  if (filterCli) cmds = cmds.filter(c=>c.client_id===filterCli);
+  if (currentView === 'table') renderTable(cmds);
+  else renderKanban(cmds);
+}
+
+function renderTable(cmds) {
+  document.getElementById('view-container').innerHTML = '<div class="table-wrap"><table class="table table-clickable"><thead><tr><th>N° Commande</th><th>Client</th><th>Produit</th><th>Date</th><th>Délai</th><th>Montant TTC</th><th>Statut</th><th>Actions</th></tr></thead><tbody>' +
+  cmds.map(c=>{
+    const cl=Storage.getClient(c.client_id);
+    const isUrgent=c.config?.urgence&&c.config.urgence!=='standard';
+    return`<tr onclick="openCmdPanel('${c.id}')" style="${isUrgent?'background:rgba(255,152,0,.05)':''}">
+      <td class="font-mono font-semibold text-sm">${isUrgent?'⚡ ':''}<span>${c.id}</span></td>
+      <td><div class="font-semibold">${cl?.nom||c.client_id}</div><span class="badge ${Utils.segmentClass(cl?.segment)} badge-sm">${Utils.segmentLabel(cl?.segment||'standard')}</span></td>
+      <td class="text-sm">${c.produit||'—'}</td>
+      <td class="text-muted text-sm">${Utils.dateFormat(c.date)}</td>
+      <td class="text-sm">${Utils.dateFormat(c.delai)}</td>
+      <td class="tnd font-bold">${Utils.tnd(c.montant_ttc,0)}</td>
+      <td><span class="status-badge ${Utils.statusClass(c.statut)}">${Utils.statusLabel(c.statut)}</span></td>
+      <td onclick="event.stopPropagation()">
+        <select class="form-control" style="height:32px;font-size:.75rem;padding:4px 8px;" onchange="updateStatus('${c.id}',this.value)">
+          ${STATUTS.map(s=>`<option value="${s}"${c.statut===s?' selected':''}>${STATUS_LABELS[s]}</option>`).join('')}
+        </select>
+      </td>
+    </tr>`;
+  }).join('') + '</tbody></table></div>';
+}
+
+function renderKanban(cmds) {
+  const cols = STATUTS.filter(s=>s!=='cancelled').map(s=>{
+    const colCmds = cmds.filter(c=>c.statut===s);
+    return`<div class="kanban-col">
+      <div class="kanban-col-header" style="color:${STATUS_COLORS[s]}">
+        ${Utils.statusLabel(s)} <span class="badge badge-dark badge-sm">${colCmds.length}</span>
+      </div>
+      <div class="kanban-cards">
+        ${colCmds.map(c=>{
+          const cl=Storage.getClient(c.client_id);
+          return`<div class="kanban-card" onclick="openCmdPanel('${c.id}')">
+            <div class="font-mono text-xs text-muted mb-1">${c.id}</div>
+            <div class="font-semibold text-sm mb-1">${cl?.nom||'?'}</div>
+            <div class="text-xs text-muted mb-2">${c.produit||'—'}</div>
+            <div class="flex justify-between items-center">
+              <span class="tnd text-sm font-bold" style="color:var(--cyan-600)">${Utils.tnd(c.montant_ttc,0)}</span>
+              <select style="height:26px;font-size:.6875rem;border:1px solid var(--gray-200);border-radius:5px;padding:2px 4px;" onchange="event.stopPropagation();updateStatus('${c.id}',this.value)">
+                ${STATUTS.map(s=>`<option value="${s}"${c.statut===s?' selected':''}>${STATUS_LABELS[s]}</option>`).join('')}
+              </select>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('view-container').innerHTML = `<div class="kanban-board">${cols}</div>`;
+}
+
+function updateStatus(id, newStatus) {
+  Storage.updateCommande(id, {statut:newStatus});
+  Notify.success('Statut mis à jour', Utils.statusLabel(newStatus));
+  renderView();
+}
+
+function openCmdPanel(id) {
+  const c = Storage.getCommande(id);
+  if (!c) return;
+  const cl = Storage.getClient(c.client_id);
+  const cfg = c.config||{};
+  document.getElementById('panel-cmd-title').textContent = c.id;
+  document.getElementById('panel-cmd-body').innerHTML = `
+    <div class="mb-4 flex gap-2 flex-wrap">
+      <span class="status-badge ${Utils.statusClass(c.statut)}">${Utils.statusLabel(c.statut)}</span>
+      ${c.config?.urgence&&c.config.urgence!=='standard'?'<span class="badge badge-warning">⚡ URGENT</span>':''}
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h4>Client</h4></div>
+      <div class="card-body">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="user-avatar">${cl?.avatar||'?'}</div>
+          <div><div class="font-semibold">${cl?.nom||'?'}</div><div class="text-sm text-muted">${cl?.email||''}</div></div>
+          <span class="badge ${Utils.segmentClass(cl?.segment||'standard')} ml-auto">${Utils.segmentLabel(cl?.segment||'standard')}</span>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h4>Produit</h4></div>
+      <div class="card-body">
+        <div class="font-semibold mb-2">${c.produit||'—'}</div>
+        ${Object.entries(cfg).map(([k,v])=>`<div class="flex justify-between py-1 border-bottom text-sm"><span class="text-muted">${k}</span><span>${v}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><h4>Changer le statut</h4></div>
+      <div class="card-body">
+        <div class="flex flex-wrap gap-2">
+          ${STATUTS.map(s=>`<button class="btn btn-sm ${c.statut===s?'btn-primary':'btn-secondary'}" onclick="updateStatus('${c.id}','${s}');App.closePanel('panel-cmd')">${Utils.statusLabel(s)}</button>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <button class="btn btn-primary" onclick="PDF.genererBonCommande('${c.id}')">📄 Bon de commande PDF</button>
+      <button class="btn btn-secondary btn-sm" onclick="Notify.info('Notification envoyée','Le client a été informé par email (simulé)')">📧 Notifier le client</button>
+    </div>`;
+  App.openPanel('panel-cmd');
+}
+</script>
+</body></html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard Admin — Admin Simpact</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+<link rel="stylesheet" href="../../assets/css/charts.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Administration</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>SA</div>
+      <div>
+        <div class="user-name" data-user-name>Admin</div>
+        <div class="user-role" style="color:rgba(233,30,99,.8);font-size:.625rem;font-weight:700;">ADMINISTRATEUR</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Vue d'ensemble</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="reporting.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        <span>Reporting</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Production</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Commandes</span>
+      </a>
+      <a href="clients.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clients</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Gestion</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="stock.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Stock</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Portail client</div>
+      <a href="../client/dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Vue client</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Dashboard Administration</div><span class="header-subtitle" id="admin-date"></span></div>
+  <div class="header-actions ml-auto">
+    <span class="badge badge-magenta">Vue Admin</span>
+    <button class="header-icon-btn"><span>🔔</span><div class="header-notif-dot"></div></button>
+  </div>
+</header>
+<main class="main-content">
+  <!-- KPI 4 cards -->
+  <div class="grid-4 gap-5 mb-6" id="admin-kpis">
+    <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+  </div>
+
+  <!-- Alertes -->
+  <div id="admin-alerts" class="mb-6"></div>
+
+  <div class="grid-2 gap-6 mb-6">
+    <!-- Graphique CA -->
+    <div class="chart-container">
+      <div class="chart-header">
+        <span class="chart-title">CA mensuel — 12 mois</span>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-line" style="background:var(--cyan-500)"></div>2025-26</div>
+          <div class="legend-item"><div class="legend-line" style="background:var(--gray-300)"></div>Objectif</div>
+        </div>
+      </div>
+      <div style="height:220px;"><canvas id="chart-ca-admin"></canvas></div>
+    </div>
+    <!-- Mix produits donut -->
+    <div class="chart-container">
+      <div class="chart-header"><span class="chart-title">Mix produits (CA)</span></div>
+      <div style="height:220px;"><canvas id="chart-mix"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-2 gap-6 mb-6">
+    <!-- Dernières commandes -->
+    <div class="card">
+      <div class="card-header"><h4>Dernières commandes</h4><a href="commandes.html" class="btn btn-ghost btn-sm">Tout voir →</a></div>
+      <div id="admin-recent-orders" class="overflow-auto"></div>
+    </div>
+    <!-- Top clients + V1000 -->
+    <div>
+      <div class="card mb-4">
+        <div class="card-header"><h4>Top 5 clients du mois</h4></div>
+        <div class="card-body p-3" id="top-clients"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h4>🖨️ Canon V1000 — Production</h4></div>
+        <div class="card-body" id="v1000-gauge"></div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/charts.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('ADMIN')) return;
+  await Storage.init();
+  document.getElementById('admin-date').textContent = new Date().toLocaleDateString('fr-TN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const kpis = Storage.getKPIs();
+  const commandes = Storage.getCommandes();
+  const clients = Storage.getClients();
+
+  // KPIs
+  const urgentes = commandes.filter(c=>c.config?.urgence&&c.config.urgence!=='standard'&&!['delivered','cancelled'].includes(c.statut));
+  document.getElementById('admin-kpis').innerHTML = `
+    <div class="kpi-card cyan"><div class="flex justify-between items-start">
+      <div><div class="kpi-label">CA Aujourd'hui</div><div class="kpi-value tnd">${Utils.tnd(kpis.ca_aujourd_hui,0)}</div>
+      <div class="kpi-trend up mt-2">↑ ${kpis.variation_ca_pct}% vs N-1</div></div>
+      <div class="kpi-icon cyan">💰</div></div></div>
+    <div class="kpi-card magenta"><div class="flex justify-between items-start">
+      <div><div class="kpi-label">Commandes</div><div class="kpi-value">${kpis.commandes_aujourd_hui}</div>
+      <div class="kpi-trend up mt-2">${kpis.commandes_mois} ce mois</div></div>
+      <div class="kpi-icon magenta">📋</div></div></div>
+    <div class="kpi-card success"><div class="flex justify-between items-start">
+      <div><div class="kpi-label">Pages produites YTD</div><div class="kpi-value">${(kpis.pages_ytd/1000000).toFixed(2)}M</div>
+      <div class="kpi-trend up mt-2">${Utils.pct(kpis.pages_ytd,kpis.pages_objectif)}% objectif</div></div>
+      <div class="kpi-icon success">📄</div></div></div>
+    <div class="kpi-card warning"><div class="flex justify-between items-start">
+      <div><div class="kpi-label">Panier moyen</div><div class="kpi-value tnd">${kpis.panier_moyen} TND</div>
+      <div class="kpi-trend up mt-2">↑ ${kpis.panier_moyen_variation}%</div></div>
+      <div class="kpi-icon warning">🛒</div></div></div>`;
+
+  // Alertes
+  const attente = commandes.filter(c=>c.statut==='waiting_file');
+  let alertHtml = '';
+  if (attente.length) alertHtml += `<div class="alert alert-danger mb-3"><span class="alert-icon">🔴</span><div><div class="alert-title">${attente.length} commande(s) en attente de fichier client</div><div><a href="commandes.html">Voir les commandes →</a></div></div></div>`;
+  if (urgentes.length) alertHtml += `<div class="alert alert-warning mb-3"><span class="alert-icon">⚡</span><div><div class="alert-title">${urgentes.length} commande(s) urgente(s) à traiter en priorité</div></div></div>`;
+  const stocks = Storage.getStocks();
+  const ruptures = stocks.filter(s=>s.statut==='rupture');
+  if (ruptures.length) alertHtml += `<div class="alert alert-danger mb-3"><span class="alert-icon">📦</span><div><div class="alert-title">Rupture de stock : ${ruptures.map(s=>s.nom).join(', ')}</div><div><a href="stock.html">Gérer le stock →</a></div></div></div>`;
+  document.getElementById('admin-alerts').innerHTML = alertHtml;
+
+  // Graphiques
+  Charts.caLineChart('chart-ca-admin', kpis.mois_labels, kpis.ca_mensuel_12m, null, 50000);
+  const mix = kpis.mix_produits;
+  Charts.donutChart('chart-mix', Object.keys(mix), Object.values(mix));
+
+  // Dernières commandes
+  const recent = commandes.slice(0,8);
+  document.getElementById('admin-recent-orders').innerHTML = recent.length ? `
+    <table class="table"><thead><tr><th>N°</th><th>Client</th><th>Produit</th><th>Montant</th><th>Statut</th></tr></thead><tbody>
+    ${recent.map(c=>{const cl=Storage.getClient(c.client_id);return`<tr>
+      <td class="font-mono text-xs font-semibold">${c.id}</td>
+      <td>${cl?.nom||c.client_id}</td>
+      <td class="text-sm truncate" style="max-width:120px">${c.produit||'—'}</td>
+      <td class="tnd">${Utils.tnd(c.montant_ttc,0)}</td>
+      <td><span class="status-badge ${Utils.statusClass(c.statut)} badge-sm">${Utils.statusLabel(c.statut)}</span></td>
+    </tr>`}).join('')}
+    </tbody></table>` : '';
+
+  // Top clients
+  const topIds = kpis.top_clients || [];
+  document.getElementById('top-clients').innerHTML = topIds.map((id,i)=>{
+    const c=Storage.getClient(id);
+    if(!c)return'';
+    return`<div class="flex items-center gap-3 py-2 border-bottom">
+      <span class="font-bold text-muted" style="width:20px;">${i+1}</span>
+      <div class="user-avatar" style="width:32px;height:32px;font-size:.75rem;">${c.avatar||'?'}</div>
+      <div class="flex-1"><div class="font-semibold text-sm">${c.nom}</div><div class="text-xs text-muted">${c.secteur}</div></div>
+      <div class="text-right"><div class="tnd font-bold">${Utils.tnd(c.ca_mensuel,0)}</div><span class="badge ${Utils.segmentClass(c.segment)} badge-sm">${Utils.segmentLabel(c.segment)}</span></div>
+    </div>`;
+  }).join('');
+
+  // Jauge V1000
+  Charts.progressBar('v1000-gauge', kpis.pages_ytd, kpis.pages_objectif);
+});
+</script>
+</body></html>

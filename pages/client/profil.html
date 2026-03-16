@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mon profil — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Vos projets, notre expertise</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>?</div>
+      <div>
+        <div class="user-name" data-user-name>Chargement…</div>
+        <div class="user-role" data-user-role></div>
+        <span class="user-segment" data-user-segment></span>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Menu principal</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a href="configurateur.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        <span>Nouveau devis</span>
+      </a>
+      <a href="panier.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Panier</span>
+        <span class="nav-badge hidden" data-cart-badge>0</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Suivi</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Mes commandes</span>
+      </a>
+      <a href="devis.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        <span>Mes devis</span>
+      </a>
+      <a href="fichiers.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Mes fichiers</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Ressources</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="profil.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mon profil</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Mon profil</div></div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-primary btn-sm" id="btn-save" onclick="saveProfil()">Enregistrer</button>
+  </div>
+</header>
+<main class="main-content">
+  <div class="grid-2 gap-6">
+    <div>
+      <div class="card mb-4">
+        <div class="card-header"><h4>🏢 Informations entreprise</h4></div>
+        <div class="card-body" id="profil-form">
+          <div class="skeleton skeleton-card"></div>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-header"><h4>📍 Adresses de livraison</h4></div>
+        <div class="card-body">
+          <div id="addresses-list"></div>
+          <button class="btn btn-secondary btn-sm mt-3" onclick="Notify.info('Bientôt disponible','Gestion des adresses')">+ Ajouter une adresse</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card mb-4">
+        <div class="card-header"><h4>🔔 Notifications</h4></div>
+        <div class="card-body">
+          <div class="flex justify-between items-center py-3 border-bottom"><span class="font-medium text-sm">Changement de statut commande</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="flex justify-between items-center py-3 border-bottom"><span class="font-medium text-sm">Fichier validé</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="flex justify-between items-center py-3"><span class="font-medium text-sm">Commande prête</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-header"><h4>💾 Modèles sauvegardés</h4></div>
+        <div class="card-body" id="modeles-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h4>🔐 Sécurité</h4></div>
+        <div class="card-body">
+          <button class="btn btn-secondary w-full" onclick="App.openModal('modal-pwd')">Changer le mot de passe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="modal-overlay" id="modal-pwd" onclick="if(event.target===this)App.closeModal('modal-pwd')">
+  <div class="modal modal-sm">
+    <div class="modal-header"><span class="modal-title">Changer le mot de passe</span><button class="modal-close" onclick="App.closeModal('modal-pwd')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Mot de passe actuel</label><input type="password" class="form-control" placeholder="••••••••"></div>
+      <div class="form-group"><label class="form-label">Nouveau mot de passe</label><input type="password" class="form-control" placeholder="••••••••"></div>
+      <div class="form-group"><label class="form-label">Confirmer</label><input type="password" class="form-control" placeholder="••••••••"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="App.closeModal('modal-pwd')">Annuler</button>
+      <button class="btn btn-gradient btn-sm" onclick="Notify.success('Mot de passe modifié','');App.closeModal('modal-pwd')">Enregistrer</button>
+    </div>
+  </div>
+</div></div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('CLIENT')) return;
+  await Storage.init();
+  const user = Auth.current;
+  const client = Storage.getClient(user.id);
+  if (!client) return;
+  document.getElementById('profil-form').innerHTML = `
+    <div class="form-group"><label class="form-label">Raison sociale</label><input type="text" class="form-control" id="p-nom" value="${client.nom||''}"></div>
+    <div class="form-group"><label class="form-label">Contact principal</label><input type="text" class="form-control" id="p-contact" value="${client.contact||''}"></div>
+    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" id="p-email" value="${client.email||''}"></div>
+    <div class="form-group"><label class="form-label">Téléphone</label><input type="text" class="form-control" id="p-tel" value="${client.tel||''}"></div>
+    <div class="form-group"><label class="form-label">Adresse</label><textarea class="form-control" id="p-addr" rows="2">${client.adresse||''}</textarea></div>
+    <div class="form-group"><label class="form-label">Secteur</label><input type="text" class="form-control" id="p-secteur" value="${client.secteur||''}"></div>
+    <div class="mt-2 flex items-center gap-3">
+      <span class="text-sm text-muted">Segment client :</span>
+      <span class="badge ${Utils.segmentClass(client.segment)}">${Utils.segmentLabel(client.segment)}</span>
+    </div>`;
+  document.getElementById('addresses-list').innerHTML = `<div class="alert alert-info"><span>📍</span><div><div class="alert-title">${client.adresse||'Aucune adresse sauvegardée'}</div><div class="text-xs">Adresse principale</div></div></div>`;
+  const modeles = Storage.getModeles(user.id);
+  document.getElementById('modeles-list').innerHTML = modeles.length ?
+    modeles.map(m=>`<div class="flex justify-between items-center py-2 border-bottom">
+      <span class="font-medium text-sm">${m.nom}</span>
+      <div class="flex gap-2">
+        <button class="btn btn-primary btn-sm" onclick="useModel('${m.id}')">Utiliser</button>
+        <button class="btn btn-danger btn-sm" onclick="delModel('${m.id}')">✕</button>
+      </div></div>`).join('') :
+    '<div class="empty-state" style="padding:20px"><div class="empty-state-title" style="font-size:.875rem;">Aucun modèle sauvegardé</div><div class="empty-state-text">Sauvegardez vos configurations depuis le configurateur.</div></div>';
+});
+function saveProfil() {
+  const user = Auth.current;
+  Storage.updateClient(user.id, {
+    nom:document.getElementById('p-nom')?.value,
+    contact:document.getElementById('p-contact')?.value,
+    email:document.getElementById('p-email')?.value,
+    tel:document.getElementById('p-tel')?.value,
+    adresse:document.getElementById('p-addr')?.value,
+    secteur:document.getElementById('p-secteur')?.value,
+  });
+  Notify.success('Profil enregistré','Vos informations ont été mises à jour.');
+}
+function useModel(id) {
+  const user = Auth.current;
+  const m = Storage.getModeles(user.id).find(x=>x.id===id);
+  if (m?.config) window.location.href='configurateur.html?cfg='+encodeURIComponent(JSON.stringify(m.config));
+}
+function delModel(id) {
+  const user = Auth.current;
+  Storage.deleteModele(user.id,id);
+  Notify.info('Modèle supprimé','');
+  location.reload();
+}
+</script>
+</body></html>

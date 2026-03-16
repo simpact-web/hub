@@ -1,0 +1,642 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "entreprise": "Simpact",
+    "date": "2026-03-16",
+    "description": "Matrice de prix complète pour calcul automatique de devis impression numérique. Basée sur Canon imagePRESS V1000 + Konica Minolta N&B. Toutes les valeurs sont en TND (Dinar Tunisien). Méthode de calcul : Activity-Based Costing (ABC).",
+    "auteur": "Audit analytique Simpact × Claude",
+    "usage": "Intégrer dans le portail B2B client Simpact. Utiliser la fonction calcul_devis() décrite en bas de ce fichier."
+  },
+
+  "machines": {
+    "v1000": {
+      "nom": "Canon imagePRESS V1000",
+      "type": "couleur",
+      "vitesse_ppm": 100,
+      "format_max_mm": [330, 487],
+      "grammage_min": 52,
+      "grammage_max": 400,
+      "resolution_dpi": 2400,
+      "usage": "Tous les travaux couleur + N&B si nécessaire (déconseillé)"
+    },
+    "km_nb": {
+      "nom": "Konica Minolta N&B",
+      "type": "nb",
+      "usage": "Exclusivement livres N&B, documents internes N&B",
+      "note": "NE JAMAIS produire un livre N&B sur la V1000 — perte garantie"
+    }
+  },
+
+  "formats": {
+    "_doc": "Ratio = surface_format / surface_A4. UA4 = Unités A4 équivalentes. Utilisé pour tous les calculs de prix.",
+    "carte_visite": {
+      "label": "Carte de visite 8,5×5,5 cm",
+      "dimensions_mm": [85, 55],
+      "surface_m2": 0.004675,
+      "ratio_a4": 0.0750,
+      "imposition_par_face_a4": 10,
+      "nota": "10 cartes par face A4 (2 colonnes × 5 rangées)"
+    },
+    "a5": {
+      "label": "A5",
+      "dimensions_mm": [148, 210],
+      "surface_m2": 0.031080,
+      "ratio_a4": 0.4983,
+      "imposition_par_face_a3plus": 4,
+      "pages_par_feuille_rv": 8
+    },
+    "seize23": {
+      "label": "16×23 cm (édition)",
+      "dimensions_mm": [160, 230],
+      "surface_m2": 0.036800,
+      "ratio_a4": 0.5900,
+      "imposition_par_face_a3plus": 4,
+      "pages_par_feuille_rv": 8,
+      "nota": "Même imposition que A5. Prix naturellement +18,4% vs A5."
+    },
+    "a4": {
+      "label": "A4",
+      "dimensions_mm": [210, 297],
+      "surface_m2": 0.062370,
+      "ratio_a4": 1.0000,
+      "imposition_par_face_a3plus": 1,
+      "pages_par_feuille_rv": 2
+    },
+    "a3": {
+      "label": "A3",
+      "dimensions_mm": [297, 420],
+      "surface_m2": 0.124740,
+      "ratio_a4": 2.0000,
+      "nota": "1 A3 = 2 UA4"
+    },
+    "a3plus": {
+      "label": "A3+ (33×48 cm)",
+      "dimensions_mm": [330, 480],
+      "surface_m2": 0.158400,
+      "ratio_a4": 2.5397,
+      "nota": "Format max V1000"
+    }
+  },
+
+  "cpc_consommables": {
+    "_doc": "CPC = Cost Per Click. Source : Offre Azur Colors (talel.khedija@azurcolors.com), 05/03/2026. Norme ISO 19798 à 5% de couverture par canal. Tous les coûts sont par click A4 équivalent.",
+    "_formule": "cout_total = pieces_fixes + (drums_couleur si quadri) + (taux_couverture_N / 5) × dev_bk_ref + (taux_couverture_C+M+Y / 5) × dev_clr_ref",
+
+    "pieces_mecaniques_fixes": {
+      "_doc": "Usure mécanique indépendante de la couverture. S'applique à CHAQUE click.",
+      "valeur_par_click_a4": 0.0118,
+      "detail": {
+        "drum_unit_black": 0.0016,
+        "belt_fixing": 0.0019,
+        "roller_pressure": 0.0012,
+        "plate_separation": 0.0001,
+        "belt_inter_transfer": 0.0034,
+        "primary_corona_assembly": 0.0005,
+        "transfer_cleaning_assembly": 0.0006,
+        "fixing_pad_unit": 0.0014,
+        "transfer_cleaner_assembly": 0.0011
+      }
+    },
+
+    "tambours_couleur": {
+      "_doc": "Drum C + M + Y. S'applique UNIQUEMENT si impression couleur (quadri).",
+      "valeur_par_click_a4": 0.0117,
+      "detail": {
+        "drum_unit_cyan": 0.0039,
+        "drum_unit_magenta": 0.0039,
+        "drum_unit_yellow": 0.0039
+      }
+    },
+
+    "taux_par_pourcent_couverture": {
+      "_doc": "Coût ADDITIONNEL par point de % de couverture. Ex: 10% couverture N = 10 × 0.00238",
+      "noir_par_pct": {
+        "valeur": 0.00238,
+        "detail": {
+          "developing_assembly_bk_ref_5pct": 0.0020,
+          "toner_black_t11_ref_5pct": 0.0099,
+          "cout_par_1pct": 0.00238
+        }
+      },
+      "couleur_par_pct_par_canal": {
+        "valeur": 0.00274,
+        "detail": {
+          "developing_assembly_clr_ref_5pct": 0.0020,
+          "toner_canal_ref_5pct": 0.0117,
+          "cout_par_1pct_par_canal": 0.00274
+        }
+      }
+    },
+
+    "cpc_reference_iso": {
+      "_doc": "Valeurs de référence à 5% N + 5% C + 5% M + 5% Y (20% couverture totale). Base de calcul du CPC contractuel Azur Colors.",
+      "pieces": 0.0314,
+      "toners": 0.0449,
+      "total": 0.0764
+    },
+
+    "exemples_precalcules": {
+      "_doc": "Coût CPC consommables seul (hors MO, amort, énergie, papier) par click A4",
+      "noir_seul_10pct": {
+        "couverture": "10% N, 0% CMY",
+        "cout_click_a4": 0.0355,
+        "calcul": "0.0118 + 10×0.00238"
+      },
+      "quadri_20pct": {
+        "couverture": "5% N + 5% C + 5% M + 5% Y",
+        "cout_click_a4": 0.0764,
+        "calcul": "0.0118 + 0.0117 + 5×0.00238 + 15×0.00274"
+      },
+      "quadri_55pct_brochure": {
+        "couverture": "10% N + 15% C + 15% M + 15% Y",
+        "cout_click_a4": 0.1506,
+        "calcul": "0.0118 + 0.0117 + 10×0.00238 + 45×0.00274"
+      },
+      "quadri_68pct_flyer": {
+        "couverture": "8% N + 20% C + 20% M + 20% Y",
+        "cout_click_a4": 0.1887,
+        "calcul": "0.0118 + 0.0117 + 8×0.00238 + 60×0.00274"
+      },
+      "quadri_100pct_affiche": {
+        "couverture": "10% N + 30% C + 30% M + 30% Y",
+        "cout_click_a4": 0.2689,
+        "calcul": "0.0118 + 0.0117 + 10×0.00238 + 90×0.00274"
+      }
+    }
+  },
+
+  "couts_fixes_par_click_a4": {
+    "_doc": "Coûts fixes s'ajoutant au CPC consommables. Calculés par méthode ABC sur base 1 000 000 pages/an, 2 employés à 11 200 TND net/an chacun.",
+    "main_doeuvre_abc": {
+      "valeur_par_click_a4": 0.0353,
+      "base_calcul": "33 298 TND coût total chargé ÷ 1 000 000 pages/an",
+      "detail_activites": {
+        "preparation_fichiers": 0.0073,
+        "mise_en_route_machine": 0.0053,
+        "surveillance_production": 0.0027,
+        "faconnage_finition": 0.0100,
+        "controle_qualite": 0.0027,
+        "conditionnement": 0.0033,
+        "maintenance_niveau1": 0.0017,
+        "administration": 0.0023
+      },
+      "note": "Le poste façonnage (0.0100) ne s'applique qu'aux 60% d'unités avec finition"
+    },
+    "amortissement_machine": {
+      "valeur_par_click_a4": 0.0170,
+      "base_calcul": "84 750 TND coût net machine (après aide 65 000) ÷ 5 ans ÷ 1 000 000 pages"
+    },
+    "energie": {
+      "valeur_par_click_a4": 0.0031,
+      "base_calcul": "0.5 kWh × 0.31 TND/kWh ÷ 100 ppm × 60"
+    },
+    "total_fixes_par_click_a4": 0.0554,
+    "note": "MO + Amortissement + Énergie = 0.0554 TND/click A4 (valeur arrondie 0.042 utilisée dans calculateur V2 — conservative de +32%)"
+  },
+
+  "papier": {
+    "_doc": "Formule : coût_feuille = grammage × surface_m2 / 1000 × prix_kg × marge_commerciale. Marge commerciale = 2.2×.",
+    "prix_achat_kg": {
+      "couche_standard": {
+        "valeur": 3.60,
+        "grammages": [115, 135, 170, 200, 250]
+      },
+      "couche_special": {
+        "valeur": 3.90,
+        "grammages": [90, 300, 350, 400]
+      },
+      "offset": {
+        "valeur": 3.60,
+        "grammages": [80, 100]
+      }
+    },
+    "marge_commerciale": 2.2,
+    "formule_js": "function coutPapier(grammage, surface_m2, prix_kg) { return grammage * surface_m2 / 1000 * prix_kg * 2.2; }",
+
+    "precalcul_feuille_a4": {
+      "_doc": "Coût papier seul (hors impression) par feuille A4 avec marge commerciale ×2.2",
+      "offset_80g":    0.0308,
+      "offset_100g":   0.0385,
+      "couche_90g":    0.0456,
+      "couche_115g":   0.0566,
+      "couche_135g":   0.0665,
+      "couche_170g":   0.0837,
+      "couche_200g":   0.0985,
+      "couche_250g":   0.1231,
+      "couche_300g":   0.1614,
+      "couche_350g":   0.1883,
+      "couche_400g":   0.2152
+    }
+  },
+
+  "finitions_consommables": {
+    "_doc": "Coûts MATIÈRE des consommables de finition. La main d'œuvre est déjà incluse dans les coûts fixes ABC (poste A4 façonnage = 0.0100/page). Ces montants s'ajoutent uniquement quand la finition est sélectionnée.",
+
+    "pelliculage": {
+      "_doc": "Coût film pelliculage (mat ou brillant). Proportionnel à la surface du format.",
+      "cout_matiere_par_unite": {
+        "carte_visite": 0.003,
+        "a5": 0.012,
+        "seize23": 0.014,
+        "a4": 0.020,
+        "a3": 0.040
+      },
+      "prix_vente_par_unite": {
+        "_doc": "Prix de vente suggéré incluant matière + MO (déjà dans ABC) + marge",
+        "carte_visite": 0.025,
+        "a5": 0.060,
+        "seize23": 0.071,
+        "a4": 0.100,
+        "a3": 0.180
+      }
+    },
+
+    "rainage": {
+      "cout_matiere_par_unite": 0.002,
+      "prix_vente_par_unite": 0.025,
+      "nota": "La MO rainage est dans A4 façonnage (ABC)"
+    },
+
+    "pliage": {
+      "1_pli": {"cout_matiere": 0.001, "prix_vente": 0.020},
+      "2_plis": {"cout_matiere": 0.002, "prix_vente": 0.035},
+      "3_plis": {"cout_matiere": 0.002, "prix_vente": 0.045}
+    },
+
+    "reliure": {
+      "piquure_cheval": {
+        "cout_matiere_par_unite": 0.015,
+        "prix_vente_par_unite": {"min": 0.40, "max": 0.80},
+        "nota": "Agrafes métal. Prix vente selon nb pages."
+      },
+      "spirale_plastique": {
+        "cout_matiere_par_unite": 0.35,
+        "prix_vente_par_unite": {"min": 1.20, "max": 2.50},
+        "nota": "Spirale plastique. Prix selon épaisseur doc."
+      },
+      "spirale_metal_wirero": {
+        "cout_matiere_par_unite": 0.65,
+        "prix_vente_par_unite": {"min": 2.00, "max": 4.00}
+      },
+      "dos_carre_colle": {
+        "cout_matiere_par_unite": 0.08,
+        "prix_vente_par_unite": {"min": 2.50, "max": 5.00},
+        "nota": "Colle thermique. Prix selon épaisseur dos."
+      },
+      "reliure_thermique": {
+        "cout_matiere_par_unite": 0.25,
+        "prix_vente_par_unite": {"min": 1.50, "max": 3.50}
+      }
+    },
+
+    "coins_arrondis": {
+      "cout_matiere_par_unite": 0.002,
+      "prix_vente_par_unite": 0.030
+    },
+
+    "decoupe_speciale": {
+      "cout_matiere_par_unite": 0.010,
+      "prix_vente_par_unite": {"min": 0.08, "max": 0.20},
+      "nota": "Découpe forme spéciale (hors coupe droite incluse)"
+    }
+  },
+
+  "profils_produits": {
+    "_doc": "Profil complet de chaque produit. Taux de couverture moyens de l'industrie. Machine assignée. Logique d'imposition.",
+
+    "flyer": {
+      "label": "Flyer",
+      "machine": "v1000",
+      "formats_disponibles": ["a5", "seize23", "a4"],
+      "impression": ["recto", "rv"],
+      "couverture_moyenne": {
+        "noir_pct": 8,
+        "cyan_pct": 20,
+        "magenta_pct": 20,
+        "yellow_pct": 20,
+        "total_pct": 68
+      },
+      "grammages_conseilles": [115, 135, 170, 200],
+      "finitions_possibles": [],
+      "logique_ua4": "qty × ratio_format × nb_faces",
+      "note": "1 flyer = 1 feuille. A5 & 16×23 : 4 pièces/face sur A3+."
+    },
+
+    "carte_visite": {
+      "label": "Carte de visite 8,5×5,5 cm",
+      "machine": "v1000",
+      "formats_disponibles": ["carte_visite"],
+      "impression": ["recto"],
+      "couverture_moyenne": {
+        "noir_pct": 10,
+        "cyan_pct": 22,
+        "magenta_pct": 22,
+        "yellow_pct": 22,
+        "total_pct": 76
+      },
+      "grammages_conseilles": [250, 300, 350, 400],
+      "finitions_possibles": ["pelliculage", "coins_arrondis"],
+      "imposition": "10 cartes par face A4",
+      "logique_tarif": "Tarif fixe par quantité (paliers). Supplément papier séparé.",
+      "note": "Pelliculage inclus dans TARIFS.carte.pellicule — ne pas double-compter."
+    },
+
+    "depliant": {
+      "label": "Dépliant",
+      "machine": "v1000",
+      "formats_disponibles": ["a4", "seize23", "a3"],
+      "impression": ["rv"],
+      "couverture_moyenne": {
+        "noir_pct": 8,
+        "cyan_pct": 18,
+        "magenta_pct": 18,
+        "yellow_pct": 18,
+        "total_pct": 62
+      },
+      "grammages_conseilles": [115, 135, 170, 200, 250],
+      "finitions_possibles": ["rainage", "pliage"],
+      "logique_ua4": "qty × ratio_format × 2 faces",
+      "note": "1 dépliant = 1 feuille R/V. Rainage inclus dans prix."
+    },
+
+    "entete": {
+      "label": "Papier en-tête",
+      "machine": "v1000",
+      "formats_disponibles": ["a4", "seize23"],
+      "impression": ["recto"],
+      "couverture_moyenne": {
+        "_doc": "Version couleur (logo couleur + texte)",
+        "noir_pct": 8,
+        "cyan_pct": 10,
+        "magenta_pct": 10,
+        "yellow_pct": 10,
+        "total_pct": 38
+      },
+      "grammages_conseilles": [80, 90, 100],
+      "finitions_possibles": [],
+      "logique_ua4": "qty × ratio_format × 1 face"
+    },
+
+    "brochure_couleur": {
+      "label": "Brochure couleur",
+      "machine": "v1000",
+      "formats_disponibles": ["a4", "a5", "seize23"],
+      "impression": "rv_interieur",
+      "couverture_interieure": {
+        "noir_pct": 10,
+        "cyan_pct": 15,
+        "magenta_pct": 15,
+        "yellow_pct": 15,
+        "total_pct": 55
+      },
+      "couverture_exterieure": {
+        "noir_pct": 10,
+        "cyan_pct": 15,
+        "magenta_pct": 15,
+        "yellow_pct": 15,
+        "total_pct": 55
+      },
+      "grammages_interieur": [80, 90, 115, 135, 170],
+      "grammages_couverture": [250, 300, 350],
+      "finitions_possibles": ["pelliculage", "dos_carre_colle", "piquure_cheval", "spirale_plastique"],
+      "logique_imposition": {
+        "a4": "pages / 4 feuilles par livre. 1 couv = 1 feuille.",
+        "a5": "pages / 8 feuilles par livre. 1 couv = 0.5 feuille.",
+        "seize23": "pages / 8 feuilles par livre. 1 couv = 0.5 feuille."
+      },
+      "logique_ua4": {
+        "interieur": "nb_feuilles_int × ratio_format × 2",
+        "couverture": "nb_feuilles_couv × ratio_format × nb_faces_couv"
+      },
+      "taux_par_ua4_total": {
+        "_doc": "Prix par UA4 selon volume total (intérieur + couv). Identique à conversion depuis prix/feuille A3+.",
+        "paliers": [
+          {"ua4_min": 0,   "ua4_max": 25,  "prix_ua4_rv": 3.00, "prix_ua4_r": 2.80},
+          {"ua4_min": 25,  "ua4_max": 50,  "prix_ua4_rv": 2.50, "prix_ua4_r": 2.30},
+          {"ua4_min": 50,  "ua4_max": 100, "prix_ua4_rv": 2.00, "prix_ua4_r": 1.80},
+          {"ua4_min": 100, "ua4_max": 200, "prix_ua4_rv": 1.90, "prix_ua4_r": 1.70},
+          {"ua4_min": 200, "ua4_max": 300, "prix_ua4_rv": 1.80, "prix_ua4_r": 1.60},
+          {"ua4_min": 300, "ua4_max": 400, "prix_ua4_rv": 1.70, "prix_ua4_r": 1.50},
+          {"ua4_min": 400, "ua4_max": 500, "prix_ua4_rv": 1.60, "prix_ua4_r": 1.40},
+          {"ua4_min": 500, "ua4_max": 9999,"prix_ua4_rv": 1.50, "prix_ua4_r": 1.30}
+        ]
+      }
+    },
+
+    "livre_nb": {
+      "label": "Livre N&B",
+      "machine": "km_nb",
+      "alerte": "PRODUCTION SUR KONICA MINOLTA UNIQUEMENT. Ne jamais router sur V1000.",
+      "formats_disponibles": ["a4", "a5", "seize23"],
+      "grammages_interieur": [80, 100],
+      "grammages_couverture": [250, 300, 350],
+      "finitions_possibles": ["pelliculage", "dos_carre_colle", "spirale_plastique", "reliure_thermique"],
+      "tarif_interieur": {
+        "prix_feuille_km": 0.20,
+        "prix_page": 0.05,
+        "note": "0.050 TND/page. Marge KM : 60%. Coût KM réel : ~0.020 TND/page."
+      },
+      "tarif_couverture_couleur_v1000": {
+        "_doc": "La couverture est imprimée sur V1000 (couleur). Proportionnel par surface.",
+        "a4":      {"recto": 1.30, "rv": 1.50},
+        "a5":      {"recto": 0.65, "rv": 0.75},
+        "seize23": {"recto": 0.77, "rv": 0.89}
+      },
+      "logique_imposition": {
+        "a4":      "pages / 4 feuilles/livre. 1 couv = 1 feuille.",
+        "a5":      "pages / 8 feuilles/livre. 1 couv = 0.5 feuille.",
+        "seize23": "pages / 8 feuilles/livre. 1 couv = 0.5 feuille."
+      }
+    },
+
+    "affiche": {
+      "label": "Affiche recto couleur",
+      "machine": "v1000",
+      "formats_disponibles": ["a3", "a3plus"],
+      "impression": ["recto"],
+      "couverture_moyenne": {
+        "noir_pct": 10,
+        "cyan_pct": 30,
+        "magenta_pct": 30,
+        "yellow_pct": 30,
+        "total_pct": 100
+      },
+      "grammages_conseilles": [135, 170, 200, 250],
+      "finitions_possibles": [],
+      "logique_ua4": "qty × ratio_format × 1 face",
+      "note": "Couverture 100% = travaux denses. Surveiller le coût toner."
+    }
+  },
+
+  "grilles_tarifaires": {
+    "_doc": "Tables d'interpolation indexées en UA4 (Unités A4). Moteur V3. Utiliser interpolation linéaire entre deux paliers. Prix HORS papier, HORS finitions consommables.",
+
+    "flyer_recto": {
+      "_doc": "Flyer recto couleur. UA4 = qty × ratio_format × 1. Prix TND pour le lot.",
+      "paliers_ua4": [
+        [24, 36], [49, 66], [99, 100], [249, 230],
+        [498, 350], [747, 490], [996, 610], [1494, 890],
+        [1992, 1150], [2988, 1700]
+      ],
+      "prix_min": 28
+    },
+
+    "flyer_rv": {
+      "_doc": "Flyer recto/verso couleur. UA4 = qty × ratio_format × 2. Paliers ≥498 UA4 revalorisés (audit marge 2026).",
+      "paliers_ua4": [
+        [24, 40], [49, 76], [99, 125], [249, 280],
+        [498, 450], [747, 640], [996, 840], [1494, 1180],
+        [1992, 1540], [2988, 2200]
+      ],
+      "prix_min": 28
+    },
+
+    "depliant_rv": {
+      "_doc": "Dépliant R/V. UA4 = qty × ratio_format × 2. Paliers ≥400 UA4 revalorisés (audit 2026).",
+      "paliers_ua4": [
+        [50, 29], [100, 47], [200, 84], [400, 175],
+        [1000, 410], [2000, 760], [3000, 1050], [4000, 1350],
+        [5000, 1620], [10000, 3050], [20000, 5800]
+      ],
+      "prix_min": 28
+    },
+
+    "entete_recto": {
+      "_doc": "En-tête recto couleur. UA4 = qty × ratio_format × 1.",
+      "paliers_ua4": [
+        [10, 28.5], [25, 36], [50, 59], [100, 90],
+        [200, 156], [500, 340], [1000, 519], [2000, 999],
+        [5000, 2490], [10000, 4990]
+      ],
+      "prix_min": 28
+    },
+
+    "carte_visite_sans_pelliculage": {
+      "_doc": "Tarif par QUANTITÉ (pas UA4). Imposition 10 cartes/face A4 déjà intégrée.",
+      "paliers_quantite": [
+        [100, 20], [200, 36], [500, 50], [1000, 79],
+        [1500, 109], [2000, 122], [2500, 149], [5000, 249], [10000, 479]
+      ],
+      "prix_min": 28,
+      "nota": "Ajouter supplément papier séparément si grammage > 90g"
+    },
+
+    "carte_visite_avec_pelliculage": {
+      "_doc": "Tarif par quantité. Pelliculage inclus dans ce tarif (ne pas ajouter séparément).",
+      "paliers_quantite": [
+        [100, 28], [200, 44], [500, 59], [1000, 89],
+        [1500, 119], [2000, 136], [2500, 171], [5000, 299], [10000, 560]
+      ],
+      "prix_min": 28
+    }
+  },
+
+  "regles_calcul": {
+    "_doc": "Algorithme complet pour calculer un devis. À implémenter dans le portail B2B.",
+
+    "etape_1_ua4": {
+      "description": "Calculer les Unités A4 (UA4)",
+      "formule": "UA4 = quantite × ratio_format × nb_faces",
+      "exemples": {
+        "flyer_a5_recto_500ex":       "500 × 0.4983 × 1 = 249.2 UA4",
+        "flyer_seize23_rv_500ex":     "500 × 0.5900 × 2 = 590.0 UA4",
+        "depliant_a4_rv_200ex":       "200 × 1.0000 × 2 = 400.0 UA4",
+        "brochure_a5_28p_500ex_int":  "(28/8)×500 × 0.4983 × 2 = 1745.1 UA4",
+        "brochure_a5_28p_500ex_couv": "(0.5)×500 × 0.4983 × 2 = 249.2 UA4"
+      }
+    },
+
+    "etape_2_prix_impression": {
+      "description": "Interpoler le prix dans la grille tarifaire appropriée",
+      "formule_interpolation": "si ua4 entre palier_A et palier_B : prix = prix_A + (prix_B - prix_A) × (ua4 - ua4_A) / (ua4_B - ua4_A)",
+      "appliquer_prix_min": "prix_final = max(prix_calcule, prix_min)"
+    },
+
+    "etape_3_papier": {
+      "description": "Calculer le coût papier pour le lot complet",
+      "formule": "nb_feuilles × grammage × surface_format_m2 / 1000 × prix_kg × 2.2",
+      "nota": "nb_feuilles = quantite pour formats simples. Pour brochures : calcul séparé int + couv."
+    },
+
+    "etape_4_finitions": {
+      "description": "Ajouter les finitions sélectionnées",
+      "formule": "pour chaque finition sélectionnée : ajouter prix_vente_par_unite × quantite",
+      "finitions_qui_s_ajoutent": ["pelliculage", "rainage", "pliage", "reliure", "coins_arrondis", "decoupe_speciale"],
+      "nota": "Le pelliculage carte de visite est déjà dans le tarif CARTE_AVEC_PELLICULAGE — ne pas double-compter."
+    },
+
+    "etape_5_total": {
+      "description": "Somme finale",
+      "formule": "TOTAL = prix_impression + papier + finitions",
+      "prix_unitaire": "TOTAL / quantite"
+    },
+
+    "regles_speciales": {
+      "livre_nb": "Intérieur = (pages / pages_par_feuille) × quantite × 0.20 TND/feuille (KM). Couverture = tarif_couverture_v1000 × quantite. MO déjà dans le 0.20 TND/feuille.",
+      "brochure_ua4_total": "Le taux brochure dépend du TOTAL UA4 (intérieur + couverture) pour déterminer le palier.",
+      "affiche_ua4": "1 affiche A3 = 2 UA4. 1 affiche A3+ = 2.54 UA4. Utiliser T_RECTO pour le prix.",
+      "prix_minimum_absolu": "Aucune commande ne peut être facturée moins de 28 TND."
+    }
+  },
+
+  "couts_revient_reference": {
+    "_doc": "Coûts de revient complets par produit type (HORS papier). Pour référence interne et contrôle de marge. Ne pas communiquer au client.",
+    "base": "1 000 000 pages/an, 2 employés 11 200 TND net, V1000 amortie sur 5 ans.",
+
+    "page_a4_quadri_20pct": {
+      "cpc_consommables": 0.0764,
+      "amortissement": 0.0170,
+      "energie": 0.0031,
+      "main_doeuvre_abc": 0.0353,
+      "total_hors_papier": 0.1318,
+      "confirmation": "Valide votre hypothèse initiale de 0.130 TND à 1.4% près."
+    },
+    "page_a4_noir_seul_10pct": {
+      "cpc_consommables": 0.0355,
+      "amortissement": 0.0170,
+      "energie": 0.0031,
+      "main_doeuvre_abc": 0.0353,
+      "total_hors_papier": 0.0909
+    },
+    "page_a4_quadri_68pct_flyer": {
+      "cpc_consommables": 0.1887,
+      "amortissement": 0.0170,
+      "energie": 0.0031,
+      "main_doeuvre_abc": 0.0353,
+      "total_hors_papier": 0.2441
+    },
+
+    "marge_par_prix_vente": {
+      "_doc": "Marge brute en % selon le prix de vente pratiqué. Hors papier.",
+      "pv_0.50_vs_quadri_20pct": "73.6%",
+      "pv_0.50_vs_quadri_68pct": "51.2%",
+      "pv_0.50_vs_noir_10pct":   "81.8%",
+      "alerte_quadri_100pct":    "Coût hors papier = 0.327 TND. PV 0.50 → marge 34.5% seulement. Appliquer majoration."
+    },
+
+    "seuil_rentabilite_annuel": {
+      "pages": 45811,
+      "mois": 3818,
+      "jour_22j_ouvrables": 174,
+      "temps_production_100ppm": "1h 45min/mois",
+      "base": "Amortissement machine 16 950 TND/an ÷ marge 0.370 TND/page (PV 0.50 - coût 0.130)"
+    }
+  },
+
+  "parametres_entreprise": {
+    "_doc": "Paramètres Simpact à utiliser dans les calculs du portail.",
+    "prix_vente_base_page_a4": 0.50,
+    "prix_vente_page_nb_km": 0.055,
+    "tva": 0.19,
+    "delai_standard_heures": 48,
+    "delai_urgent_heures": 24,
+    "supplement_urgent_pct": 30,
+    "supplement_tres_urgent_pct": 60,
+    "prix_minimum_commande_tnd": 28,
+    "supplement_conception_graphique": {
+      "simple": 30,
+      "moyen": 60,
+      "complexe": 120
+    }
+  }
+}

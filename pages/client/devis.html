@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mes devis — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Vos projets, notre expertise</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>?</div>
+      <div>
+        <div class="user-name" data-user-name>Chargement…</div>
+        <div class="user-role" data-user-role></div>
+        <span class="user-segment" data-user-segment></span>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Menu principal</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a href="configurateur.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        <span>Nouveau devis</span>
+      </a>
+      <a href="panier.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Panier</span>
+        <span class="nav-badge hidden" data-cart-badge>0</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Suivi</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Mes commandes</span>
+      </a>
+      <a href="devis.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        <span>Mes devis</span>
+      </a>
+      <a href="fichiers.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Mes fichiers</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Ressources</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="profil.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mon profil</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Mes devis</div></div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-gradient btn-sm" onclick="window.location.href='configurateur.html'">+ Nouveau devis</button>
+  </div>
+</header>
+<main class="main-content">
+  <div id="devis-list"></div>
+</main></div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('CLIENT')) return;
+  await Storage.init();
+  const user = Auth.current;
+  const devis = Storage.getDevis(user.id);
+  const wrap = document.getElementById('devis-list');
+  if (!devis.length) {
+    wrap.innerHTML = '<div class="card"><div class="card-body"><div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-title">Aucun devis</div><button class="btn btn-gradient btn-sm" onclick="window.location.href='configurateur.html'">Créer un devis</button></div></div></div>';
+    return;
+  }
+  wrap.innerHTML = '<div class="table-wrap"><table class="table"><thead><tr><th>N° Devis</th><th>Produit</th><th>Date</th><th>Expiration</th><th>Montant TTC</th><th>Statut</th><th>Actions</th></tr></thead><tbody>' +
+  devis.map(d=>`<tr>
+    <td class="font-semibold" style="font-family:Space Mono,monospace;font-size:.8125rem;">${d.id}</td>
+    <td>${d.produit||'—'}</td>
+    <td class="text-muted">${Utils.dateFormat(d.date)}</td>
+    <td class="text-muted">${Utils.dateFormat(d.expiry)}</td>
+    <td><span class="tnd font-bold">${Utils.tnd(d.montant_ttc,0)}</span></td>
+    <td><span class="status-badge ${Utils.statusClass(d.statut)}">${Utils.statusLabel(d.statut)}</span></td>
+    <td>
+      <div class="flex gap-2 flex-wrap">
+        <button class="btn btn-secondary btn-sm" onclick="PDF.genererBonCommande('${d.id}')">PDF</button>
+        ${d.statut==='pending'?`<button class="btn btn-success btn-sm" onclick="convertToOrder('${d.id}')">→ Commander</button>`:''}
+        ${d.statut==='expired'?`<button class="btn btn-primary btn-sm" onclick="window.location.href='configurateur.html?cfg='+encodeURIComponent(JSON.stringify((Storage.getDevisItem('${d.id}')?.config)||{}))">Recréer</button>`:''}
+      </div>
+    </td>
+  </tr>`).join('') + '</tbody></table></div>';
+});
+function convertToOrder(id) {
+  const d = Storage.getDevisItem(id);
+  if (!d) return;
+  const cmd = {
+    id:Utils.genCommandeId(), client_id:d.client_id, produit:d.produit, config:d.config,
+    montant_ht:d.montant_ht, tva:d.tva, montant_ttc:d.montant_ttc,
+    statut:'waiting_file', date:new Date().toISOString(),
+    delai:Utils.addWorkDays(new Date().toISOString(),2), devis_id:id, note:d.note||''
+  };
+  Storage.addCommande(cmd);
+  Storage.updateDevis(id,{statut:'accepted',commande_id:cmd.id});
+  Notify.success('Commande créée','N° '+cmd.id);
+  setTimeout(()=>location.reload(),1500);
+}
+</script>
+</body></html>

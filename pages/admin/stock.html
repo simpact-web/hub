@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Stock — Admin — Admin Simpact</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Administration</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>SA</div>
+      <div>
+        <div class="user-name" data-user-name>Admin</div>
+        <div class="user-role" style="color:rgba(233,30,99,.8);font-size:.625rem;font-weight:700;">ADMINISTRATEUR</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Vue d'ensemble</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="reporting.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        <span>Reporting</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Production</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Commandes</span>
+      </a>
+      <a href="clients.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clients</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Gestion</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="stock.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Stock</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Portail client</div>
+      <a href="../client/dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Vue client</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Gestion du stock</div></div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-gradient btn-sm" onclick="Notify.success('Commande déclenchée','Votre fournisseur a été contacté (simulé)')">📦 Commander fournisseur</button>
+  </div>
+</header>
+<main class="main-content">
+  <!-- Alertes stock -->
+  <div id="stock-alerts" class="mb-6"></div>
+  <div class="grid-2 gap-6">
+    <!-- Papiers -->
+    <div class="card">
+      <div class="card-header"><h4>📄 Stocks papier</h4></div>
+      <div class="card-body p-0" id="papier-stocks"></div>
+    </div>
+    <!-- Consommables V1000 -->
+    <div class="card">
+      <div class="card-header"><h4>🖨️ Consommables Canon V1000</h4></div>
+      <div class="card-body" id="toner-stocks"></div>
+    </div>
+  </div>
+</main>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('ADMIN')) return;
+  await Storage.init();
+  const stocks = Storage.getStocks();
+  const papiers = stocks.filter(s=>s.type==='papier');
+  const consommables = stocks.filter(s=>s.type==='consommable');
+
+  // Alertes
+  const problemes = stocks.filter(s=>s.statut!=='ok');
+  document.getElementById('stock-alerts').innerHTML = problemes.map(s=>`
+    <div class="alert ${s.statut==='rupture'?'alert-danger':'alert-warning'} mb-3">
+      <span class="alert-icon">${s.statut==='rupture'?'🔴':'⚠️'}</span>
+      <div><div class="alert-title">${s.nom}</div>
+      <div>${s.statut==='rupture'?'RUPTURE DE STOCK':'Stock bas'} — ${s.qty||s.qty_pct+'%'} restant(s)</div></div>
+    </div>`).join('');
+
+  // Papiers
+  document.getElementById('papier-stocks').innerHTML = papiers.map(s=>{
+    const pct = Math.round(s.qty/Math.max(s.seuil*5,1)*100);
+    const color = s.statut==='rupture'?'danger':s.statut==='low'?'warning':'';
+    return`<div class="stock-item p-4">
+      <div class="stock-info">
+        <div class="stock-name">${s.nom}</div>
+        <div class="stock-detail">${s.format||''} · Seuil alerte : ${s.seuil} ${s.unite}</div>
+        <div class="progress mt-2" style="width:180px;">
+          <div class="progress-bar${color?' '+color:''}" style="width:${Math.min(100,pct)}%"></div>
+        </div>
+      </div>
+      <div class="stock-qty" style="color:${s.statut==='rupture'?'var(--danger-dark)':s.statut==='low'?'var(--warning-dark)':'var(--success-dark)'}">
+        ${s.qty}<div class="text-xs text-muted">${s.unite}</div>
+        <span class="badge ${s.statut==='rupture'?'badge-danger':s.statut==='low'?'badge-warning':'badge-success'} badge-sm mt-1">${s.statut==='rupture'?'Rupture':s.statut==='low'?'Bas':'OK'}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Consommables
+  document.getElementById('toner-stocks').innerHTML = consommables.map(t=>{
+    const pct = t.qty_pct||0;
+    const color = pct<30?'danger':pct<50?'warning':'';
+    const colorStyle = pct<30?'var(--danger-dark)':pct<50?'var(--warning-dark)':'var(--success-dark)';
+    return`<div class="mb-4">
+      <div class="flex justify-between items-center mb-1">
+        <span class="font-semibold text-sm">${t.nom}</span>
+        <span class="font-mono font-bold text-sm" style="color:${colorStyle};">${pct}%</span>
+      </div>
+      <div class="progress progress-lg">
+        <div class="progress-bar${color?' '+color:''}" style="width:${pct}%"></div>
+      </div>
+      <div class="text-xs text-muted mt-1">Dernier remplacement : ${t.dernier_remplacement||'—'}</div>
+    </div>`;
+  }).join('');
+});
+</script>
+</body></html>

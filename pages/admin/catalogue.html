@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Catalogue — Admin — Admin Simpact</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Administration</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>SA</div>
+      <div>
+        <div class="user-name" data-user-name>Admin</div>
+        <div class="user-role" style="color:rgba(233,30,99,.8);font-size:.625rem;font-weight:700;">ADMINISTRATEUR</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Vue d'ensemble</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="reporting.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        <span>Reporting</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Production</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Commandes</span>
+      </a>
+      <a href="clients.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clients</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Gestion</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="stock.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Stock</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Portail client</div>
+      <a href="../client/dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Vue client</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Gestion catalogue & prix</div></div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-secondary btn-sm" onclick="Notify.info('Rechargé','pricing_matrix.json rechargé depuis le disque (simulé)')">↻ Recharger pricing.json</button>
+  </div>
+</header>
+<main class="main-content">
+  <div class="alert alert-info mb-6">
+    <span class="alert-icon">ℹ</span>
+    <div><div class="alert-title">Modification des prix</div>
+    <div>Les modifications effectuées ici sont sauvegardées en localStorage. Pour une modification permanente, éditez le fichier <strong>data/pricing_matrix.json</strong> directement.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h4>Grilles tarifaires — Consultation</h4></div>
+    <div class="card-body">
+      <div class="tabs mb-4" data-tabs>
+        <button class="tab active" data-tab="recto" onclick="showTarifAdmin('recto',this)">Flyer Recto</button>
+        <button class="tab" data-tab="rv" onclick="showTarifAdmin('rv',this)">Flyer R/V</button>
+        <button class="tab" data-tab="depliant" onclick="showTarifAdmin('depliant',this)">Dépliant</button>
+        <button class="tab" data-tab="entete" onclick="showTarifAdmin('entete',this)">En-tête</button>
+        <button class="tab" data-tab="cv" onclick="showTarifAdmin('cv',this)">Cartes de visite</button>
+        <button class="tab" data-tab="brochure" onclick="showTarifAdmin('brochure',this)">Brochure</button>
+      </div>
+      <div id="tarif-admin-table"></div>
+    </div>
+  </div>
+</main>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+const TARIFS_ADMIN = {
+  recto:{title:"Flyer Recto (UA4 max → Prix lot TND)",cols:["UA4 max","Prix HT","Prix TTC","PU HT estimé"],
+    data:[[24,36],[49,66],[99,100],[249,230],[498,350],[747,490],[996,610],[1494,890],[1992,1150],[2988,1700]]},
+  rv:{title:"Flyer R/V (UA4 max → Prix lot TND)",cols:["UA4 max","Prix HT","Prix TTC","PU HT estimé"],
+    data:[[24,40],[49,76],[99,125],[249,280],[498,450],[747,640],[996,840],[1494,1180],[1992,1540],[2988,2200]]},
+  depliant:{title:"Dépliant R/V (UA4 max → Prix lot TND)",cols:["UA4 max","Prix HT","Prix TTC",""],
+    data:[[50,29],[100,47],[200,84],[400,175],[1000,410],[2000,760],[3000,1050],[4000,1350],[5000,1620],[10000,3050],[20000,5800]]},
+  entete:{title:"En-tête Recto",cols:["UA4 max","Prix HT","Prix TTC",""],
+    data:[[10,28.5],[25,36],[50,59],[100,90],[200,156],[500,340],[1000,519],[2000,999],[5000,2490],[10000,4990]]},
+  cv:{title:"Cartes de visite",cols:["Quantité","Sans pelliculage","Avec pelliculage",""],
+    data:[[100,20,28],[200,36,44],[500,50,59],[1000,79,89],[1500,109,119],[2000,122,136],[2500,149,171],[5000,249,299],[10000,479,560]]},
+  brochure:{title:"Brochure couleur — Taux par UA4",cols:["UA4 min","UA4 max","Prix/UA4 R/V","Prix/UA4 Recto"],
+    data:[[0,25,3.00,2.80],[25,50,2.50,2.30],[50,100,2.00,1.80],[100,200,1.90,1.70],[200,300,1.80,1.60],[300,400,1.70,1.50],[400,500,1.60,1.40],[500,9999,1.50,1.30]]},
+};
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('ADMIN')) return;
+  showTarifAdmin('recto', document.querySelector('.tab'));
+});
+
+function showTarifAdmin(key, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const t = TARIFS_ADMIN[key];
+  document.getElementById('tarif-admin-table').innerHTML = `
+    <div class="text-sm font-semibold text-muted mb-3">${t.title}</div>
+    <div class="table-wrap"><table class="table">
+      <thead><tr>${t.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+      <tbody>${t.data.map(row=>`<tr>${row.map((v,i)=>`<td class="${i>0?'tnd':''} font-mono">${v===9999?'∞':v}</td>`).join('')}</tr>`).join('')}
+      </tbody>
+    </table></div>
+    <div class="mt-4 text-xs text-muted">💡 Pour modifier ces tarifs, éditez le fichier <code>data/pricing_matrix.json</code> et rechargez le portail.</div>`;
+}
+</script>
+</body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simpact B2B — Portail d'impression numérique</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<style>
+body{background:var(--primary-900);display:flex;align-items:center;justify-content:center;min-height:100vh;}
+.splash{text-align:center;}
+.splash-logo{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#00B8D4,#E91E63);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:2.2rem;color:white;margin:0 auto 20px;box-shadow:0 8px 32px rgba(0,184,212,.4);animation:bounceIn .6s ease;}
+.splash-name{font-family:'Outfit',sans-serif;font-size:2.5rem;font-weight:800;color:white;}
+.splash-sub{color:rgba(255,255,255,.4);margin-top:8px;}
+.loading-dots{margin-top:32px;display:flex;gap:8px;justify-content:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan-500);}
+.dot:nth-child(1){animation:pulse 1.4s .0s ease infinite;}
+.dot:nth-child(2){animation:pulse 1.4s .2s ease infinite;}
+.dot:nth-child(3){animation:pulse 1.4s .4s ease infinite;}
+@keyframes bounceIn{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.1)}80%{transform:scale(.95)}100%{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+<div class="splash animate-fade-in">
+  <div class="splash-logo">S</div>
+  <div class="splash-name">SIMPACT</div>
+  <div class="splash-sub">Portail B2B · Chargement en cours…</div>
+  <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+</div>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+(async () => {
+  await Storage.init();
+  Auth.init();
+  await new Promise(r => setTimeout(r, 1200));
+  if (Auth.isLoggedIn()) {
+    Auth.redirectAfterLogin();
+  } else {
+    window.location.href = 'pages/login.html';
+  }
+})();
+</script>
+</body>
+</html>

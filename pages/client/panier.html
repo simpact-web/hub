@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Panier — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Vos projets, notre expertise</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>?</div>
+      <div>
+        <div class="user-name" data-user-name>Chargement…</div>
+        <div class="user-role" data-user-role></div>
+        <span class="user-segment" data-user-segment></span>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Menu principal</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a href="configurateur.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        <span>Nouveau devis</span>
+      </a>
+      <a href="panier.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Panier</span>
+        <span class="nav-badge hidden" data-cart-badge>0</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Suivi</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Mes commandes</span>
+      </a>
+      <a href="devis.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        <span>Mes devis</span>
+      </a>
+      <a href="fichiers.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Mes fichiers</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Ressources</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="profil.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mon profil</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Mon panier</div></div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-secondary btn-sm" onclick="window.location.href='configurateur.html'">+ Ajouter un produit</button>
+  </div>
+</header>
+<main class="main-content">
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;">
+    <div>
+      <div id="cart-items"></div>
+    </div>
+    <div>
+      <!-- Récapitulatif -->
+      <div class="card" style="position:sticky;top:88px;">
+        <div class="card-header"><h4>Récapitulatif</h4></div>
+        <div class="card-body" id="cart-summary">
+          <div class="empty-state"><div class="empty-state-icon">🛒</div><div class="empty-state-title">Panier vide</div></div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-gradient w-full" id="btn-validate" disabled onclick="validerCommande()">Valider la commande</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Modal validation -->
+<div class="modal-overlay" id="modal-validate" onclick="if(event.target===this)App.closeModal('modal-validate')">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title">Confirmer la commande</span>
+      <button class="modal-close" onclick="App.closeModal('modal-validate')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Mode de livraison</label>
+        <select class="form-control" id="livraison-select">
+          <option value="gratuit">Retrait en imprimerie (gratuit)</option>
+          <option value="grand_tunis">Livraison Grand Tunis (+5 TND HT)</option>
+          <option value="national">Livraison nationale (+8 TND HT)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Instructions spéciales</label>
+        <textarea class="form-control" id="order-note" placeholder="Instructions de livraison, conditionnement, références…" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="App.closeModal('modal-validate')">Annuler</button>
+      <button class="btn btn-gradient btn-sm" onclick="confirmerCommande()">Confirmer la commande</button>
+    </div>
+  </div>
+</div>
+<!-- Modal confirmation -->
+<div class="modal-overlay" id="modal-confirmed" onclick="">
+  <div class="modal modal-sm" style="text-align:center;">
+    <div class="card-body p-8">
+      <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+      <h3 style="margin-bottom:8px;">Commande validée !</h3>
+      <p id="confirm-id" class="text-muted mb-6"></p>
+      <div class="flex flex-col gap-2">
+        <button class="btn btn-primary" onclick="App.closeModal('modal-confirmed');window.location.href='commandes.html'">Voir mes commandes</button>
+        <button class="btn btn-secondary btn-sm" id="btn-dl-pdf" onclick="downloadPDF()">Télécharger le bon de commande PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/charts.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+let lastCmd = null;
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('CLIENT')) return;
+  await Storage.init();
+  renderCart();
+  window.addEventListener('cart:updated', renderCart);
+});
+
+function renderCart() {
+  const items = Storage.getPanier();
+  const area = document.getElementById('cart-items');
+  if (!items.length) {
+    area.innerHTML = `<div class="card"><div class="card-body"><div class="empty-state">
+      <div class="empty-state-icon">🛒</div>
+      <div class="empty-state-title">Votre panier est vide</div>
+      <div class="empty-state-text">Configurez un produit pour l'ajouter ici</div>
+      <button class="btn btn-gradient btn-sm" onclick="window.location.href='configurateur.html'">Configurer un produit</button>
+    </div></div></div>`;
+    document.getElementById('btn-validate').disabled = true;
+    document.getElementById('cart-summary').innerHTML = '<div class="empty-state"><div class="empty-state-icon">🛒</div><div class="empty-state-title">Panier vide</div></div>';
+    return;
+  }
+  area.innerHTML = items.map(item => `
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="flex gap-4 items-start">
+          <div style="font-size:2rem;">${getProdIcon(item.config?.produit)}</div>
+          <div class="flex-1">
+            <div class="font-semibold font-primary mb-1">${item.produit_label}</div>
+            <div class="text-sm text-muted mb-2">${describeConfig(item.config)}</div>
+            <div class="flex gap-2 items-center">
+              <span class="badge ${item.fichier_status==='valide'?'badge-success':'badge-warning'} badge-sm">
+                ${item.fichier_status==='valide'?'✅ Fichier fourni':'⚠️ Fichier manquant'}
+              </span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="tnd font-extrabold text-2xl" style="font-family:Space Mono,monospace;color:var(--cyan-600);">${Utils.tnd(item.devis?.total_ttc,0)}</div>
+            <div class="text-xs text-muted">TTC · ${Utils.tnd(item.devis?.total_ht,0)} HT</div>
+            <button class="btn btn-danger btn-sm mt-2" onclick="Cart.remove('${item.panier_id}')">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const totalHT = Cart.getTotal();
+  const totalTTC = Cart.getTotalTTC();
+  document.getElementById('cart-summary').innerHTML = `
+    <div class="price-line"><span>Sous-total HT</span><span class="tnd font-semibold">${Utils.tnd(totalHT)}</span></div>
+    <div class="price-line text-muted"><span>TVA 19%</span><span class="tnd">${Utils.tnd(totalHT*0.19)}</span></div>
+    <div class="divider"></div>
+    <div class="price-line" style="font-size:1.125rem;font-weight:800;"><span>Total TTC</span><span class="tnd" style="color:var(--cyan-600);">${Utils.tnd(totalTTC,0)}</span></div>
+    <div class="mt-3 text-xs text-muted">⚠️ Le règlement s'effectue directement auprès de Simpact — aucun paiement en ligne.</div>`;
+  document.getElementById('btn-validate').disabled = false;
+}
+
+function getProdIcon(p) {
+  const m={'flyer':'📄','carte_visite':'💳','depliant':'📰','brochure':'📖','livre_nb':'📚','entete':'📝','affiche':'🖼'};
+  return m[p]||'🖨';
+}
+
+function describeConfig(c) {
+  if (!c) return '';
+  const parts=[];
+  if (c.format) parts.push(c.format.replace('_',' ').toUpperCase());
+  if (c.faces) parts.push(c.faces==='rv'?'Recto/Verso':'Recto');
+  if (c.pages) parts.push(c.pages+' pages');
+  if (c.papier) parts.push(c.papier.replace('-',' '));
+  if (c.quantite) parts.push('×'+c.quantite);
+  if (c.urgence&&c.urgence!=='standard') parts.push(c.urgence==='urgent_24h'?'⚡Urgent':'⚡Express');
+  return parts.join(' · ');
+}
+
+function validerCommande() { App.openModal('modal-validate'); }
+
+function confirmerCommande() {
+  const livraison = document.getElementById('livraison-select').value;
+  const note = document.getElementById('order-note').value;
+  const cmd = Cart.validerCommande(livraison, note);
+  if (cmd) {
+    lastCmd = cmd;
+    App.closeModal('modal-validate');
+    document.getElementById('confirm-id').textContent = 'N° '+cmd.id;
+    App.openModal('modal-confirmed');
+    renderCart();
+  }
+}
+
+function downloadPDF() {
+  if (lastCmd) PDF.genererBonCommande(lastCmd.id);
+}
+</script>
+</body></html>

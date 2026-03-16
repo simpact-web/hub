@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Configurateur — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+<style>
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+.product-card{border:2px solid var(--gray-200);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;transition:var(--transition-base);background:white;}
+.product-card:hover{border-color:var(--cyan-400);background:var(--cyan-50);}
+.product-card.selected{border-color:var(--cyan-500);background:var(--cyan-50);box-shadow:0 0 0 3px rgba(0,184,212,.15);}
+.product-card .icon{font-size:1.75rem;margin-bottom:6px;}
+.product-card .label{font-size:.6875rem;font-weight:700;color:var(--gray-700);font-family:'Outfit',sans-serif;}
+.format-btn,.face-btn{border:2px solid var(--gray-200);border-radius:8px;padding:10px 14px;cursor:pointer;transition:var(--transition-fast);background:white;font-family:'Outfit',sans-serif;font-weight:600;font-size:.8125rem;text-align:center;}
+.format-btn:hover,.face-btn:hover{border-color:var(--cyan-400);}
+.format-btn.selected,.face-btn.selected{border-color:var(--cyan-500);background:var(--cyan-100);color:var(--cyan-700,#0097A7);}
+.format-btn .dims{font-size:.625rem;font-weight:400;color:var(--gray-400);display:block;margin-top:2px;}
+.config-step{margin-bottom:24px;}
+.step-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-400);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--cyan-500);color:white;font-size:.625rem;display:inline-flex;align-items:center;justify-content:center;font-weight:800;}
+.machine-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:'Outfit',sans-serif;}
+.machine-v1000{background:#E8F5E9;color:#388E3C;}
+.machine-km{background:#212121;color:white;}
+.price-anim{transition:all .25s ease;}
+.price-changed{animation:pricePulse .3s ease;}
+.comparateur-row{padding:10px 12px;border-radius:8px;cursor:pointer;transition:var(--transition-fast);display:flex;align-items:center;justify-content:space-between;border:1.5px solid transparent;}
+.comparateur-row:hover{background:var(--gray-50);}
+.comparateur-row.best{background:var(--success-bg);border-color:rgba(76,175,80,.3);}
+.urgence-btn{border:2px solid var(--gray-200);border-radius:8px;padding:10px 14px;cursor:pointer;transition:var(--transition-fast);background:white;flex:1;text-align:center;}
+.urgence-btn.selected{border-color:var(--cyan-500);background:var(--cyan-50);}
+.urgence-btn .name{font-weight:700;font-size:.8125rem;font-family:'Outfit',sans-serif;}
+.urgence-btn .sub{font-size:.6875rem;color:var(--gray-500);}
+.urgence-btn .surcharge{font-size:.625rem;font-weight:700;color:var(--danger-dark);margin-top:3px;}
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Vos projets, notre expertise</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>?</div>
+      <div>
+        <div class="user-name" data-user-name>Chargement…</div>
+        <div class="user-role" data-user-role></div>
+        <span class="user-segment" data-user-segment></span>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Menu principal</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a href="configurateur.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        <span>Nouveau devis</span>
+      </a>
+      <a href="panier.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Panier</span>
+        <span class="nav-badge hidden" data-cart-badge>0</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Suivi</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Mes commandes</span>
+      </a>
+      <a href="devis.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        <span>Mes devis</span>
+      </a>
+      <a href="fichiers.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Mes fichiers</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Ressources</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="profil.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mon profil</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Configurateur de devis</div></div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-secondary btn-sm" onclick="window.location.href='panier.html'">🛒 Panier <span data-cart-badge class="badge badge-magenta hidden ml-1">0</span></button>
+  </div>
+</header>
+<main class="main-content">
+  <div class="config-layout" id="config-layout">
+    <!-- COL GAUCHE — Sélecteurs -->
+    <div>
+      <!-- Étape 1 : Produit -->
+      <div class="card mb-4">
+        <div class="card-header"><h4>1 · Choisir un produit</h4></div>
+        <div class="card-body">
+          <div class="product-grid" id="product-grid"></div>
+        </div>
+      </div>
+      <!-- Étape 2 : Configuration -->
+      <div class="card mb-4" id="config-options">
+        <div class="card-header"><h4>2 · Configuration</h4></div>
+        <div class="card-body" id="config-body">
+          <div class="empty-state" style="padding:24px;">
+            <div class="empty-state-icon">👆</div>
+            <div class="empty-state-title">Sélectionnez un produit</div>
+          </div>
+        </div>
+      </div>
+      <!-- Étape 3 : Fichier -->
+      <div class="card" id="file-step">
+        <div class="card-header"><h4>3 · Fichier de travail</h4></div>
+        <div class="card-body">
+          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+            <div class="upload-zone-icon">📎</div>
+            <div class="upload-zone-title">Déposez votre fichier ici</div>
+            <div class="upload-zone-hint">PDF, AI, EPS, TIFF · Max 100 MB · Fond perdu 3mm · CMJN</div>
+            <input type="file" id="file-input" accept=".pdf,.ai,.eps,.tiff,.tif,.png">
+          </div>
+          <div id="file-preview" class="hidden mt-3"></div>
+          <div class="mt-3">
+            <label class="form-check">
+              <input type="checkbox" id="file-later">
+              <span class="form-check-label text-muted">Je fournirai le fichier plus tard</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL CENTRE — Prévisualisation -->
+    <div>
+      <div class="card" style="position:sticky;top:88px;">
+        <div class="card-header">
+          <h4>Prévisualisation</h4>
+          <div id="machine-badge" class="machine-badge machine-v1000">Canon V1000 🟢</div>
+        </div>
+        <div class="card-body" style="min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <div id="product-preview" style="width:100%;display:flex;align-items:center;justify-content:center;">
+            <svg viewBox="0 0 200 160" style="width:180px;opacity:.3">
+              <rect x="20" y="10" width="160" height="140" rx="4" fill="none" stroke="#BDBDBD" stroke-width="2" stroke-dasharray="6,4"/>
+              <text x="100" y="85" text-anchor="middle" font-size="12" fill="#BDBDBD" font-family="Outfit">Sélectionnez un produit</text>
+            </svg>
+          </div>
+          <div id="preview-info" class="mt-4 w-full">
+            <div class="flex flex-wrap gap-2 justify-center" id="preview-badges"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL DROITE — Prix -->
+    <div>
+      <div class="card" style="position:sticky;top:88px;">
+        <div class="card-header"><h4>💰 Récapitulatif prix</h4></div>
+        <div class="card-body p-0">
+          <div id="price-display" style="padding:16px;">
+            <div class="empty-state" style="padding:24px 16px;">
+              <div class="empty-state-icon">🧮</div>
+              <div class="empty-state-title" style="font-size:.875rem;">Configurez le produit pour voir le prix</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="flex flex-col gap-2">
+            <button class="btn btn-gradient w-full" id="btn-add-cart" disabled onclick="addToCart()">Ajouter au panier</button>
+            <button class="btn btn-secondary w-full btn-sm" id="btn-save-model" disabled onclick="saveModel()">💾 Sauvegarder comme modèle</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparateur de paliers -->
+      <div class="card mt-4" id="comparateur-card" style="display:none;">
+        <div class="card-header"><h4>📊 Comparateur de quantités</h4></div>
+        <div class="card-body p-3" id="comparateur-body"></div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+const PRODUCTS = [
+  {id:'flyer',label:'Flyer',icon:'📄',machine:'V1000'},
+  {id:'carte_visite',label:'Carte de visite',icon:'💳',machine:'V1000'},
+  {id:'depliant',label:'Dépliant',icon:'📰',machine:'V1000'},
+  {id:'brochure',label:'Brochure',icon:'📖',machine:'V1000'},
+  {id:'livre_nb',label:'Livre N&B',icon:'📚',machine:'KM'},
+  {id:'entete',label:'En-tête',icon:'📝',machine:'V1000'},
+  {id:'affiche',label:'Affiche',icon:'🖼',machine:'V1000'},
+];
+
+const FORMATS = {
+  flyer:       [{id:'a5',label:'A5',dims:'14.8×21 cm'},{id:'seize23',label:'16×23',dims:'16×23 cm'},{id:'a4',label:'A4',dims:'21×29.7 cm'}],
+  carte_visite:[{id:'carte_visite',label:'8.5×5.5',dims:'Standard'}],
+  depliant:    [{id:'a4',label:'A4',dims:'21×29.7 cm'},{id:'seize23',label:'16×23',dims:'16×23 cm'},{id:'a3',label:'A3',dims:'29.7×42 cm'}],
+  brochure:    [{id:'a4',label:'A4',dims:'21×29.7 cm'},{id:'a5',label:'A5',dims:'14.8×21 cm'},{id:'seize23',label:'16×23',dims:'16×23 cm'}],
+  livre_nb:    [{id:'a4',label:'A4',dims:'21×29.7 cm'},{id:'a5',label:'A5',dims:'14.8×21 cm'},{id:'seize23',label:'16×23',dims:'16×23 cm'}],
+  entete:      [{id:'a4',label:'A4',dims:'21×29.7 cm'},{id:'seize23',label:'16×23',dims:'16×23 cm'}],
+  affiche:     [{id:'a3',label:'A3',dims:'29.7×42 cm'},{id:'a3plus',label:'A3+',dims:'33×48 cm'}],
+};
+
+const PAPIERS = [
+  {key:'offset-80',label:'Offset 80g'},{key:'offset-100',label:'Offset 100g'},
+  {key:'couche-90',label:'Couché 90g'},{key:'couche-115',label:'Couché 115g'},
+  {key:'couche-135',label:'Couché 135g'},{key:'couche-170',label:'Couché 170g'},
+  {key:'couche-200',label:'Couché 200g'},{key:'couche-250',label:'Couché 250g'},
+  {key:'couche-300',label:'Couché 300g'},{key:'couche-350',label:'Couché 350g'},
+  {key:'couche-400',label:'Couché 400g'},
+];
+
+const PAPIERS_COUV = PAPIERS.filter(p=>['couche-250','couche-300','couche-350'].includes(p.key));
+const PAPIERS_INT  = PAPIERS.filter(p=>['offset-80','offset-100','couche-90','couche-115','couche-135','couche-170'].includes(p.key));
+
+// État courant
+let cfg = {
+  produit:null,format:null,faces:'recto',quantite:500,
+  papier:'couche-135',papier_couv:'couche-350',pelliculage:false,pelliculage_couv:false,
+  pliage:null,rainage:false,coins_arrondis:false,reliure:null,reliure_pv:null,
+  pages:16,urgence:'standard',livraison:'gratuit',couverture_faces:'rv'
+};
+let lastDevis = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('CLIENT')) return;
+  await Storage.init();
+  renderProducts();
+  // Pré-remplir depuis URL
+  const params = new URLSearchParams(location.search);
+  if (params.get('produit')) selectProduct(params.get('produit'));
+  if (params.get('cfg')) {
+    try { const c = JSON.parse(decodeURIComponent(params.get('cfg'))); Object.assign(cfg,c); selectProduct(cfg.produit); } catch{}
+  }
+});
+
+function renderProducts() {
+  document.getElementById('product-grid').innerHTML = PRODUCTS.map(p=>
+    `<div class="product-card${cfg.produit===p.id?' selected':''}" onclick="selectProduct('${p.id}')">
+      <div class="icon">${p.icon}</div><div class="label">${p.label}</div>
+    </div>`
+  ).join('');
+}
+
+function selectProduct(id) {
+  cfg.produit = id;
+  renderProducts();
+  const p = PRODUCTS.find(x=>x.id===id);
+  // Machine badge
+  const mb = document.getElementById('machine-badge');
+  if (p.machine==='KM') { mb.className='machine-badge machine-km'; mb.textContent='Konica Minolta ⚫'; }
+  else { mb.className='machine-badge machine-v1000'; mb.textContent='Canon V1000 🟢'; }
+  // Réinitialiser format
+  cfg.format = FORMATS[id]?.[0]?.id || null;
+  renderConfig(id);
+  renderPreview(id);
+  calcAndShowPrice();
+}
+
+function renderConfig(produit) {
+  const fmts = FORMATS[produit] || [];
+  const isCV = produit==='carte_visite';
+  const isBrochure = produit==='brochure'||produit==='livre_nb';
+  const isDepliant = produit==='depliant';
+  const isEntete = produit==='entete';
+  const isAffiche = produit==='affiche';
+
+  let html = '';
+
+  // FORMAT
+  html += `<div class="config-step"><div class="step-label"><span class="step-num">1</span>Format</div>
+    <div class="flex flex-wrap gap-2">${fmts.map(f=>
+      `<div class="format-btn${cfg.format===f.id?' selected':''}" onclick="setCfg('format','${f.id}')">
+        ${f.label}<span class="dims">${f.dims}</span></div>`
+    ).join('')}</div></div>`;
+
+  // IMPRESSION
+  if (!isCV && !isBrochure) {
+    const facesOpts = isAffiche||isEntete ? [['recto','Recto']] : [['recto','Recto'],['rv','Recto/Verso']];
+    html += `<div class="config-step"><div class="step-label"><span class="step-num">2</span>Impression</div>
+      <div class="flex gap-2">${facesOpts.map(([v,l])=>
+        `<div class="face-btn${cfg.faces===v?' selected':''}" onclick="setCfg('faces','${v}')">${l}</div>`
+      ).join('')}</div></div>`;
+  }
+
+  // PAGES (brochure/livre)
+  if (isBrochure) {
+    const pagesOptions = [8,12,16,20,24,28,32,40,48,64,80,100,120,150,200];
+    html += `<div class="config-step"><div class="step-label"><span class="step-num">2</span>Nombre de pages</div>
+      <select class="form-control" onchange="setCfg('pages',parseInt(this.value))">
+        ${pagesOptions.map(p=>`<option value="${p}"${cfg.pages===p?' selected':''}>${p} pages</option>`).join('')}
+      </select></div>`;
+    // Papier intérieur
+    html += `<div class="config-step"><div class="step-label"><span class="step-num">3</span>Papier intérieur</div>
+      <select class="form-control" onchange="setCfg('papier',this.value)">
+        ${PAPIERS_INT.map(p=>`<option value="${p.key}"${cfg.papier===p.key?' selected':''}>${p.label}</option>`).join('')}
+      </select></div>`;
+    // Papier couverture
+    html += `<div class="config-step"><div class="step-label"><span class="step-num">4</span>Couverture</div>
+      <select class="form-control" onchange="setCfg('papier_couv',this.value)">
+        ${PAPIERS_COUV.map(p=>`<option value="${p.key}"${cfg.papier_couv===p.key?' selected':''}>${p.label}</option>`).join('')}
+      </select>
+      <div class="flex gap-2 mt-2">
+        ${[['recto','Recto'],['rv','R/V']].map(([v,l])=>
+          `<div class="face-btn${cfg.couverture_faces===v?' selected':''}" onclick="setCfg('couverture_faces','${v}')">${l}</div>`
+        ).join('')}
+      </div>
+      <label class="form-check mt-2"><input type="checkbox" ${cfg.pelliculage_couv?'checked':''} onchange="setCfg('pelliculage_couv',this.checked)"><span class="form-check-label">Pelliculage couverture</span></label>
+      </div>`;
+  } else {
+    // Papier standard
+    const paperStep = isBrochure ? 5 : 3;
+    html += `<div class="config-step"><div class="step-label"><span class="step-num">${paperStep}</span>Papier</div>
+      <select class="form-control" onchange="setCfg('papier',this.value)">
+        ${PAPIERS.map(p=>`<option value="${p.key}"${cfg.papier===p.key?' selected':''}>${p.label}</option>`).join('')}
+      </select></div>`;
+  }
+
+  // FINITIONS
+  const finStep = isBrochure ? 5 : 4;
+  let finHtml = '';
+  if (isCV) {
+    finHtml = `
+      <label class="form-check mb-2"><input type="checkbox" ${cfg.pelliculage?'checked':''} onchange="setCfg('pelliculage',this.checked)"><span class="form-check-label">Pelliculage (mat ou brillant)</span></label>
+      <label class="form-check"><input type="checkbox" ${cfg.coins_arrondis?'checked':''} onchange="setCfg('coins_arrondis',this.checked)"><span class="form-check-label">Coins arrondis</span></label>`;
+  } else if (isDepliant) {
+    finHtml = `
+      <label class="form-check mb-2"><input type="checkbox" ${cfg.rainage?'checked':''} onchange="setCfg('rainage',this.checked)"><span class="form-check-label">Rainage</span></label>
+      <label class="form-check mb-2"><input type="checkbox" ${cfg.pliage==='1_pli'?'checked':''} onchange="setCfg('pliage',this.checked?'1_pli':null)"><span class="form-check-label">Pliage 1 pli</span></label>
+      <label class="form-check"><input type="checkbox" ${cfg.pliage==='2_plis'?'checked':''} onchange="setCfg('pliage',this.checked?'2_plis':null)"><span class="form-check-label">Pliage 2 plis</span></label>`;
+  } else if (!isAffiche && !isEntete) {
+    finHtml = `
+      <label class="form-check mb-2"><input type="checkbox" ${cfg.pelliculage?'checked':''} onchange="setCfg('pelliculage',this.checked)"><span class="form-check-label">Pelliculage</span></label>`;
+  }
+  if (finHtml) {
+    html += `<div class="config-step"><div class="step-label"><span class="step-num">${finStep}</span>Finitions</div>${finHtml}</div>`;
+  }
+
+  // QUANTITÉ
+  html += `<div class="config-step"><div class="step-label"><span class="step-num">★</span>Quantité</div>
+    <div class="qty-input">
+      <button class="qty-btn" onclick="changeQty(-${qtyStep()})">−</button>
+      <input type="number" class="qty-field" id="qty-field" value="${cfg.quantite}" min="1" onchange="setCfg('quantite',parseInt(this.value)||1)">
+      <button class="qty-btn" onclick="changeQty(${qtyStep()})">+</button>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-2">
+      ${[100,250,500,1000,2000,5000].map(q=>`<button class="btn btn-secondary btn-sm" onclick="setCfg('quantite',${q})">${q}</button>`).join('')}
+    </div>
+    </div>`;
+
+  // URGENCE
+  html += `<div class="config-step"><div class="step-label"><span class="step-num">⚡</span>Délai</div>
+    <div class="flex gap-2">
+      <div class="urgence-btn${cfg.urgence==='standard'?' selected':''}" onclick="setCfg('urgence','standard')">
+        <div class="name">Standard</div><div class="sub">48h ouvrables</div>
+      </div>
+      <div class="urgence-btn${cfg.urgence==='urgent_24h'?' selected':''}" onclick="setCfg('urgence','urgent_24h')">
+        <div class="name">Urgent</div><div class="sub">24h</div><div class="surcharge">+30%</div>
+      </div>
+      <div class="urgence-btn${cfg.urgence==='express_4h'?' selected':''}" onclick="setCfg('urgence','express_4h')">
+        <div class="name">Express</div><div class="sub">4 heures</div><div class="surcharge">+60%</div>
+      </div>
+    </div></div>`;
+
+  document.getElementById('config-body').innerHTML = html;
+}
+
+function qtyStep() {
+  const q = cfg.quantite||100;
+  if (q < 100) return 10;
+  if (q < 500) return 50;
+  if (q < 2000) return 100;
+  return 500;
+}
+
+function setCfg(key, val) {
+  cfg[key] = val;
+  renderConfig(cfg.produit);
+  renderPreview(cfg.produit);
+  calcAndShowPrice();
+}
+
+function changeQty(delta) {
+  cfg.quantite = Math.max(1, (cfg.quantite||100) + delta);
+  renderConfig(cfg.produit);
+  calcAndShowPrice();
+}
+
+const calcDebounced = Utils.debounce(calcAndShowPrice, 250);
+
+function renderPreview(produit) {
+  const svgMap = {
+    flyer:`<svg viewBox="0 0 120 160" width="160"><rect x="5" y="5" width="110" height="150" rx="4" fill="#E0F7FA" stroke="#00B8D4" stroke-width="2"/><rect x="15" y="20" width="60" height="8" rx="2" fill="#00B8D4" opacity=".7"/><rect x="15" y="35" width="90" height="4" rx="2" fill="#B0BEC5"/><rect x="15" y="45" width="75" height="4" rx="2" fill="#B0BEC5"/><rect x="15" y="55" width="85" height="4" rx="2" fill="#B0BEC5"/><rect x="15" y="80" width="90" height="50" rx="4" fill="#B2EBF2" opacity=".5"/></svg>`,
+    carte_visite:`<svg viewBox="0 0 160 100" width="180"><rect x="5" y="5" width="150" height="90" rx="6" fill="#FCE4EC" stroke="#E91E63" stroke-width="2"/><rect x="20" y="25" width="50" height="7" rx="2" fill="#E91E63" opacity=".8"/><rect x="20" y="40" width="80" height="4" rx="2" fill="#BDBDBD"/><rect x="20" y="52" width="65" height="4" rx="2" fill="#BDBDBD"/><rect x="20" y="64" width="55" height="4" rx="2" fill="#BDBDBD"/></svg>`,
+    depliant:`<svg viewBox="0 0 180 140" width="180"><rect x="5" y="5" width="80" height="130" rx="3" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.5"/><rect x="90" y="5" width="85" height="130" rx="3" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5"/><line x1="90" y1="5" x2="90" y2="135" stroke="#90A4AE" stroke-width="1" stroke-dasharray="4,2"/><rect x="15" y="20" width="55" height="5" rx="2" fill="#2196F3" opacity=".7"/><rect x="100" y="20" width="60" height="5" rx="2" fill="#4CAF50" opacity=".7"/></svg>`,
+    brochure:`<svg viewBox="0 0 130 170" width="150"><rect x="5" y="5" width="120" height="160" rx="4" fill="#F3E5F5" stroke="#9C27B0" stroke-width="2"/><rect x="15" y="15" width="100" height="60" rx="3" fill="#CE93D8" opacity=".4"/><rect x="15" y="85" width="70" height="6" rx="2" fill="#9C27B0" opacity=".8"/><rect x="15" y="98" width="100" height="4" rx="2" fill="#B0BEC5"/><rect x="15" y="108" width="85" height="4" rx="2" fill="#B0BEC5"/></svg>`,
+    livre_nb:`<svg viewBox="0 0 130 170" width="150"><rect x="5" y="5" width="120" height="160" rx="4" fill="#FAFAFA" stroke="#424242" stroke-width="2"/><rect x="5" y="5" width="15" height="160" rx="2" fill="#424242"/><rect x="28" y="20" width="85" height="7" rx="2" fill="#212121" opacity=".8"/><rect x="28" y="40" width="85" height="3" rx="1" fill="#BDBDBD"/><rect x="28" y="50" width="75" height="3" rx="1" fill="#BDBDBD"/><rect x="28" y="60" width="80" height="3" rx="1" fill="#BDBDBD"/></svg>`,
+    entete:`<svg viewBox="0 0 160 120" width="180"><rect x="5" y="5" width="150" height="110" rx="3" fill="white" stroke="#CFD8DC" stroke-width="1.5"/><rect x="5" y="5" width="150" height="30" rx="3" fill="#E0F7FA"/><rect x="15" y="12" width="40" height="16" rx="2" fill="#00B8D4" opacity=".8"/><rect x="105" y="14" width="40" height="4" rx="2" fill="#B0BEC5"/><rect x="105" y="24" width="30" height="3" rx="2" fill="#B0BEC5"/><rect x="15" y="50" width="130" height="3" rx="1" fill="#EEEEEE"/></svg>`,
+    affiche:`<svg viewBox="0 0 120 170" width="150"><rect x="5" y="5" width="110" height="160" rx="4" fill="#E8F5E9" stroke="#4CAF50" stroke-width="2"/><rect x="15" y="60" width="80" height="50" rx="4" fill="#A5D6A7" opacity=".6"/><rect x="15" y="120" width="55" height="8" rx="3" fill="#4CAF50" opacity=".8"/></svg>`,
+  };
+  const fmtLabel = FORMATS[produit]?.find(f=>f.id===cfg.format)?.label || '';
+  document.getElementById('product-preview').innerHTML = svgMap[produit] || '';
+  const badges = [];
+  if (fmtLabel) badges.push(`<span class="badge badge-cyan">${fmtLabel}</span>`);
+  if (cfg.pages && (produit==='brochure'||produit==='livre_nb')) badges.push(`<span class="badge badge-default">${cfg.pages} pages</span>`);
+  if (cfg.quantite) badges.push(`<span class="badge badge-default">×${cfg.quantite}</span>`);
+  if (cfg.urgence!=='standard') badges.push(`<span class="badge badge-warning">${cfg.urgence==='urgent_24h'?'Urgent 24h':'Express 4h'}</span>`);
+  document.getElementById('preview-badges').innerHTML = badges.join('');
+}
+
+function calcAndShowPrice() {
+  if (!cfg.produit || !cfg.format) return;
+  try {
+    const devis = Pricing.calculerDevis({...cfg});
+    lastDevis = devis;
+    const pd = document.getElementById('price-display');
+    pd.innerHTML = `
+      <div style="padding:4px 0;">
+        ${devis.detail.map(d=>`
+          <div class="price-line">
+            <span class="label text-sm">${d.label}</span>
+            <span class="amount tnd">${Utils.tnd(d.montant)}</span>
+          </div>`).join('')}
+        <div class="divider"></div>
+        <div class="price-line">
+          <span class="label font-semibold">Total HT</span>
+          <span class="amount tnd font-semibold">${Utils.tnd(devis.total_ht)}</span>
+        </div>
+        <div class="price-line text-muted">
+          <span class="label">TVA 19%</span>
+          <span class="amount tnd">${Utils.tnd(devis.tva_montant)}</span>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--cyan-50),var(--magenta-50));border-radius:10px;padding:14px 12px;margin-top:10px;">
+          <div class="flex justify-between items-center">
+            <span class="font-extrabold" style="font-family:Outfit,sans-serif;font-size:1rem;">TOTAL TTC</span>
+            <span class="tnd" style="font-size:1.5rem;font-weight:800;color:var(--cyan-600);">${Utils.tnd(devis.total_ttc,0)}</span>
+          </div>
+          <div class="flex justify-between items-center mt-2 text-xs text-muted">
+            <span>Prix unitaire HT</span><span class="font-mono font-semibold">${Utils.tnd(devis.pu_ht,4)}</span>
+          </div>
+          <div class="flex justify-between items-center text-xs text-muted">
+            <span>Prix unitaire TTC</span><span class="font-mono font-semibold">${Utils.tnd(devis.pu_ttc,4)}</span>
+          </div>
+        </div>
+        <div class="mt-3 flex justify-between items-center text-xs text-muted">
+          <span>⏱ Délai estimé</span>
+          <span class="font-semibold">${Pricing.delaiEstime(cfg.produit, cfg.quantite, cfg.urgence)}</span>
+        </div>
+      </div>`;
+    pd.classList.add('price-anim');
+
+    document.getElementById('btn-add-cart').disabled = false;
+    document.getElementById('btn-save-model').disabled = false;
+
+    // Comparateur
+    const comp = Pricing.comparateurPaliers({...cfg});
+    const bestIdx = comp.reduce((bi,c,i,arr) => c.pu_ttc < arr[bi].pu_ttc ? i : bi, 0);
+    document.getElementById('comparateur-card').style.display = '';
+    document.getElementById('comparateur-body').innerHTML = comp.map((c,i)=>`
+      <div class="comparateur-row${i===bestIdx?' best':''}" onclick="setCfg('quantite',${c.quantite})">
+        <div>
+          <span class="font-semibold">${c.quantite} ex</span>
+          ${i===bestIdx?'<span class="badge badge-success badge-sm ml-2">Meilleur rapport Q/P</span>':''}
+        </div>
+        <div class="text-right">
+          <div class="tnd font-bold">${Utils.tnd(c.total_ttc,0)}</div>
+          <div class="text-xs text-muted">${Utils.tnd(c.pu_ttc,4)} / ex</div>
+        </div>
+      </div>`).join('');
+
+  } catch(e) {
+    console.error('Erreur calcul:', e);
+  }
+}
+
+function addToCart() {
+  if (!lastDevis) return;
+  Cart.add({...cfg}, lastDevis);
+}
+
+function saveModel() {
+  if (!cfg.produit) return;
+  const user = Auth.current;
+  const nom = prompt('Nom du modèle :', Cart._labelProduit(cfg));
+  if (!nom) return;
+  Storage.saveModele(user.id, { nom, config:{...cfg} });
+  Notify.success('Modèle sauvegardé', nom);
+}
+
+// Upload zone
+document.addEventListener('DOMContentLoaded', () => {
+  const zone = document.getElementById('upload-zone');
+  const input = document.getElementById('file-input');
+  zone?.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone?.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone?.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0]); });
+  input?.addEventListener('change', () => handleFile(input.files[0]));
+});
+
+function handleFile(file) {
+  if (!file) return;
+  const preview = document.getElementById('file-preview');
+  preview.classList.remove('hidden');
+  preview.innerHTML = `
+    <div class="alert alert-success">
+      <span class="alert-icon">✓</span>
+      <div><div class="alert-title">${file.name}</div><div>${Utils.formatBytes(file.size)} — En attente de validation Simpact</div></div>
+    </div>`;
+  Notify.info('Fichier prêt', file.name + ' sera transmis à la commande.');
+}
+</script>
+</body></html>

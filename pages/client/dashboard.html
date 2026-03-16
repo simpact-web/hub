@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tableau de bord — Simpact B2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+<link rel="stylesheet" href="../../assets/css/charts.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-shell">
+
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Vos projets, notre expertise</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>?</div>
+      <div>
+        <div class="user-name" data-user-name>Chargement…</div>
+        <div class="user-role" data-user-role></div>
+        <span class="user-segment" data-user-segment></span>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Menu principal</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Tableau de bord</span>
+      </a>
+      <a href="configurateur.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        <span>Nouveau devis</span>
+      </a>
+      <a href="panier.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Panier</span>
+        <span class="nav-badge hidden" data-cart-badge>0</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Suivi</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Mes commandes</span>
+      </a>
+      <a href="devis.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        <span>Mes devis</span>
+      </a>
+      <a href="fichiers.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Mes fichiers</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Ressources</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="profil.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mon profil</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<!-- HEADER -->
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div>
+    <div class="header-title">Tableau de bord</div>
+  </div>
+  <div class="header-actions ml-auto">
+    <button class="btn btn-primary btn-sm" onclick="window.location.href='configurateur.html'">+ Nouveau devis</button>
+    <button class="header-icon-btn" title="Notifications"><span>🔔</span><div class="header-notif-dot"></div></button>
+  </div>
+</header>
+<!-- MAIN -->
+<main class="main-content">
+  <!-- Welcome -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="page-title">Bonjour <span data-user-prenom>…</span> 👋</h1>
+      <p class="page-subtitle" id="dash-date">Chargement…</p>
+    </div>
+    <div class="flex gap-3">
+      <button class="btn btn-secondary btn-sm" onclick="window.location.href='commandes.html'">Mes commandes</button>
+      <button class="btn btn-gradient btn-sm" onclick="window.location.href='configurateur.html'">Configurer un produit</button>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="grid-kpi mb-6" id="kpi-area">
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+    <div class="skeleton skeleton-card"></div>
+  </div>
+
+  <!-- Alertes -->
+  <div id="alerts-area" class="mb-6"></div>
+
+  <div class="grid-2 gap-6 mb-6">
+    <!-- Commandes récentes -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Commandes récentes</h3>
+        <a href="commandes.html" class="btn btn-ghost btn-sm">Tout voir →</a>
+      </div>
+      <div id="recent-orders">
+        <div class="p-6"><div class="skeleton skeleton-text w-full mb-3"></div><div class="skeleton skeleton-text w-full mb-3"></div><div class="skeleton skeleton-text w-full"></div></div>
+      </div>
+    </div>
+    <!-- Commander rapidement -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Commander rapidement</h3>
+        <span class="badge badge-cyan badge-sm">Mes produits fréquents</span>
+      </div>
+      <div id="quick-order" class="card-body">
+        <div class="skeleton skeleton-card"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mini graphique CA -->
+  <div class="chart-container">
+    <div class="chart-header">
+      <span class="chart-title">Évolution de mes commandes — 6 derniers mois</span>
+    </div>
+    <div class="chart-canvas-wrap" style="height:220px;">
+      <canvas id="chart-ca-client"></canvas>
+    </div>
+  </div>
+</main>
+</div>
+
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/pricing.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/cart.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/charts.js"></script>
+<script src="../../assets/js/pdf.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!Auth.guard('CLIENT')) return;
+  const user = Auth.current;
+  document.getElementById('dash-date').textContent = new Date().toLocaleDateString('fr-TN', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  await new Promise(r => setTimeout(r, 600));
+
+  const client = Storage.getClient(user.id);
+  const commandes = Storage.getCommandes(user.id);
+  const enCours = commandes.filter(c => !['delivered','cancelled'].includes(c.statut));
+
+  // KPIs
+  const moisCourant = commandes.filter(c => c.date?.startsWith(new Date().toISOString().slice(0,7)));
+  const caClient = moisCourant.reduce((s,c) => s + (c.montant_ttc||0), 0);
+  document.getElementById('kpi-area').innerHTML = `
+    <div class="kpi-card cyan">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="kpi-label">Commandes en cours</div>
+          <div class="kpi-value">${enCours.length}</div>
+          <div class="flex gap-2 mt-2 flex-wrap">
+            ${enCours.slice(0,3).map(c=>`<span class="status-badge ${Utils.statusClass(c.statut)}">${Utils.statusLabel(c.statut)}</span>`).join('')}
+          </div>
+        </div>
+        <div class="kpi-icon cyan">📦</div>
+      </div>
+    </div>
+    <div class="kpi-card magenta">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="kpi-label">CA commandé ce mois</div>
+          <div class="kpi-value tnd">${Utils.tnd(caClient,0)}</div>
+          <div class="kpi-trend up mt-2">↑ Actif</div>
+        </div>
+        <div class="kpi-icon magenta">💰</div>
+      </div>
+    </div>
+    <div class="kpi-card success">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="kpi-label">Commandes ce mois</div>
+          <div class="kpi-value">${moisCourant.length}</div>
+          <div class="kpi-trend up mt-2">Segment ${Utils.segmentLabel(client?.segment||'standard')}</div>
+        </div>
+        <div class="kpi-icon success">📋</div>
+      </div>
+    </div>
+  `;
+
+  // Alertes
+  const attenteFichier = commandes.filter(c => c.statut === 'waiting_file');
+  if (attenteFichier.length) {
+    document.getElementById('alerts-area').innerHTML = `
+      <div class="alert alert-warning">
+        <span class="alert-icon">⚠️</span>
+        <div><div class="alert-title">Fichier manquant sur ${attenteFichier.length} commande(s)</div>
+        <div>Commande(s) en attente : ${attenteFichier.map(c=>c.id).join(', ')} — <a href="commandes.html">Envoyer les fichiers →</a></div></div>
+      </div>
+    `;
+  }
+
+  // Commandes récentes
+  const recent = commandes.slice(0,5);
+  document.getElementById('recent-orders').innerHTML = recent.length ? `
+    <div style="overflow-x:auto;">
+    <table class="table">
+      <thead><tr><th>N° Commande</th><th>Produit</th><th>Date</th><th>Montant TTC</th><th>Statut</th><th></th></tr></thead>
+      <tbody>${recent.map(c=>`
+        <tr>
+          <td class="font-semibold font-mono text-sm">${c.id}</td>
+          <td>${c.produit||'—'}</td>
+          <td class="text-muted">${Utils.dateFormat(c.date)}</td>
+          <td class="tnd font-semibold">${Utils.tnd(c.montant_ttc,0)}</td>
+          <td><span class="status-badge ${Utils.statusClass(c.statut)}">${Utils.statusLabel(c.statut)}</span></td>
+          <td><button class="btn btn-secondary btn-sm" onclick="reorder('${c.id}')">↻ Re-commander</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
+  ` : `<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-title">Aucune commande</div><div class="empty-state-text">Votre premier devis est à un clic !</div><button class="btn btn-gradient btn-sm" onclick="window.location.href='configurateur.html'">Démarrer</button></div>`;
+
+  // Commander rapidement
+  const produitsFavoris = [
+    {label:'Flyer A5 R/V',icone:'📄',config:{produit:'flyer',format:'a5',faces:'rv',quantite:500,papier:'couche-135'}},
+    {label:'Carte de visite',icone:'💳',config:{produit:'carte_visite',format:'carte_visite',quantite:500,pelliculage:false}},
+    {label:'Brochure A4',icone:'📖',config:{produit:'brochure',format:'a4',pages:16,quantite:100}},
+    {label:'En-tête A4',icone:'📝',config:{produit:'entete',format:'a4',faces:'recto',quantite:1000,papier:'offset-80'}},
+  ];
+  document.getElementById('quick-order').innerHTML = produitsFavoris.map(p => {
+    const d = Pricing.calculerDevis({...p.config,urgence:'standard'});
+    return `<div class="card card-hover p-4 mb-3 cursor-pointer flex items-center gap-4" onclick="window.location.href='configurateur.html?produit=${p.config.produit}'">
+      <div style="font-size:1.5rem;">${p.icone}</div>
+      <div class="flex-1"><div class="font-semibold text-sm">${p.label}</div><div class="text-muted text-xs">×${p.config.quantite||100}</div></div>
+      <div class="text-right"><div class="tnd font-bold text-cyan">${Utils.tnd(d.total_ttc,0)}</div><div class="text-xs text-muted">TTC</div></div>
+      <button class="btn btn-primary btn-sm">Commander</button>
+    </div>`;
+  }).join('');
+
+  // Graphique
+  const labels = ['Oct','Nov','Déc','Jan','Fév','Mar'];
+  const data = [180, 240, 195, 310, 275, caClient||320];
+  Charts.caLineChart('chart-ca-client', labels, data);
+});
+
+function reorder(cmdId) {
+  const cmd = Storage.getCommande(cmdId);
+  if (cmd?.config) window.location.href = `configurateur.html?cfg=${encodeURIComponent(JSON.stringify(cmd.config))}`;
+}
+</script>
+</body></html>
