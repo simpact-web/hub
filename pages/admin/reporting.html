@@ -142,6 +142,63 @@
       <div style="height:240px;"><canvas id="chart-color-nb"></canvas></div>
     </div>
   </div>
+
+  <!-- Section 5 : Coût de revient — SUPER ADMIN uniquement -->
+  <div id="section-cdr" style="display:none;">
+    <div class="mb-2 flex items-center justify-between">
+      <h2 class="page-title" style="font-size:1.125rem;">💎 Coût de revient & Marges</h2>
+      <span class="badge badge-magenta">Super Admin uniquement</span>
+    </div>
+
+    <!-- KPIs marges -->
+    <div class="grid-4 gap-4 mb-6" id="margin-kpis"></div>
+
+    <div class="grid-2 gap-6 mb-6">
+      <!-- Tableau CPC Azur Colors -->
+      <div class="card">
+        <div class="card-header">
+          <h4>CPC Canon V1000 — Source Azur Colors</h4>
+          <span class="badge badge-default badge-sm">Devis 05/03/2026</span>
+        </div>
+        <div class="card-body p-0">
+          <table class="table">
+            <thead><tr><th>Composante</th><th>Coût/click A4</th><th>% du total</th></tr></thead>
+            <tbody id="cpc-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Marges par produit -->
+      <div class="chart-container">
+        <div class="chart-header"><span class="chart-title">Marge brute estimée par famille produit</span></div>
+        <div style="height:280px;"><canvas id="chart-margins"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Tableau coût de revient par commande -->
+    <div class="card mb-6">
+      <div class="card-header">
+        <h4>Coût de revient par commande</h4>
+        <span class="text-muted text-sm">Basé sur CPC Azur Colors × UA4 + papier + MO ABC</span>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>N° Commande</th>
+              <th>Client</th>
+              <th>Produit</th>
+              <th>Prix vente HT</th>
+              <th>Coût estimé</th>
+              <th>Marge brute</th>
+              <th>Marge %</th>
+            </tr>
+          </thead>
+          <tbody id="cdr-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </main>
 </div>
 <div id="toast-container" class="toast-container"></div>
@@ -159,6 +216,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!Auth.guard('ADMIN')) return;
   App.setupUI();
   loadReporting();
+
+  // Révéler section coût de revient si Super Admin
+  if (Auth.isSuperAdmin()) {
+    document.getElementById('section-cdr').style.display = '';
+    loadCoutRevient();
+  }
 });
 
 function setPeriod(p, btn) {
@@ -229,6 +292,217 @@ function exportCSV() {
   a.download = 'simpact_commandes_'+(new Date().toISOString().split('T')[0])+'.csv';
   a.click();
   Notify.success('Export CSV téléchargé','');
+}
+
+// ══════════════════════════════════════════════════════════
+// COÛT DE REVIENT — Source : Devis Azur Colors 05/03/2026
+// Canon imagePRESS V1000 + méthode ABC Simpact
+// ══════════════════════════════════════════════════════════
+
+// CPC réel issu du devis Azur Colors (cost per click A4)
+const CPC = {
+  // Pièces mécaniques fixes (par click, indépendant de la couverture)
+  pieces: {
+    drum_bk:               0.0016,
+    belt_fixing:           0.0019,
+    roller_pressure:       0.0012,
+    plate_separation:      0.0001,
+    belt_inter_transfer:   0.0034,
+    primary_corona:        0.0005,
+    transfer_cleaning:     0.0006,
+    fixing_pad:            0.0014,
+    transfer_cleaner:      0.0011,
+    get total() { return Object.entries(this).filter(([k])=>k!=='total'&&k!=='get total').reduce((s,[,v])=>s+v,0); }
+  },
+  // Tambours couleur (seulement si quadri)
+  drums_color:             0.0117, // C+M+Y = 3 × 0.0039
+  // Toners — coût additionnel par % de couverture
+  noir_par_pct:            0.00238,   // developing BK + toner T11 BK à 5%
+  couleur_par_pct_canal:   0.00274,   // developing CMY + toner T11 C/M/Y à 5%
+  // Coûts fixes ABC (MO + amortissement + énergie)
+  mo_abc:                  0.0353,
+  amortissement:           0.0170,
+  energie:                 0.0031,
+  get fixes_total() { return this.mo_abc + this.amortissement + this.energie; }
+};
+
+// Profils de couverture par produit (% N, % C, % M, % Y)
+const COUVERTURES = {
+  flyer:        {n:8,  c:20, m:20, y:20, quadri:true},
+  carte_visite: {n:10, c:22, m:22, y:22, quadri:true},
+  depliant:     {n:8,  c:18, m:18, y:18, quadri:true},
+  brochure:     {n:10, c:15, m:15, y:15, quadri:true},
+  entete:       {n:8,  c:10, m:10, y:10, quadri:true},
+  affiche:      {n:10, c:30, m:30, y:30, quadri:true},
+  livre_nb:     {n:10, c:0,  m:0,  y:0,  quadri:false},
+};
+
+// Papier — prix d'achat kg (source matrice)
+const PAPIER_KG = {
+  'offset-80':0.0140,'offset-100':0.0175,
+  'couche-90':0.0207,'couche-115':0.0257,'couche-135':0.0302,
+  'couche-170':0.0380,'couche-200':0.0447,'couche-250':0.0559,
+  'couche-300':0.0733,'couche-350':0.0856,'couche-400':0.0978
+};
+
+// Format ratio A4
+const RATIO_A4 = {
+  carte_visite:0.075, a5:0.4983, seize23:0.59,
+  a4:1.0, a3:2.0, a3plus:2.5397
+};
+
+function calcCPC(produit) {
+  const cv = COUVERTURES[produit] || COUVERTURES.flyer;
+  const pieces = CPC.pieces.total;
+  const drums = cv.quadri ? CPC.drums_color : 0;
+  const toner_n = cv.n * CPC.noir_par_pct;
+  const toner_cmj = (cv.c + cv.m + cv.y) * CPC.couleur_par_pct_canal;
+  return pieces + drums + toner_n + toner_cmj;
+}
+
+function calcCoutCommande(commande) {
+  const cfg = commande.config || {};
+  const produit = commande.produit?.toLowerCase().includes('flyer') ? 'flyer'
+    : commande.produit?.toLowerCase().includes('carte') ? 'carte_visite'
+    : commande.produit?.toLowerCase().includes('depliant') || commande.produit?.toLowerCase().includes('dépliant') ? 'depliant'
+    : commande.produit?.toLowerCase().includes('brochure') ? 'brochure'
+    : commande.produit?.toLowerCase().includes('livre') ? 'livre_nb'
+    : commande.produit?.toLowerCase().includes('tête') || commande.produit?.toLowerCase().includes('tete') ? 'entete'
+    : commande.produit?.toLowerCase().includes('affiche') ? 'affiche'
+    : 'flyer';
+
+  const qty = parseInt(cfg.quantite) || 100;
+  const format = (cfg.format||'a4').toLowerCase().replace('×','').replace('x','').replace(' ','');
+  const fmtKey = format.includes('carte') ? 'carte_visite'
+    : format.includes('a5') ? 'a5'
+    : format.includes('16') || format.includes('1623') || format.includes('seize') ? 'seize23'
+    : format.includes('a3+') || format.includes('a3p') ? 'a3plus'
+    : format.includes('a3') ? 'a3'
+    : 'a4';
+  const ratio = RATIO_A4[fmtKey] || 1.0;
+
+  // UA4 selon produit
+  let ua4 = 0;
+  if (produit === 'brochure' || produit === 'livre_nb') {
+    const pages = parseInt(cfg.pages) || 16;
+    const ppf = fmtKey === 'a4' ? 4 : 8;
+    ua4 = Math.ceil(pages/ppf) * qty * ratio * 2;
+  } else if (produit === 'carte_visite') {
+    ua4 = qty * 0.075;
+  } else {
+    const faces = cfg.faces === 'rv' || cfg.faces === 'R/V' ? 2 : 1;
+    ua4 = qty * ratio * faces;
+  }
+
+  // CPC consommables × UA4
+  const cpc_unit = calcCPC(produit);
+  const cout_impression = cpc_unit * ua4;
+
+  // Coûts fixes (MO + amort + énergie)
+  const cout_fixes = CPC.fixes_total * ua4;
+
+  // Papier coût d'achat (hors marge)
+  const papierKey = (cfg.papier||'couche-135').toLowerCase().replace(' ','').replace('g','').replace('couché','couche-').replace('offset','offset-').replace('é','e');
+  const coutFeuille = PAPIER_KG[cfg.papier] || PAPIER_KG['couche-135'];
+  const cout_papier = coutFeuille * qty * ratio;
+
+  const cout_total = cout_impression + cout_fixes + cout_papier;
+  const pv_ht = commande.montant_ht || 0;
+  const marge = pv_ht - cout_total;
+  const marge_pct = pv_ht > 0 ? marge / pv_ht * 100 : 0;
+
+  return { cout_total, cout_impression, cout_fixes, cout_papier, marge, marge_pct };
+}
+
+function loadCoutRevient() {
+  const commandes = Storage.getCommandes();
+  const livrees = commandes.filter(c => ['delivered','production','finishing','ready','file_received'].includes(c.statut));
+
+  // KPIs marges globaux
+  let totalCA = 0, totalCout = 0;
+  livrees.forEach(c => {
+    const r = calcCoutCommande(c);
+    totalCA += c.montant_ht || 0;
+    totalCout += r.cout_total;
+  });
+  const margeGlobale = totalCA > 0 ? (totalCA - totalCout) / totalCA * 100 : 0;
+
+  document.getElementById('margin-kpis').innerHTML = `
+    <div class="kpi-card cyan">
+      <div class="kpi-label">CA HT total analysé</div>
+      <div class="kpi-value tnd" style="font-size:1.25rem;">${Utils.tnd(totalCA,0)}</div>
+    </div>
+    <div class="kpi-card magenta">
+      <div class="kpi-label">Coût de revient total</div>
+      <div class="kpi-value tnd" style="font-size:1.25rem;">${Utils.tnd(totalCout,0)}</div>
+    </div>
+    <div class="kpi-card success">
+      <div class="kpi-label">Marge brute totale</div>
+      <div class="kpi-value tnd" style="font-size:1.25rem;">${Utils.tnd(totalCA-totalCout,0)}</div>
+    </div>
+    <div class="kpi-card warning">
+      <div class="kpi-label">Taux de marge moyen</div>
+      <div class="kpi-value">${margeGlobale.toFixed(1)}%</div>
+      <div class="kpi-trend ${margeGlobale>50?'up':'down'} mt-2">${margeGlobale>50?'✓ Sain':'⚠ À surveiller'}</div>
+    </div>`;
+
+  // Tableau CPC Azur Colors
+  const pieces_total = CPC.pieces.total;
+  const cpc_rows = [
+    {label:'Pièces mécaniques (drum BK, belt, roller…)',  val: pieces_total, color:'var(--info)'},
+    {label:'Tambours couleur C+M+Y (si quadri)',           val: CPC.drums_color, color:'var(--magenta-500)'},
+    {label:'Toner Noir (base 8% couverture)',               val: 8 * CPC.noir_par_pct, color:'var(--gray-700)'},
+    {label:'Toners CMJ (base 18% × 3 canaux)',             val: 54 * CPC.couleur_par_pct_canal, color:'var(--cyan-500)'},
+    {label:'Main d\'œuvre ABC',                            val: CPC.mo_abc, color:'var(--warning)'},
+    {label:'Amortissement machine',                        val: CPC.amortissement, color:'var(--purple)'},
+    {label:'Énergie',                                      val: CPC.energie, color:'var(--success)'},
+  ];
+  const cpc_total = cpc_rows.reduce((s,r)=>s+r.val,0);
+  document.getElementById('cpc-table').innerHTML = cpc_rows.map(r=>`
+    <tr>
+      <td>${r.label}</td>
+      <td class="font-mono font-semibold">${r.val.toFixed(4)} TND</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="height:8px;border-radius:4px;background:${r.color};width:${(r.val/cpc_total*100).toFixed(0)}px;min-width:4px;"></div>
+          <span style="font-size:.75rem;color:var(--gray-500);">${(r.val/cpc_total*100).toFixed(1)}%</span>
+        </div>
+      </td>
+    </tr>`).join('') + `
+    <tr style="background:var(--gray-50);font-weight:700;">
+      <td>TOTAL CPC moyen (couleur standard)</td>
+      <td class="font-mono" style="color:var(--magenta-600);">${cpc_total.toFixed(4)} TND</td>
+      <td><span class="badge badge-magenta badge-sm">Source: Azur Colors</span></td>
+    </tr>`;
+
+  // Marge par famille produit
+  const familles = ['flyer','brochure','carte_visite','depliant','entete','affiche','livre_nb'];
+  const labels_fr = ['Flyer','Brochure','Carte de visite','Dépliant','En-tête','Affiche','Livre N&B'];
+  const marges_fam = familles.map(f => {
+    const cpc = calcCPC(f);
+    const fixes = CPC.fixes_total;
+    const pv_moyen = 0.50; // prix de vente moyen par page A4
+    return Math.max(0, (pv_moyen - cpc - fixes) / pv_moyen * 100);
+  });
+  Charts.barChart('chart-margins', labels_fr, marges_fam.map(m=>Math.round(m)), 'Marge % estimée', false);
+
+  // Tableau commande par commande
+  document.getElementById('cdr-table').innerHTML = livrees.map(c => {
+    const cl = Storage.getClient(c.client_id);
+    const r = calcCoutCommande(c);
+    const mBadge = r.marge_pct >= 50 ? 'badge-success'
+      : r.marge_pct >= 30 ? 'badge-warning'
+      : 'badge-danger';
+    return `<tr>
+      <td class="font-mono text-sm font-semibold">${c.id}</td>
+      <td class="text-sm">${cl?.nom||c.client_id||'—'}</td>
+      <td class="text-sm">${c.produit||'—'}</td>
+      <td class="tnd font-semibold">${Utils.tnd(c.montant_ht)}</td>
+      <td class="tnd text-muted">${Utils.tnd(r.cout_total)}</td>
+      <td class="tnd font-semibold" style="color:${r.marge>=0?'var(--success-dark)':'var(--danger-dark)'};">${Utils.tnd(r.marge)}</td>
+      <td><span class="badge ${mBadge}">${r.marge_pct.toFixed(1)}%</span></td>
+    </tr>`;
+  }).join('');
 }
 </script>
 </body></html>

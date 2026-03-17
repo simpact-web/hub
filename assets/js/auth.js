@@ -46,8 +46,9 @@ const Auth = {
   },
 
   isLoggedIn() { return this.current !== null; },
-  isAdmin()    { return this.current?.role === 'ADMIN'; },
+  isAdmin()    { return ['ADMIN','SUPERADMIN'].includes(this.current?.role); },
   isClient()   { return ['CLIENT','AGENCE'].includes(this.current?.role); },
+  isSuperAdmin(){ return this.current?.role === 'SUPERADMIN'; },
 
   // Guard robuste — empêche les boucles
   guard(requiredRole = null) {

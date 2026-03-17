@@ -377,7 +377,7 @@ function findUser(email, password) {
 }
 
 function redirectAfterLogin(role) {
-  const dest = role === 'ADMIN'
+  const dest = (role === 'ADMIN' || role === 'SUPERADMIN')
     ? urlTo('pages/admin/dashboard.html')
     : urlTo('pages/client/dashboard.html');
   window.location.replace(dest);
