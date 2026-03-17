@@ -9,12 +9,20 @@ const Storage = {
   _data: null,
   _pricing: null,
   DATA_KEY: 'simpact_data',
+  DATA_VERSION: 'v7', // Changer pour forcer un reset localStorage
 
   async init() {
     // Toujours charger le pricing depuis les données inline
     this._pricing = PRICING_INLINE;
 
     // Essayer de charger depuis localStorage d'abord
+    // Vérifier la version — forcer reset si version différente
+    const savedVersion = localStorage.getItem(this.DATA_KEY + '_version');
+    if (savedVersion !== this.DATA_VERSION) {
+      localStorage.removeItem(this.DATA_KEY);
+      localStorage.setItem(this.DATA_KEY + '_version', this.DATA_VERSION);
+    }
+
     const saved = localStorage.getItem(this.DATA_KEY);
     if (saved) {
       try {
