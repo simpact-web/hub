@@ -161,3 +161,65 @@ const Storage = {
 };
 
 window.Storage = Storage;
+
+
+// ─────────────────────────────────────────────────────────────────────────
+// INTÉGRATION GOOGLE SHEETS — patch automatique si SheetsDB est actif
+// ─────────────────────────────────────────────────────────────────────────
+const Storage_Original_GetClients    = Storage.getClients.bind(Storage);
+const Storage_Original_GetCommandes  = Storage.getCommandes.bind(Storage);
+const Storage_Original_GetDevis      = Storage.getDevis.bind(Storage);
+const Storage_Original_AddCommande   = Storage.addCommande.bind(Storage);
+const Storage_Original_UpdateCommande= Storage.updateCommande.bind(Storage);
+const Storage_Original_AddClient     = Storage.addClient.bind(Storage);
+const Storage_Original_UpdateClient  = Storage.updateClient.bind(Storage);
+const Storage_Original_AddDevis      = Storage.addDevis.bind(Storage);
+const Storage_Original_UpdateDevis   = Storage.updateDevis.bind(Storage);
+
+// Surcharge asynchrone — utilise Sheets si actif, sinon localStorage
+Storage.getClientsAsync = async function() {
+  if (window.SheetsDB?.isActive()) {
+    const data = await SheetsDB.getTable('clients');
+    if (data) { this._data.clients = data; this._save(); return data; }
+  }
+  return this.getClients();
+};
+
+Storage.getCommandesAsync = async function(clientId = null) {
+  if (window.SheetsDB?.isActive()) {
+    const data = await SheetsDB.getTable('commandes');
+    if (data) {
+      this._data.commandes = data;
+      return clientId ? data.filter(c => c.client_id === clientId) : data;
+    }
+  }
+  return this.getCommandes(clientId);
+};
+
+Storage.getDevisAsync = async function(clientId = null) {
+  if (window.SheetsDB?.isActive()) {
+    const data = await SheetsDB.getTable('devis');
+    if (data) {
+      this._data.devis = data;
+      return clientId ? data.filter(d => d.client_id === clientId) : data;
+    }
+  }
+  return this.getDevis(clientId);
+};
+
+// Les écritures écrivent en localStorage ET dans Sheets
+const _patchWrite = (origFn, table) => async function(...args) {
+  const result = origFn(...args);
+  if (window.SheetsDB?.isActive()) {
+    // Écriture asynchrone en arrière-plan
+    const record = args[0];
+    if (typeof record === 'object') {
+      SheetsDB.upsert(table, record).catch(() => {});
+    }
+  }
+  return result;
+};
+
+Storage.addCommande    = _patchWrite(Storage_Original_AddCommande,    'commandes');
+Storage.addClient      = _patchWrite(Storage_Original_AddClient,      'clients');
+Storage.addDevis       = _patchWrite(Storage_Original_AddDevis,       'devis');

@@ -99,6 +99,55 @@
   </div>
 </header>
 <main class="main-content">
+  <!-- Configuration Google Sheets — Super Admin -->
+  <div id="sheets-config-panel" style="background:linear-gradient(135deg,#1a1a1a,#2d2d2d);border-radius:14px;padding:24px;margin-bottom:24px;display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div>
+        <h4 style="color:white;font-family:Outfit,sans-serif;margin-bottom:4px;">🔗 Google Sheets — Base de données</h4>
+        <div style="font-size:.8125rem;color:rgba(255,255,255,.4);">Connectez le portail à vos 3 Sheets printhub</div>
+      </div>
+      <div id="sheets-status" style="padding:6px 16px;border-radius:20px;font-size:.75rem;font-weight:700;background:rgba(255,152,0,.2);color:#FFB74D;">Non connecté</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:12px;margin-bottom:16px;">
+      <div>
+        <label style="display:block;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">URL de déploiement Apps Script</label>
+        <input type="text" id="apps-script-url" 
+          placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+          style="width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:white;font-size:.875rem;font-family:Space Mono,monospace;"
+          oninput="saveSheetURL(this.value)">
+        <div style="font-size:.6875rem;color:rgba(255,255,255,.3);margin-top:5px;">Collez ici l'URL après avoir déployé le Apps Script</div>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:8px;">
+        <button onclick="testConnection()" style="padding:10px 18px;border:none;border-radius:8px;background:rgba(0,184,212,.2);color:#4DD0E1;font-weight:700;font-size:.8125rem;cursor:pointer;white-space:nowrap;">🔌 Tester</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:.625rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">Clients</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.6);font-family:Space Mono,monospace;">printhub_clients</div>
+        <div style="font-size:.625rem;color:rgba(0,184,212,.6);margin-top:3px;" id="status-clients">—</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:.625rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">Commandes</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.6);font-family:Space Mono,monospace;">printhub_commandes</div>
+        <div style="font-size:.625rem;color:rgba(0,184,212,.6);margin-top:3px;" id="status-commandes">—</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:.625rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">Devis</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.6);font-family:Space Mono,monospace;">printhub_devis</div>
+        <div style="font-size:.625rem;color:rgba(0,184,212,.6);margin-top:3px;" id="status-devis">—</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="initSheets()" style="padding:10px 20px;border:none;border-radius:8px;background:linear-gradient(135deg,#00B8D4,#0097A7);color:white;font-weight:700;font-size:.875rem;cursor:pointer;font-family:Outfit,sans-serif;">
+        📤 Initialiser les Sheets avec les données actuelles
+      </button>
+      <button onclick="syncFromSheets()" style="padding:10px 20px;border:1.5px solid rgba(0,184,212,.4);border-radius:8px;background:transparent;color:#4DD0E1;font-weight:700;font-size:.875rem;cursor:pointer;font-family:Outfit,sans-serif;">
+        🔄 Synchroniser depuis Sheets
+      </button>
+    </div>
+  </div>
+
   <!-- KPI -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;" id="user-kpis"></div>
 
@@ -210,6 +259,7 @@
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/auth.js"></script>
 <script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/sheets.js"></script>
 <script src="../../assets/js/app.js"></script>
 <script>
 let allUsers = [];
@@ -403,6 +453,103 @@ function confirmDelete() {
   Notify.success('Utilisateur supprimé', '');
   loadUsers();
   deleteTargetId = null;
+}
+
+// ── Configuration Google Sheets (Super Admin uniquement) ──────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Afficher le panel si Super Admin
+  if (Auth.isSuperAdmin()) {
+    document.getElementById('sheets-config-panel').style.display = '';
+    // Restaurer l'URL sauvegardée
+    const savedUrl = localStorage.getItem('printhub_apps_script_url') || '';
+    document.getElementById('apps-script-url').value = savedUrl;
+    if (savedUrl && window.SheetsDB) {
+      SheetsDB.APPS_SCRIPT_URL = savedUrl;
+      updateSheetStatus(SheetsDB.isActive());
+    }
+  }
+});
+
+function saveSheetURL(url) {
+  localStorage.setItem('printhub_apps_script_url', url.trim());
+  if (window.SheetsDB) SheetsDB.APPS_SCRIPT_URL = url.trim();
+  updateSheetStatus(url.trim().length > 10);
+}
+
+function updateSheetStatus(active) {
+  const el = document.getElementById('sheets-status');
+  if (el) {
+    el.textContent = active ? '✓ URL configurée' : 'Non connecté';
+    el.style.background = active ? 'rgba(76,175,80,.2)' : 'rgba(255,152,0,.2)';
+    el.style.color = active ? '#81C784' : '#FFB74D';
+  }
+}
+
+async function testConnection() {
+  const url = document.getElementById('apps-script-url').value.trim();
+  if (!url) { Notify.warning('URL manquante', 'Collez d'abord l'URL du Apps Script'); return; }
+  SheetsDB.APPS_SCRIPT_URL = url;
+  Notify.info('Test en cours…', 'Connexion aux Sheets…');
+  try {
+    const data = await SheetsDB.getTable('clients');
+    if (data !== null) {
+      Notify.success('Connexion réussie !', `${data.length} client(s) trouvé(s) dans printhub_clients`);
+      document.getElementById('status-clients').textContent = `✓ ${data.length} lignes`;
+      updateSheetStatus(true);
+      localStorage.setItem('printhub_apps_script_url', url);
+    } else {
+      Notify.error('Connexion échouée', 'Vérifiez l'URL et le déploiement du Apps Script');
+    }
+  } catch(e) {
+    Notify.error('Erreur', e.message);
+  }
+}
+
+async function initSheets() {
+  const url = document.getElementById('apps-script-url').value.trim();
+  if (!url) { Notify.warning('URL manquante', ''); return; }
+  SheetsDB.APPS_SCRIPT_URL = url;
+  
+  Notify.info('Initialisation en cours…', 'Envoi des données vers Google Sheets');
+  const clients   = Storage.getClients();
+  const commandes = Storage.getCommandes();
+  const devis     = Storage.getDevis();
+  
+  const ok = await SheetsDB.initializeSheets(clients, commandes, devis);
+  if (ok) {
+    Notify.success('Sheets initialisés !', `${clients.length} clients · ${commandes.length} commandes · ${devis.length} devis`);
+    document.getElementById('status-clients').textContent   = `✓ ${clients.length} lignes`;
+    document.getElementById('status-commandes').textContent = `✓ ${commandes.length} lignes`;
+    document.getElementById('status-devis').textContent     = `✓ ${devis.length} lignes`;
+  } else {
+    Notify.error('Échec initialisation', 'Vérifiez l'URL et les permissions du Apps Script');
+  }
+}
+
+async function syncFromSheets() {
+  const url = document.getElementById('apps-script-url').value.trim();
+  if (!url) { Notify.warning('URL manquante', ''); return; }
+  SheetsDB.APPS_SCRIPT_URL = url;
+  
+  Notify.info('Synchronisation…', 'Lecture depuis Google Sheets');
+  const [clients, commandes, devis] = await Promise.all([
+    SheetsDB.getTable('clients'),
+    SheetsDB.getTable('commandes'),
+    SheetsDB.getTable('devis'),
+  ]);
+  
+  let synced = 0;
+  if (clients?.length)   { Storage._data.clients   = clients;   synced++; }
+  if (commandes?.length) { Storage._data.commandes = commandes; synced++; }
+  if (devis?.length)     { Storage._data.devis     = devis;     synced++; }
+  
+  if (synced > 0) {
+    Storage._save();
+    Notify.success('Synchronisation réussie !', `${clients?.length||0} clients · ${commandes?.length||0} commandes`);
+    loadUsers();
+  } else {
+    Notify.warning('Sheets vides', 'Initialisez d'abord avec "Initialiser les Sheets"');
+  }
 }
 </script>
 </body></html>
