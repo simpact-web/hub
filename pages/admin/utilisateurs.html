@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Utilisateurs — Admin Simpact</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/layout.css">
+</head><body>
+<div class="app-shell">
+
+<aside class="sidebar" id="app-sidebar">
+  <div class="sidebar-logo">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon">S</div>
+      <div class="logo-text">
+        <div class="logo-name">SIMPACT</div>
+        <div class="logo-tagline">Administration</div>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-info">
+      <div class="user-avatar" data-user-avatar>SA</div>
+      <div>
+        <div class="user-name" data-user-name>Admin</div>
+        <div class="user-role" style="color:rgba(233,30,99,.8);font-size:.625rem;font-weight:700;">ADMINISTRATEUR</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Vue d'ensemble</div>
+      <a href="dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="reporting.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        <span>Reporting</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Production</div>
+      <a href="commandes.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Commandes</span>
+      </a>
+      <a href="utilisateurs.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Utilisateurs</span>
+      </a>
+      <a href="clients.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clients</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Gestion</div>
+      <a href="catalogue.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Catalogue</span>
+      </a>
+      <a href="stock.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        <span>Stock</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Portail client</div>
+      <a href="../client/dashboard.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Vue client</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-item" data-logout>
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<header class="app-header">
+  <button class="burger-btn" id="burger-btn"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
+  <div><div class="header-title">Gestion des utilisateurs</div></div>
+  <div class="header-actions ml-auto gap-3">
+    <input type="text" id="search-user" class="form-control" style="height:38px;width:220px;" placeholder="🔍 Rechercher un utilisateur…" oninput="filterUsers()">
+    <select id="filter-secteur" class="form-control" style="height:38px;width:160px;" onchange="filterUsers()">
+      <option value="">Tous les secteurs</option>
+      <option value="Banque">Banques</option>
+      <option value="Assurance">Assurances</option>
+      <option value="Admin">Administrateurs</option>
+    </select>
+    <button class="btn btn-gradient btn-sm" onclick="App.openModal('modal-new-user')">+ Nouvel utilisateur</button>
+  </div>
+</header>
+<main class="main-content">
+  <!-- KPI -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;" id="user-kpis"></div>
+
+  <!-- Tableau -->
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Utilisateur</th>
+          <th>Identifiant / Email</th>
+          <th>Mot de passe</th>
+          <th>Secteur</th>
+          <th>Rôle</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="users-body"></tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Modal Créer/Modifier -->
+<div class="modal-overlay" id="modal-new-user" onclick="if(event.target===this)App.closeModal('modal-new-user')">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-user-title">Nouvel utilisateur</span>
+      <button class="modal-close" onclick="App.closeModal('modal-new-user')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-user-id">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="form-group">
+          <label class="form-label">Nom d'affichage <span class="required">*</span></label>
+          <input type="text" id="u-nom" class="form-control" placeholder="ex: UBCI">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email / Identifiant <span class="required">*</span></label>
+          <input type="text" id="u-email" class="form-control" placeholder="ex: ubci@simpact.tn">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe <span class="required">*</span></label>
+          <input type="text" id="u-pwd" class="form-control" placeholder="ex: ubci2026">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rôle</label>
+          <select id="u-role" class="form-control">
+            <option value="CLIENT">Client</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Secteur</label>
+          <select id="u-secteur" class="form-control">
+            <option value="Banque">Banque</option>
+            <option value="Assurance">Assurance</option>
+            <option value="Industrie">Industrie</option>
+            <option value="Santé">Santé</option>
+            <option value="Hôtellerie">Hôtellerie</option>
+            <option value="Éducation">Éducation</option>
+            <option value="Agences">Agences</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Segment</label>
+          <select id="u-segment" class="form-control">
+            <option value="standard">Standard</option>
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
+            <option value="platinum">Platinum</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Téléphone</label>
+        <input type="text" id="u-tel" class="form-control" placeholder="+216 XX XXX XXX">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Adresse</label>
+        <input type="text" id="u-adresse" class="form-control" placeholder="Ville, Adresse">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="App.closeModal('modal-new-user')">Annuler</button>
+      <button class="btn btn-gradient btn-sm" onclick="saveUser()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmation suppression -->
+<div class="modal-overlay" id="modal-confirm-delete" onclick="if(event.target===this)App.closeModal('modal-confirm-delete')">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header"><span class="modal-title">Confirmer la suppression</span></div>
+    <div class="modal-body">
+      <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong id="delete-user-name"></strong> ?</p>
+      <p class="text-muted text-sm mt-2">Cette action est irréversible.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="App.closeModal('modal-confirm-delete')">Annuler</button>
+      <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+<script>window.SIMPACT_ROOT='../../';</script>
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/storage.js"></script>
+<script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/notifications.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script>
+let allUsers = [];
+let deleteTargetId = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await Storage.init();
+  Auth.init();
+  if (!Auth.guard('ADMIN')) return;
+  App.setupUI();
+  loadUsers();
+});
+
+function loadUsers() {
+  const clients = Storage.getClients();
+  const admins  = Storage.getAdmins();
+  // Combine all users
+  allUsers = [
+    ...admins.map(a => ({...a, _type:'admin'})),
+    ...clients.map(c => ({...c, _type:'client'}))
+  ];
+  renderKPIs(clients, admins);
+  renderTable(allUsers);
+}
+
+function renderKPIs(clients, admins) {
+  const banques    = clients.filter(c => c.secteur === 'Banque').length;
+  const assurances = clients.filter(c => c.secteur === 'Assurance').length;
+  document.getElementById('user-kpis').innerHTML = `
+    <div class="kpi-card cyan"><div class="kpi-label">Total clients</div><div class="kpi-value">${clients.length}</div></div>
+    <div class="kpi-card magenta"><div class="kpi-label">Banques</div><div class="kpi-value">${banques}</div></div>
+    <div class="kpi-card success"><div class="kpi-label">Assurances</div><div class="kpi-value">${assurances}</div></div>
+    <div class="kpi-card warning"><div class="kpi-label">Administrateurs</div><div class="kpi-value">${admins.length}</div></div>`;
+}
+
+function filterUsers() {
+  const q  = document.getElementById('search-user').value.toLowerCase();
+  const sf = document.getElementById('filter-secteur').value;
+  let filtered = allUsers.filter(u => {
+    const matchSearch = !q || u.nom?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q);
+    const matchSecteur = !sf || (sf === 'Admin' ? u._type === 'admin' : u.secteur === sf);
+    return matchSearch && matchSecteur;
+  });
+  renderTable(filtered);
+}
+
+function renderTable(users) {
+  document.getElementById('users-body').innerHTML = users.map(u => {
+    const isAdmin = u._type === 'admin';
+    const roleBadge = u.role === 'SUPERADMIN' ? '<span class="badge badge-magenta">Super Admin</span>'
+      : u.role === 'ADMIN' ? '<span class="badge badge-dark">Admin</span>'
+      : '<span class="badge badge-cyan">Client</span>';
+    const statusBadge = u.actif !== false
+      ? '<span class="badge badge-success">Actif</span>'
+      : '<span class="badge badge-danger">Inactif</span>';
+    const canDelete = u.role !== 'SUPERADMIN';
+    return `<tr>
+      <td>
+        <div class="flex items-center gap-3">
+          <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--cyan-500),var(--magenta-500));color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0;">${u.avatar||Utils.initials(u.nom)}</div>
+          <div>
+            <div class="font-semibold text-sm">${u.nom||'—'}</div>
+            <div class="text-xs text-muted">${u.secteur||''}</div>
+          </div>
+        </div>
+      </td>
+      <td class="font-mono text-sm">${u.email||'—'}</td>
+      <td>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-sm" id="pwd-${u.id}" style="filter:blur(4px);transition:.2s;">${u.password||'—'}</span>
+          <button class="btn btn-ghost btn-sm" style="padding:3px 7px;font-size:.75rem;" onclick="togglePwd('${u.id}')">👁</button>
+        </div>
+      </td>
+      <td class="text-sm">${u.secteur||'—'}</td>
+      <td>${roleBadge}</td>
+      <td>${statusBadge}</td>
+      <td>
+        <div class="flex gap-2">
+          <button class="btn btn-secondary btn-sm" onclick="editUser('${u.id}',${isAdmin})">✏️ Modifier</button>
+          ${canDelete ? `<button class="btn btn-danger btn-sm" onclick="deleteUser('${u.id}','${u.nom}',${isAdmin})">🗑</button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function togglePwd(id) {
+  const el = document.getElementById('pwd-' + id);
+  if (el) el.style.filter = el.style.filter ? '' : 'blur(4px)';
+}
+
+function editUser(id, isAdmin) {
+  const u = isAdmin
+    ? Storage.getAdmins().find(a => a.id === id)
+    : Storage.getClient(id);
+  if (!u) return;
+  document.getElementById('modal-user-title').textContent = 'Modifier — ' + u.nom;
+  document.getElementById('edit-user-id').value = id + '|' + (isAdmin?'admin':'client');
+  document.getElementById('u-nom').value    = u.nom || '';
+  document.getElementById('u-email').value  = u.email || '';
+  document.getElementById('u-pwd').value    = u.password || '';
+  document.getElementById('u-role').value   = u.role || 'CLIENT';
+  document.getElementById('u-secteur').value= u.secteur || 'Banque';
+  document.getElementById('u-segment').value= u.segment || 'standard';
+  document.getElementById('u-tel').value    = u.tel || '';
+  document.getElementById('u-adresse').value= u.adresse || '';
+  App.openModal('modal-new-user');
+}
+
+function saveUser() {
+  const nom     = document.getElementById('u-nom').value.trim();
+  const email   = document.getElementById('u-email').value.trim();
+  const pwd     = document.getElementById('u-pwd').value.trim();
+  const role    = document.getElementById('u-role').value;
+  const secteur = document.getElementById('u-secteur').value;
+  const segment = document.getElementById('u-segment').value;
+  const tel     = document.getElementById('u-tel').value.trim();
+  const adresse = document.getElementById('u-adresse').value.trim();
+  const editVal = document.getElementById('edit-user-id').value;
+
+  if (!nom || !email || !pwd) {
+    Notify.error('Champs obligatoires', 'Nom, email et mot de passe sont requis.');
+    return;
+  }
+
+  if (editVal) {
+    // Modification
+    const [id, type] = editVal.split('|');
+    if (type === 'client') {
+      Storage.updateClient(id, {nom, email, password:pwd, role, secteur, segment, tel, adresse, avatar:Utils.initials(nom)});
+    } else {
+      const admins = Storage.getAdmins();
+      const idx = admins.findIndex(a => a.id === id);
+      if (idx >= 0) {
+        admins[idx] = {...admins[idx], nom, email, password:pwd, role, secteur, tel, adresse};
+        Storage._data.admins = admins;
+        Storage._save();
+      }
+    }
+    Notify.success('Utilisateur modifié', nom);
+  } else {
+    // Création
+    const newId = (role === 'ADMIN' ? 'ADM' : 'CLI') + Date.now();
+    if (role === 'ADMIN') {
+      Storage._data.admins.push({id:newId, nom, email, password:pwd, role, avatar:Utils.initials(nom), actif:true});
+      Storage._save();
+    } else {
+      Storage.addClient({id:newId, nom, email, password:pwd, role, secteur, segment, tel, adresse, avatar:Utils.initials(nom), ca_mensuel:0, nb_commandes_mois:0, derniere_commande:null, actif:true});
+    }
+    Notify.success('Utilisateur créé', nom);
+  }
+
+  document.getElementById('edit-user-id').value = '';
+  App.closeModal('modal-new-user');
+  loadUsers();
+}
+
+function deleteUser(id, nom, isAdmin) {
+  deleteTargetId = {id, isAdmin};
+  document.getElementById('delete-user-name').textContent = nom;
+  App.openModal('modal-confirm-delete');
+}
+
+function confirmDelete() {
+  if (!deleteTargetId) return;
+  const {id, isAdmin} = deleteTargetId;
+  if (isAdmin) {
+    Storage._data.admins = Storage.getAdmins().filter(a => a.id !== id);
+    Storage._save();
+  } else {
+    Storage.updateClient(id, {actif: false});
+  }
+  App.closeModal('modal-confirm-delete');
+  Notify.success('Utilisateur supprimé', '');
+  loadUsers();
+  deleteTargetId = null;
+}
+</script>
+</body></html>

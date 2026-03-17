@@ -241,19 +241,11 @@ input::placeholder { color: #BDBDBD; }
     <p class="login-sub">Connectez-vous à votre espace Simpact</p>
 
     <!-- Comptes démo -->
-    <div class="demo-box">
-      <div class="demo-label">🎭 Comptes de démonstration — cliquez pour remplir</div>
-      <div class="demo-row" id="d1">
-        <div><div class="demo-name">Clinique Hannibal</div><div class="demo-creds">client@demo.tn / demo123</div></div>
-        <span class="pill pill-client">Client</span>
-      </div>
-      <div class="demo-row" id="d2">
-        <div><div class="demo-name">Memac Ogilvy</div><div class="demo-creds">agence@demo.tn / demo123</div></div>
-        <span class="pill pill-agence">Agence</span>
-      </div>
-      <div class="demo-row" id="d3">
-        <div><div class="demo-name">Simpact Admin</div><div class="demo-creds">admin@simpact.tn / admin</div></div>
-        <span class="pill pill-admin">Admin</span>
+    <div class="demo-box" style="background:#F5F5F5;border-radius:10px;padding:14px;margin-bottom:28px;border:1px solid #E0E0E0;">
+      <div class="demo-label" style="font-size:.625rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#BDBDBD;margin-bottom:10px;">🔐 Comptes administrateurs</div>
+      <div class="demo-row" id="d_admin" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;cursor:pointer;border:1.5px solid transparent;transition:all .15s ease;">
+        <div><div class="demo-name" style="font-weight:600;font-size:.8125rem;color:#212121;">Simpact Admin</div><div class="demo-creds" style="font-family:Space Mono,monospace;font-size:.6875rem;color:#9E9E9E;">admin@simpact.tn / admin</div></div>
+        <span class="pill pill-admin" style="font-size:.625rem;font-weight:700;padding:3px 9px;border-radius:8px;background:#FCE4EC;color:#C2185B;">Admin</span>
       </div>
     </div>
 
@@ -378,17 +370,33 @@ function setSession(user) {
 // ── Table de connexion — source unique de vérité ──────────────────────────
 // Pour ajouter/modifier un compte : modifier UNIQUEMENT cette table
 const CREDENTIALS = [
-  // CLIENTS
-  { email:'client@demo.tn',       password:'demo123',   role:'CLIENT',     nom:'Clinique Hannibal',       id:'CLI001', avatar:'CH', segment:'gold'     },
-  { email:'agence@demo.tn',       password:'demo123',   role:'AGENCE',     nom:'Memac Ogilvy Tunisie',    id:'CLI002', avatar:'MO', segment:'platinum'  },
-  { email:'residence@demo.tn',    password:'demo123',   role:'CLIENT',     nom:'The Residence Tunis',     id:'CLI003', avatar:'RT', segment:'silver'    },
-  { email:'esprit@demo.tn',       password:'demo123',   role:'CLIENT',     nom:'ESPRIT School',           id:'CLI004', avatar:'ES', segment:'silver'    },
-  { email:'delice@demo.tn',       password:'demo123',   role:'CLIENT',     nom:'Délice Holding',          id:'CLI005', avatar:'DH', segment:'gold'      },
-  { email:'artline@demo.tn',      password:'demo123',   role:'CLIENT',     nom:'Studio Artline',          id:'CLI006', avatar:'SA', segment:'bronze'    },
-  // ADMINS
-  { email:'admin@simpact.tn',     password:'admin',     role:'ADMIN',      nom:'Simpact Admin',           id:'ADM001', avatar:'SA', segment:null        },
-  // SUPER ADMIN
-  { email:'youssef@simpact.tn',   password:'ni3Shaey',  role:'SUPERADMIN', nom:'Youssef — Super Admin',   id:'ADM002', avatar:'YS', segment:null        },
+  // ── ADMINISTRATEURS ────────────────────────────────────────────────────────
+  { email:'admin@simpact.tn',     password:'admin',     role:'ADMIN',      nom:'Simpact Admin',         id:'ADM001', avatar:'SA', segment:null },
+  { email:'youssef@simpact.tn',   password:'ni3Shaey',  role:'SUPERADMIN', nom:'Youssef — Super Admin', id:'ADM002', avatar:'YS', segment:null },
+  // ── CLIENTS — Banques ──────────────────────────────────────────────────────
+  { email:'ubci@simpact.tn',        password:'ubci2026',       role:'CLIENT', nom:'UBCI',             id:'CLI101', avatar:'UB', segment:'standard' },
+  { email:'attijari@simpact.tn',    password:'attijari2026',   role:'CLIENT', nom:'Attijari',         id:'CLI102', avatar:'AT', segment:'standard' },
+  { email:'atb@simpact.tn',         password:'atb2026',        role:'CLIENT', nom:'ATB Bank',         id:'CLI103', avatar:'AB', segment:'standard' },
+  { email:'amen@simpact.tn',        password:'amen2026',       role:'CLIENT', nom:'Amen Bank',        id:'CLI104', avatar:'AM', segment:'standard' },
+  { email:'biat@simpact.tn',        password:'biat2026',       role:'CLIENT', nom:'BIAT',             id:'CLI105', avatar:'BI', segment:'standard' },
+  { email:'zitouna@simpact.tn',     password:'zitouna2026',    role:'CLIENT', nom:'Zitouna Bank',     id:'CLI106', avatar:'ZB', segment:'standard' },
+  { email:'btk@simpact.tn',         password:'btk2026',        role:'CLIENT', nom:'BTK Bank',         id:'CLI107', avatar:'BK', segment:'standard' },
+  { email:'qnb@simpact.tn',         password:'qnb2026',        role:'CLIENT', nom:'QNB Bank',         id:'CLI108', avatar:'QN', segment:'standard' },
+  { email:'tsb@simpact.tn',         password:'tsb2026',        role:'CLIENT', nom:'TSB Bank',         id:'CLI109', avatar:'TS', segment:'standard' },
+  { email:'bte@simpact.tn',         password:'bte2026',        role:'CLIENT', nom:'BTE Bank',         id:'CLI110', avatar:'BT', segment:'standard' },
+  { email:'bt@simpact.tn',          password:'bt2026',         role:'CLIENT', nom:'BT Bank',          id:'CLI111', avatar:'BP', segment:'standard' },
+  // ── CLIENTS — Assurances ───────────────────────────────────────────────────
+  { email:'star@simpact.tn',        password:'star2026',       role:'CLIENT', nom:'STAR',             id:'CLI112', avatar:'ST', segment:'standard' },
+  { email:'astree@simpact.tn',      password:'astree2026',     role:'CLIENT', nom:'Astree',           id:'CLI113', avatar:'AS', segment:'standard' },
+  { email:'comar@simpact.tn',       password:'comar2026',      role:'CLIENT', nom:'Comar',            id:'CLI114', avatar:'CO', segment:'standard' },
+  { email:'carte@simpact.tn',       password:'carte2026',      role:'CLIENT', nom:'La Carte',         id:'CLI115', avatar:'LC', segment:'standard' },
+  { email:'gat@simpact.tn',         password:'gat2026',        role:'CLIENT', nom:'GAT Assurance',    id:'CLI116', avatar:'GA', segment:'standard' },
+  { email:'maghrebia@simpact.tn',   password:'maghrebia2026',  role:'CLIENT', nom:'Maghrebia',        id:'CLI117', avatar:'MG', segment:'standard' },
+  { email:'biatassur@simpact.tn',   password:'biatassur2026',  role:'CLIENT', nom:'Biat Assurance',   id:'CLI118', avatar:'BA', segment:'standard' },
+  { email:'lloyd@simpact.tn',       password:'lloyd2026',      role:'CLIENT', nom:'Lloyd Assurances', id:'CLI119', avatar:'LL', segment:'standard' },
+  { email:'mae@simpact.tn',         password:'mae2026',        role:'CLIENT', nom:'MAE Assurance',    id:'CLI120', avatar:'MA', segment:'standard' },
+  { email:'takaful@simpact.tn',     password:'takaful2026',    role:'CLIENT', nom:'Zitouna Takaful',  id:'CLI121', avatar:'ZT', segment:'standard' },
+  { email:'takafulia@simpact.tn',   password:'takafulia2026',  role:'CLIENT', nom:'At-Takafulia',     id:'CLI122', avatar:'TK', segment:'standard' },
 ];
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -460,9 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sess) { redirectAfterLogin(sess.role); return; }
 
   // Comptes démo
-  document.getElementById('d1').addEventListener('click', () => { document.getElementById('email').value='client@demo.tn';  document.getElementById('pwd').value='demo123'; hideError(); });
-  document.getElementById('d2').addEventListener('click', () => { document.getElementById('email').value='agence@demo.tn';  document.getElementById('pwd').value='demo123'; hideError(); });
-  document.getElementById('d3').addEventListener('click', () => { document.getElementById('email').value='admin@simpact.tn'; document.getElementById('pwd').value='admin';   hideError(); });
+  document.getElementById('d_admin').addEventListener('click', () => { document.getElementById('email').value='admin@simpact.tn'; document.getElementById('pwd').value='admin'; hideError(); });
 
   // Login
   document.getElementById('btn-login').addEventListener('click', doLogin);

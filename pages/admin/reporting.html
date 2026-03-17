@@ -47,6 +47,10 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
         <span>Commandes</span>
       </a>
+      <a href="utilisateurs.html" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/><circle cx="18" cy="8" r="2"/><path d="M22 13a4 4 0 00-4-4"/></svg>
+        <span>Utilisateurs</span>
+      </a>
       <a href="clients.html" class="nav-item">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         <span>Clients</span>
@@ -144,10 +148,10 @@
   </div>
 
   <!-- Section 5 : Coût de revient — SUPER ADMIN uniquement -->
-  <div id="section-cdr" style="display:none;">
+  <div id="section-cdr">
     <div class="mb-2 flex items-center justify-between">
       <h2 class="page-title" style="font-size:1.125rem;">💎 Coût de revient & Marges</h2>
-      <span class="badge badge-magenta">Super Admin uniquement</span>
+      <span class="badge badge-default badge-sm">CPC source: Azur Colors 05/03/2026</span>
     </div>
 
     <!-- KPIs marges -->
@@ -206,6 +210,7 @@
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/storage.js"></script>
 <script src="../../assets/js/auth.js"></script>
+<script src="../../assets/js/pricing.js"></script>
 <script src="../../assets/js/notifications.js"></script>
 <script src="../../assets/js/charts.js"></script>
 <script src="../../assets/js/app.js"></script>
@@ -218,10 +223,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadReporting();
 
   // Révéler section coût de revient si Super Admin
-  if (Auth.isSuperAdmin()) {
-    document.getElementById('section-cdr').style.display = '';
-    loadCoutRevient();
-  }
+  // Section coût de revient visible pour tous les admins
+  document.getElementById('section-cdr').style.display = '';
+  loadCoutRevient();
 });
 
 function setPeriod(p, btn) {
