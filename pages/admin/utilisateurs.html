@@ -487,7 +487,7 @@ function updateSheetStatus(active) {
 
 async function testConnection() {
   const url = document.getElementById('apps-script-url').value.trim();
-  if (!url) { Notify.warning('URL manquante', 'Collez d'abord l'URL du Apps Script'); return; }
+      if (!url) { Notify.warning('URL manquante', "Collez d'abord l'URL du Apps Script"); return; }
   SheetsDB.APPS_SCRIPT_URL = url;
   Notify.info('Test en cours…', 'Connexion aux Sheets…');
   try {
@@ -498,7 +498,7 @@ async function testConnection() {
       updateSheetStatus(true);
       localStorage.setItem('printhub_apps_script_url', url);
     } else {
-      Notify.error('Connexion échouée', 'Vérifiez l'URL et le déploiement du Apps Script');
+                Notify.error('Connexion echouee', "Verifiez l'URL et le deploiement du Apps Script");
     }
   } catch(e) {
     Notify.error('Erreur', e.message);
@@ -522,7 +522,7 @@ async function initSheets() {
     document.getElementById('status-commandes').textContent = `✓ ${commandes.length} lignes`;
     document.getElementById('status-devis').textContent     = `✓ ${devis.length} lignes`;
   } else {
-    Notify.error('Échec initialisation', 'Vérifiez l'URL et les permissions du Apps Script');
+          Notify.error('Echec initialisation', "Verifiez l'URL et les permissions du Apps Script");
   }
 }
 
