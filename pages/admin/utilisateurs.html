@@ -548,8 +548,6 @@ async function syncFromSheets() {
     Notify.success('Synchronisation réussie !', `${clients?.length||0} clients · ${commandes?.length||0} commandes`);
     loadUsers();
   } else {
-    Notify.warning('Sheets vides', 'Initialisez d'abord avec "Initialiser les Sheets"');
-  }
+          Notify.warning('Sheets vides', "Initialisez d'abord via le bouton Initialiser les Sheets");
 }
-</script>
-</body></html>
+      ></html>
